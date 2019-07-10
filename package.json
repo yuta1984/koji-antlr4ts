@@ -1,8 +1,9 @@
 {
   "name": "koji-lang",
-  "version": "0.1. 0",
+  "version": "0.1.2",
   "description": "A light-weight markup language for historical Japanese text",
   "main": "index.js",
+  "types": "./src/index.d.ts",
   "scripts": {
     "antlr4ts": "antlr4ts -visitor Koji*.g4 -o src/",
     "build": "WEBPACK_ENV=development webpack",

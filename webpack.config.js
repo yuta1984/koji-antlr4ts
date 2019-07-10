@@ -8,8 +8,8 @@ module.exports = {
   // メインとなるJavaScriptファイル（エントリーポイント）
   entry: "./src/index.ts",
   output: {
-    filename: "koji-lang.js",
-    path: __dirname + "/dist",
+    filename: "index.js",
+    path: __dirname,
     library: "Koji",
     libraryTarget: "umd"
   },
