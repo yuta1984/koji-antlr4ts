@@ -1,0 +1,8 @@
+lib/
+node_modules/
+test.txt
+.antlr/
+dist/
+*code-workspace
+yarn.lock
+src/main.ts
