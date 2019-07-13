@@ -21,24 +21,32 @@ import { AbstractParseTreeVisitor } from "antlr4ts/tree/AbstractParseTreeVisitor
 import { KojiParserVisitor } from "./KojiParserVisitor";
 import { KojiContext, BlockContext, ListContext } from "./KojiParser";
 
+export interface KojiASTNode {
+  type: "koji" | "block" | "inline";
+  name: string;
+  location: { start: number; stop: number };
+  children: Array<KojiASTNode | string>;
+  id?: string;
+  classes?: Array<string>;
+  extra?: Array<Array<KojiASTNode | string>>;
+}
+
 export class KojiAstBuilder extends AbstractParseTreeVisitor<any>
   implements KojiParserVisitor<any> {
-  ast: any;
-
-  constructor() {
-    super();
-    this.ast = { type: "koji" };
-  }
+  ast: KojiASTNode;
 
   defaultResult() {}
 
-  visit(ctx: KojiContext): any {
-    this.ast.children = ctx.list().map((l) => this.visitList(l));
-    this.ast.location = this.loc(ctx);
-    return this.ast;
+  visit(ctx: KojiContext): KojiASTNode {
+    return {
+      type: "koji",
+      name: "koji",
+      location: this.loc(ctx),
+      children: ctx.list().map((l) => this.visitList(l))
+    };
   }
 
-  visitList(ctx: ListContext) {
+  visitList(ctx: ListContext): KojiASTNode | string {
     const block = ctx.block();
     const inline = ctx.inline();
     const syntaxSugar = ctx.syntaxSugar();
@@ -57,7 +65,7 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any>
     }
   }
 
-  visitBlock(ctx: BlockContext): any {
+  visitBlock(ctx: BlockContext): KojiASTNode {
     const block1 = ctx.block1();
     const block2 = ctx.block2();
     const block3 = ctx.block3();
@@ -70,20 +78,20 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any>
     if (block5) return this.visitBlock5(block5);
   }
 
-  visitBlock1(ctx: Block1Context) {
+  visitBlock1(ctx: Block1Context): KojiASTNode {
     const content = ctx.blockContent1();
     const name = ctx.ElemName().text;
     const attrs = this.processAttrs(ctx);
     return {
-      type: name,
+      type: "block",
+      name: name,
       chilren: content.map((c) => this.visitBlockContent1(c)),
       ...attrs,
-      location: this.loc(ctx),
-      block: true
+      location: this.loc(ctx)
     };
   }
 
-  visitBlockContent1(ctx: BlockContent1Context) {
+  visitBlockContent1(ctx: BlockContent1Context): KojiASTNode | string {
     const lb = ctx.Lb();
     const inline = ctx.inline();
     const textSegment = ctx.textSegment();
@@ -102,20 +110,20 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any>
     if (block5) return this.visitBlock5(block5);
   }
 
-  visitBlock2(ctx: Block2Context) {
+  visitBlock2(ctx: Block2Context): KojiASTNode {
     const content = ctx.blockContent2();
     const name = ctx.ElemName().text;
     const attrs = this.processAttrs(ctx);
     return {
-      type: name,
+      type: "block",
+      name: name,
       chilren: content.map((c) => this.visitBlockContent2(c)),
       ...attrs,
-      location: this.loc(ctx),
-      block: true
+      location: this.loc(ctx)
     };
   }
 
-  visitBlockContent2(ctx: BlockContent2Context) {
+  visitBlockContent2(ctx: BlockContent2Context): KojiASTNode | string {
     const lb = ctx.Lb();
     const inline = ctx.inline();
     const textSegment = ctx.textSegment();
@@ -132,20 +140,20 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any>
     if (block5) return this.visitBlock5(block5);
   }
 
-  visitBlock3(ctx: Block3Context) {
+  visitBlock3(ctx: Block3Context): KojiASTNode {
     const content = ctx.blockContent3();
     const name = ctx.ElemName().text;
     const attrs = this.processAttrs(ctx);
     return {
-      type: name,
+      type: "block",
+      name: name,
       chilren: content.map((c) => this.visitBlockContent3(c)),
       ...attrs,
-      location: this.loc(ctx),
-      block: true
+      location: this.loc(ctx)
     };
   }
 
-  visitBlockContent3(ctx: BlockContent3Context) {
+  visitBlockContent3(ctx: BlockContent3Context): KojiASTNode | string {
     const lb = ctx.Lb();
     const inline = ctx.inline();
     const textSegment = ctx.textSegment();
@@ -160,20 +168,20 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any>
     if (block5) return this.visitBlock5(block5);
   }
 
-  visitBlock4(ctx: Block4Context) {
+  visitBlock4(ctx: Block4Context): KojiASTNode {
     const content = ctx.blockContent4();
     const name = ctx.ElemName().text;
     const attrs = this.processAttrs(ctx);
     return {
-      type: name,
+      type: "block",
+      name: name,
       chilren: content.map((c) => this.visitBlockContent4(c)),
       ...attrs,
-      location: this.loc(ctx),
-      block: true
+      location: this.loc(ctx)
     };
   }
 
-  visitBlockContent4(ctx: BlockContent4Context) {
+  visitBlockContent4(ctx: BlockContent4Context): KojiASTNode | string {
     const lb = ctx.Lb();
     const inline = ctx.inline();
     const textSegment = ctx.textSegment();
@@ -186,20 +194,20 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any>
     if (block5) return this.visitBlock5(block5);
   }
 
-  visitBlock5(ctx: Block5Context) {
+  visitBlock5(ctx: Block5Context): KojiASTNode {
     const content = ctx.blockContent5();
     const name = ctx.ElemName().text;
     const attrs = this.processAttrs(ctx);
     return {
-      type: name,
+      type: "block",
+      name: name,
       chilren: content.map((c) => this.visitBlockContent5(c)),
       ...attrs,
-      location: this.loc(ctx),
-      block: true
+      location: this.loc(ctx)
     };
   }
 
-  visitBlockContent5(ctx: BlockContent5Context) {
+  visitBlockContent5(ctx: BlockContent5Context): KojiASTNode | string {
     const lb = ctx.Lb();
     const inline = ctx.inline();
     const textSegment = ctx.textSegment();
@@ -219,19 +227,18 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any>
     return attrs;
   }
 
-  visitInline(ctx: InlineContext): any {
+  visitInline(ctx: InlineContext): KojiASTNode {
     const name = ctx.ElemName().text;
-    //const id = this.getIdValue(ctx.ID());
-    //const classes = this.getClasses(ctx.Class());
     const content = ctx._content;
-    const children = content.map((c) => this.visitInlineContentSeq(c));
-    //children.push(extra.map((c) => this.visitInlineContentSeq(c)));
-    //const extraChildren = extra.map((e) => this.visitInlineContent(e));
+    const children = content.map((c) => this.visitInlineContent(c));
+    const extra = ctx._extra;
+    const extraChildren = extra.map((e) => this.visitInlineContentSeq(e));
     const attrs = this.processAttrs(ctx);
     return {
-      type: name,
-      inline: true,
+      type: "inline",
+      name: name,
       children: children,
+      extra: extraChildren,
       ...attrs,
       location: this.loc(ctx)
     };
@@ -241,7 +248,7 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any>
     return ctx.inlineContent().map((c) => this.visitInlineContent(c));
   }
 
-  visitInlineContent(ctx: InlineContentContext): any {
+  visitInlineContent(ctx: InlineContentContext): KojiASTNode | string {
     const lb = ctx.Lb();
     const inline = ctx.inline();
     const textSegment = ctx.textSegment();
@@ -257,7 +264,7 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any>
     }
   }
 
-  visitSyntaxSugar(ctx: SyntaxSugarContext): any {
+  visitSyntaxSugar(ctx: SyntaxSugarContext): KojiASTNode {
     const furigana = ctx.furigana();
     const annotation = ctx.annotation();
     const okurigana = ctx.okurigana();
@@ -265,45 +272,51 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any>
     const illegible = ctx.illegible();
     const bugHole = ctx.bugHole();
     if (furigana) {
-      const kanji = furigana
-        .Kanji()
-        .map((k) => k.text)
-        .join("");
+      const target = furigana._target.text;
       const kana = furigana
         .FuriganaParen()
         .text.replace("（", "")
         .replace("）", "");
       return {
-        type: "振り仮名",
-        text: kanji,
-        kana: kana,
+        name: "振り仮名",
+        type: "inline",
+        children: [target],
+        extra: [[kana]],
         location: this.loc(ctx)
       };
     } else if (annotation) {
-      return { type: "注釈", text: annotation.text, location: this.loc(ctx) };
+      return {
+        type: "inline",
+        name: "注釈",
+        children: [annotation.text],
+        location: this.loc(ctx)
+      };
     } else if (okurigana) {
       return {
-        type: "送り仮名",
-        text: okurigana.text.replace("￣", ""),
+        type: "inline",
+        name: "送り仮名",
+        children: [okurigana.text.replace("￣", "")],
         location: this.loc(ctx)
       };
     } else if (kaeriten) {
       return {
-        type: "返り点",
-        text: kaeriten.text.replace("＿", ""),
+        type: "inline",
+        name: "返り点",
+        children: [kaeriten.text.replace("＿", "")],
         location: this.loc(ctx)
       };
     } else if (illegible) {
       return {
-        type: "難読",
-        size: illegible.Illegible().length,
+        type: "inline",
+        name: "難読",
+        children: [illegible.text],
         location: this.loc(ctx)
       };
     } else if (bugHole) {
       return {
         type: "inline",
         name: "虫損",
-        size: bugHole.BugHole().length,
+        children: [bugHole.text],
         location: this.loc(ctx)
       };
     } else {

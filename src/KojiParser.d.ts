@@ -2,6 +2,7 @@ import { ATN } from "antlr4ts/atn/ATN";
 import { Parser } from "antlr4ts/Parser";
 import { ParserRuleContext } from "antlr4ts/ParserRuleContext";
 import { TerminalNode } from "antlr4ts/tree/TerminalNode";
+import { Token } from "antlr4ts/Token";
 import { TokenStream } from "antlr4ts/TokenStream";
 import { Vocabulary } from "antlr4ts/Vocabulary";
 import { KojiParserListener } from "./KojiParserListener";
@@ -124,19 +125,23 @@ export declare class ListContext extends ParserRuleContext {
     accept<Result>(visitor: KojiParserVisitor<Result>): Result;
 }
 export declare class InlineContext extends ParserRuleContext {
+    _inlineContent: InlineContentContext;
+    _content: InlineContentContext[];
     _inlineContentSeq: InlineContentSeqContext;
-    _content: InlineContentSeqContext[];
+    _extra: InlineContentSeqContext[];
     OpenInline(): TerminalNode | undefined;
     ElemName(): TerminalNode;
     Colon(): TerminalNode;
     CloseInline(): TerminalNode | undefined;
-    inlineContentSeq(): InlineContentSeqContext[];
-    inlineContentSeq(i: number): InlineContentSeqContext;
     ID(): TerminalNode | undefined;
     Class(): TerminalNode[];
     Class(i: number): TerminalNode;
     Bar(): TerminalNode[];
     Bar(i: number): TerminalNode;
+    inlineContent(): InlineContentContext[];
+    inlineContent(i: number): InlineContentContext;
+    inlineContentSeq(): InlineContentSeqContext[];
+    inlineContentSeq(i: number): InlineContentSeqContext;
     OpenInline2(): TerminalNode | undefined;
     CloseInline2(): TerminalNode | undefined;
     constructor(parent: ParserRuleContext | undefined, invokingState: number);
@@ -359,9 +364,14 @@ export declare class SyntaxSugarContext extends ParserRuleContext {
     accept<Result>(visitor: KojiParserVisitor<Result>): Result;
 }
 export declare class FuriganaContext extends ParserRuleContext {
+    _target: Token;
     FuriganaParen(): TerminalNode;
     Kanji(): TerminalNode[];
     Kanji(i: number): TerminalNode;
+    Kana(): TerminalNode[];
+    Kana(i: number): TerminalNode;
+    NonJp(): TerminalNode[];
+    NonJp(i: number): TerminalNode;
     constructor(parent: ParserRuleContext | undefined, invokingState: number);
     readonly ruleIndex: number;
     enterRule(listener: KojiParserListener): void;

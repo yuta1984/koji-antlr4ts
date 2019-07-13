@@ -9,14 +9,14 @@ koji: list* EOF;
 list: block | inline | syntaxSugar | textSegment | Lb;
 
 inline:
-	'＜' ElemName ID? Class* '：' content += inlineContentSeq (
-		'｜' content += inlineContentSeq
+	'＜' ElemName ID? Class* '：' content += inlineContent* (
+		'｜' extra += inlineContentSeq
 	)* '＞'
-	| '《' ElemName ID? Class* '：' content += inlineContentSeq (
-		'｜' content += inlineContentSeq
+	| '《' ElemName ID? Class* '：' content += inlineContent* (
+		'｜' extra += inlineContentSeq
 	)* '》';
 
-inlineContentSeq: inlineContent+;
+inlineContentSeq: inlineContent*;
 
 inlineContent: (syntaxSugar | textSegment | inline | Lb);
 
@@ -70,7 +70,7 @@ syntaxSugar:
 	| illegible
 	| bugHole;
 
-furigana: Kanji+ FuriganaParen;
+furigana: (target = Kanji+ | target = Kana+ | target = NonJp+) FuriganaParen;
 kaeriten: Kaeriten;
 okurigana: Okurigana;
 annotation: AnnotationParen;

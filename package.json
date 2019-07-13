@@ -1,6 +1,6 @@
 {
   "name": "koji-lang",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A light-weight markup language for historical Japanese text",
   "main": "index.js",
   "types": "./src/index.d.ts",
