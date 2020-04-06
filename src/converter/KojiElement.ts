@@ -47,7 +47,8 @@ export class Furigana extends KojiElement {
 
   toHTML(node: KojiASTNode) {
     const text = this.converter.convertChildren(node.children);
-    const kana = this.converter.convertChildren(node.extra[0]);
+    let kana = ""
+    if(node.extra[0]) kana = this.converter.convertChildren(node.extra[0]);    
     return `
           <ruby class="Furigana">
               ${text}<rt>${kana}</rt>
@@ -73,7 +74,8 @@ export class Warigaki extends KojiElement {
 
   toHTML(node: KojiASTNode) {
     const right = this.converter.convertChildren(node.children);
-    const left = this.converter.convertChildren(node.extra[0]);
+    let left = ""
+    if(node.extra[0]) left = this.converter.convertChildren(node.extra[0]);
     return `
     <span class="Warigaki">
       <span class="warigaki-left">${left}</span>
@@ -103,8 +105,7 @@ export class Kaeriten extends KojiElement {
 }
 
 export class Okurigana extends KojiElement {
-  get elemName() {
-    console.log("okuri")
+  get elemName() {    
     return "送り仮名";
   }
 
@@ -180,5 +181,85 @@ export class BugHole extends KojiElement {
   toHTML(node: KojiASTNode) {
     const text = this.convertChildren(node.children);
     return `<span class="BugHole inline" >${text}</span>`;
+  }
+}
+
+export class Title extends KojiElement {
+  get elemName() {
+    return "題";
+  }
+
+  toTEI(node: KojiASTNode): string {
+    throw new Error("Method not implemented.");
+  }
+
+  toText(node: KojiASTNode): string {
+    const text = this.converter.convertChildren(node.children);
+    return `${text}`;
+  }
+
+  toHTML(node: KojiASTNode) {
+    const text = this.convertChildren(node.children);
+    return `<h1 class="Title inline" >${text}</h1>`;
+  }
+}
+
+export class Indent1 extends KojiElement {
+  get elemName() {
+    return "字下げ一";
+  }
+
+  toTEI(node: KojiASTNode): string {
+    throw new Error("Method not implemented.");
+  }
+
+  toText(node: KojiASTNode): string {
+    const text = this.converter.convertChildren(node.children);
+    return `${text}`;
+  }
+
+  toHTML(node: KojiASTNode) {
+    const text = this.convertChildren(node.children);
+    return `<div class="Indent1 block" >${text}</div>`;
+  }
+}
+
+export class Indent2 extends KojiElement {
+  get elemName() {
+    return "字下げ二";
+  }
+
+  toTEI(node: KojiASTNode): string {
+    throw new Error("Method not implemented.");
+  }
+
+  toText(node: KojiASTNode): string {
+    const text = this.converter.convertChildren(node.children);
+    return `${text}`;
+  }
+
+  toHTML(node: KojiASTNode) {
+    const text = this.convertChildren(node.children);
+    return `<div class="Indent2 block" >${text}</div>`;
+  }
+}
+
+export class Indent3 extends KojiElement {
+  get elemName() {
+    return "字下げ三";
+  }
+
+  toTEI(node: KojiASTNode): string {
+    throw new Error("Method not implemented.");
+  }
+
+  toText(node: KojiASTNode): string {
+    const text = this.converter.convertChildren(node.children);
+    return `${text}`;
+  }
+
+  toHTML(node: KojiASTNode) {
+    const text = this.convertChildren(node.children);
+    return `<div class="Indent3 block" >${text}</div>`;
   }
 }

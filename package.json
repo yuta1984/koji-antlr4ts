@@ -1,28 +1,35 @@
 {
   "name": "koji-lang",
-  "version": "0.1.5",
+  "version": "0.1.12",
   "description": "A light-weight markup language for historical Japanese text",
   "main": "index.js",
   "types": "./src/index.d.ts",
   "scripts": {
-    "antlr4ts": "antlr4ts -visitor Koji*.g4 -o src/",
+    "antlr4ts": "antlr4ts -visitor src/Koji*.g4 ",
     "build": "WEBPACK_ENV=development webpack",
-    "build-prod": "WEBPACK_ENV=production webpack"
+    "build-prod": "WEBPACK_ENV=production webpack",
+    "antlr": "antlr src/grammar/KojiLexer.g4 src/grammar/KojiParser.g4 -o java/",
+    "javac": "javac *.java -classpath lib/antlr-4.7.1-complete.jar -d classes",
+    "grun": "java -classpath classes/:lib/antlr-4.7.1-complete.jar org.antlr.v4.gui.TestRig Koji koji test/test.txt -gui ",
+    "grun-token": "java -classpath classes/:lib/antlr-4.7.1-complete.jar org.antlr.v4.gui.TestRig Koji koji test/test.txt -tokens"
   },
   "author": "Yuta Hashimoto",
   "license": "ISC",
   "devDependencies": {
     "antlr4ts-cli": "^0.5.0-alpha.3",
+    "compression-webpack-plugin": "^3.1.0",
     "npm-watch": "^0.6.0",
+    "terser-webpack-plugin": "^2.3.5",
     "ts-node": "^8.3.0",
     "typescript": "^3.5.3",
-    "webpack": "^4.35.3"
-  },
-  "dependencies": {
-    "antlr4": "^4.7.2",
+    "uglifyjs-webpack-plugin": "^2.2.0",
+    "webpack": "^4.35.3",
     "antlr4ts": "^0.5.0-alpha.3",
-    "@types/node": "^12.0.10",
     "ts-loader": "^6.0.4",
     "webpack-cli": "^3.3.5"
+  },
+  "dependencies": {
+    "@types/node": "^12.0.10",
+    "antlr4": "^4.7.2"
   }
 }

@@ -35,14 +35,14 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any>
   implements KojiParserVisitor<any> {
   ast: KojiASTNode;
 
-  defaultResult() {}
+  defaultResult() { }
 
   visit(ctx: KojiContext): KojiASTNode {
     return {
       type: "koji",
       name: "koji",
       location: this.loc(ctx),
-      children: ctx.list().map((l) => this.visitList(l))
+      children: ctx.list().map(l => this.visitList(l))
     };
   }
 
@@ -85,7 +85,7 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any>
     return {
       type: "block",
       name: name,
-      chilren: content.map((c) => this.visitBlockContent1(c)),
+      children: content.map(c => this.visitBlockContent1(c)),
       ...attrs,
       location: this.loc(ctx)
     };
@@ -117,7 +117,7 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any>
     return {
       type: "block",
       name: name,
-      chilren: content.map((c) => this.visitBlockContent2(c)),
+      children: content.map(c => this.visitBlockContent2(c)),
       ...attrs,
       location: this.loc(ctx)
     };
@@ -147,7 +147,7 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any>
     return {
       type: "block",
       name: name,
-      chilren: content.map((c) => this.visitBlockContent3(c)),
+      children: content.map(c => this.visitBlockContent3(c)),
       ...attrs,
       location: this.loc(ctx)
     };
@@ -175,7 +175,7 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any>
     return {
       type: "block",
       name: name,
-      chilren: content.map((c) => this.visitBlockContent4(c)),
+      children: content.map(c => this.visitBlockContent4(c)),
       ...attrs,
       location: this.loc(ctx)
     };
@@ -201,7 +201,7 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any>
     return {
       type: "block",
       name: name,
-      chilren: content.map((c) => this.visitBlockContent5(c)),
+      children: content.map(c => this.visitBlockContent5(c)),
       ...attrs,
       location: this.loc(ctx)
     };
@@ -223,16 +223,16 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any>
     const classes = ctx.Class();
     const attrs: any = {};
     if (id) attrs.id = id.text.slice(1);
-    if (classes) attrs.classes = classes.map((c) => c.text.slice(1));
+    if (classes) attrs.classes = classes.map(c => c.text.slice(1));
     return attrs;
   }
 
   visitInline(ctx: InlineContext): KojiASTNode {
     const name = ctx.ElemName().text;
     const content = ctx._content;
-    const children = content.map((c) => this.visitInlineContent(c));
+    const children = content.map(c => this.visitInlineContent(c));
     const extra = ctx._extra;
-    const extraChildren = extra.map((e) => this.visitInlineContentSeq(e));
+    const extraChildren = extra.map(e => this.visitInlineContentSeq(e));
     const attrs = this.processAttrs(ctx);
     return {
       type: "inline",
@@ -245,7 +245,7 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any>
   }
 
   visitInlineContentSeq(ctx: InlineContentSeqContext) {
-    return ctx.inlineContent().map((c) => this.visitInlineContent(c));
+    return ctx.inlineContent().map(c => this.visitInlineContent(c));
   }
 
   visitInlineContent(ctx: InlineContentContext): KojiASTNode | string {
@@ -328,11 +328,11 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any>
     return { start: ctx.start.startIndex, stop: ctx.stop.stopIndex };
   }
 
-  visitChildren() {}
+  visitChildren() { }
 
-  visitErrorNode() {}
+  visitErrorNode() { }
 
-  visitTerminal() {}
+  visitTerminal() { }
 
-  visitKoji(ctx: KojiContext): any {}
+  visitKoji(ctx: KojiContext): any { }
 }

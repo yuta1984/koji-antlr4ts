@@ -1,8 +1,12 @@
 lib/
 node_modules/
 test.txt
-.antlr/
+.antlr
+src/.antlr/
 dist/
+classes/
+java/
 *code-workspace
 yarn.lock
 src/main.ts
+.DS_Store

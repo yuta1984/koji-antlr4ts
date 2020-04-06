@@ -39,10 +39,10 @@ fragment HiraganaChar: [\u3040-\u309F];
 fragment KatakanaChar: [\u30A0-\u30FF\u31F0-\u31FF];
 fragment HentaikanaChar: [\u1B000-\u1B000\u1B100-\u1B12F];
 NonJpChar:
-	~[\n｜（）＜＞《》【】％□◼\u3040-\u309F\u30A0-\u30FF\u31F0-\u31FF\u4E00-\u9FEA\u3400-\u4DFF];
+	~[\n｜（）《》＜＞【】％□◼\u3040-\u309F\u30A0-\u30FF\u31F0-\u31FF\u4E00-\u9FEA\u3400-\u4DFF];
+//~[\u3040-\u309F\u30A0-\u30FF\u31F0-\u31FF\u4E00-\u9FEA\u3400-\u4DFF];
 KanjiChar:
-	[\u3000-\u3007\u4E00-\u9FEA\u3400-\u4DFF\u20000-\u2A6FF\u2A700-\u2B734\u2B740-\u2B81F\u2B820-\u2CEAF\u2CEB0-\u2EBE0]
-		;
+	[\u2E80-\u2FDF\u3000-\u3007\u4E00-\u9FEA\u3400-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF];
 Lb: '\n';
 WS: [ \t]+ -> skip;
 

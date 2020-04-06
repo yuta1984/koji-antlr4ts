@@ -56,3 +56,27 @@ export declare class BugHole extends KojiElement {
     toText(node: KojiASTNode): string;
     toHTML(node: KojiASTNode): string;
 }
+export declare class Title extends KojiElement {
+    readonly elemName: string;
+    toTEI(node: KojiASTNode): string;
+    toText(node: KojiASTNode): string;
+    toHTML(node: KojiASTNode): string;
+}
+export declare class Indent1 extends KojiElement {
+    readonly elemName: string;
+    toTEI(node: KojiASTNode): string;
+    toText(node: KojiASTNode): string;
+    toHTML(node: KojiASTNode): string;
+}
+export declare class Indent2 extends KojiElement {
+    readonly elemName: string;
+    toTEI(node: KojiASTNode): string;
+    toText(node: KojiASTNode): string;
+    toHTML(node: KojiASTNode): string;
+}
+export declare class Indent3 extends KojiElement {
+    readonly elemName: string;
+    toTEI(node: KojiASTNode): string;
+    toText(node: KojiASTNode): string;
+    toHTML(node: KojiASTNode): string;
+}
