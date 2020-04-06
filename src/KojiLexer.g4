@@ -17,17 +17,25 @@ OpenBlock5: '％％％％％' -> pushMode(HEADER);
 CloseBlock5: '\n％％％％％\n';
 
 // inline element
-OpenInline: '＜' -> pushMode(HEADER);
-CloseInline: '＞';
-OpenInline2: '《' -> pushMode(HEADER);
-CloseInline2: '》';
+OpenInline: '《' -> pushMode(HEADER);
+CloseInline: '》';
 Bar: '｜';
 
-// syntax sugars
-FuriganaParen: '（' (Kana | Kanji | NonJpChar)+ '）';
-AnnotationParen: '【' (Kana | Kanji | NonJpChar)+ '】';
-Kaeriten: '＿' [レ一二三上中下甲乙丙点]+;
-Okurigana: '￣' Kana+;
+// // syntax sugars
+FuriganaOpen: '（' -> pushMode(FURIGANA);
+AnnotationOpen: '【';
+AnnotationClose: '】';
+
+PersonOpen: '｛';
+PersonClose: '｝';
+PlaceOpen: '〔';
+PlaceClose: '〕';
+DateOpen: '＜';
+DateClose: '＞';
+
+KaeritenMark: '＿';
+KaeritenChar: [レ一二三上中下甲乙丙点];
+OkuriganaMark: '￣';
 Illegible: '■';
 BugHole: '□';
 
@@ -39,7 +47,7 @@ fragment HiraganaChar: [\u3040-\u309F];
 fragment KatakanaChar: [\u30A0-\u30FF\u31F0-\u31FF];
 fragment HentaikanaChar: [\u1B000-\u1B000\u1B100-\u1B12F];
 NonJpChar:
-	~[\n｜（）《》＜＞【】％□◼\u3040-\u309F\u30A0-\u30FF\u31F0-\u31FF\u4E00-\u9FEA\u3400-\u4DFF];
+	~[\n｜（）《》＜＞【】｛｝〔〕［］％□◼\u3040-\u309F\u30A0-\u30FF\u31F0-\u31FF\u4E00-\u9FEA\u3400-\u4DFF];
 //~[\u3040-\u309F\u30A0-\u30FF\u31F0-\u31FF\u4E00-\u9FEA\u3400-\u4DFF];
 KanjiChar:
 	[\u2E80-\u2FDF\u3000-\u3007\u4E00-\u9FEA\u3400-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF];
@@ -54,3 +62,8 @@ HeaderLb: '\n' -> popMode;
 ID: ('#' | '＃') AttrName;
 Class: ('*' | '＊' | '.') AttrName;
 fragment AttrName: (Kana | Kanji | [:a-zA-Z] | [0-9])+;
+
+mode FURIGANA;
+FuriganaContent: Kana;
+FuriganaSep: '｜';
+FuriganaClose: '）' -> popMode;

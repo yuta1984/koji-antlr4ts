@@ -27,6 +27,9 @@ import { OkuriganaContext } from "./KojiParser";
 import { AnnotationContext } from "./KojiParser";
 import { IllegibleContext } from "./KojiParser";
 import { BugHoleContext } from "./KojiParser";
+import { PersonContext } from "./KojiParser";
+import { PlaceContext } from "./KojiParser";
+import { DateContext } from "./KojiParser";
 
 
 /**
@@ -297,5 +300,38 @@ export interface KojiParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitBugHole?: (ctx: BugHoleContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `KojiParser.person`.
+	 * @param ctx the parse tree
+	 */
+	enterPerson?: (ctx: PersonContext) => void;
+	/**
+	 * Exit a parse tree produced by `KojiParser.person`.
+	 * @param ctx the parse tree
+	 */
+	exitPerson?: (ctx: PersonContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `KojiParser.place`.
+	 * @param ctx the parse tree
+	 */
+	enterPlace?: (ctx: PlaceContext) => void;
+	/**
+	 * Exit a parse tree produced by `KojiParser.place`.
+	 * @param ctx the parse tree
+	 */
+	exitPlace?: (ctx: PlaceContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `KojiParser.date`.
+	 * @param ctx the parse tree
+	 */
+	enterDate?: (ctx: DateContext) => void;
+	/**
+	 * Exit a parse tree produced by `KojiParser.date`.
+	 * @param ctx the parse tree
+	 */
+	exitDate?: (ctx: DateContext) => void;
 }
 

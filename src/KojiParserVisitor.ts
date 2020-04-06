@@ -27,6 +27,9 @@ import { OkuriganaContext } from "./KojiParser";
 import { AnnotationContext } from "./KojiParser";
 import { IllegibleContext } from "./KojiParser";
 import { BugHoleContext } from "./KojiParser";
+import { PersonContext } from "./KojiParser";
+import { PlaceContext } from "./KojiParser";
+import { DateContext } from "./KojiParser";
 
 
 /**
@@ -204,5 +207,26 @@ export interface KojiParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitBugHole?: (ctx: BugHoleContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `KojiParser.person`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitPerson?: (ctx: PersonContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `KojiParser.place`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitPlace?: (ctx: PlaceContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `KojiParser.date`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitDate?: (ctx: DateContext) => Result;
 }
 

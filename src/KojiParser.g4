@@ -9,11 +9,8 @@ koji: list* EOF;
 list: block | inline | syntaxSugar | textSegment | Lb;
 
 inline:
-	'＜' ElemName ID? Class* '：' content += inlineContent* (
-		'｜' extra += inlineContentSeq
-	)* '＞'
-	| '《' ElemName ID? Class* '：' content += inlineContent* (
-		'｜' extra += inlineContentSeq
+	'《' ElemName ID? Class* '：' content += inlineContent* (
+		Bar extra += inlineContentSeq
 	)* '》';
 
 inlineContentSeq: inlineContent*;
@@ -68,12 +65,18 @@ syntaxSugar:
 	| okurigana
 	| annotation
 	| illegible
-	| bugHole;
+	| bugHole
+	| person
+	| place
+	| date;
 
-furigana: (target = Kanji+ | target = Kana+ | target = NonJp+) FuriganaParen;
-kaeriten: Kaeriten;
-okurigana: Okurigana;
-annotation: AnnotationParen;
+furigana: (target = Kanji | target = Kana | target = NonJp) 
+FuriganaOpen left = FuriganaContent (FuriganaSep right = FuriganaContent)? FuriganaClose;
+kaeriten: KaeritenMark content = KaeritenChar+;
+okurigana: OkuriganaMark content = Kana;
+annotation: AnnotationOpen content = textSegment AnnotationClose;
 illegible: Illegible+;
 bugHole: BugHole+;
-
+person: PersonOpen inlineContent PersonClose;
+place: PlaceOpen inlineContent PlaceClose;
+date: DateOpen inlineContent DateClose;
