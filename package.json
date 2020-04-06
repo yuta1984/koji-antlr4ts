@@ -8,10 +8,10 @@
     "antlr4ts": "antlr4ts -visitor src/Koji*.g4 ",
     "build": "WEBPACK_ENV=development webpack",
     "build-prod": "WEBPACK_ENV=production webpack",
-    "antlr": "antlr src/grammar/KojiLexer.g4 src/grammar/KojiParser.g4 -o java/",
-    "javac": "javac *.java -classpath lib/antlr-4.7.1-complete.jar -d classes",
-    "grun": "java -classpath classes/:lib/antlr-4.7.1-complete.jar org.antlr.v4.gui.TestRig Koji koji test/test.txt -gui ",
-    "grun-token": "java -classpath classes/:lib/antlr-4.7.1-complete.jar org.antlr.v4.gui.TestRig Koji koji test/test.txt -tokens"
+    "antlr": "antlr src/KojiLexer.g4 src/KojiParser.g4 -o java/",
+    "javac": "javac java/src/*.java -classpath lib/antlr-4.8-complete.jar -d classes",
+    "grun": "java -classpath classes/:lib/antlr-4.8-complete.jar org.antlr.v4.gui.TestRig Koji koji test/test.txt -gui ",
+    "grun-token": "java -classpath classes/:lib/antlr-4.8-complete.jar org.antlr.v4.gui.TestRig Koji koji test/test.txt -tokens"
   },
   "author": "Yuta Hashimoto",
   "license": "ISC",
