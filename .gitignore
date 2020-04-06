@@ -10,3 +10,4 @@ java/
 yarn.lock
 src/main.ts
 .DS_Store
+yarn-error.log
