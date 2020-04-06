@@ -271,38 +271,39 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any>
     const kaeriten = ctx.kaeriten();
     const illegible = ctx.illegible();
     const bugHole = ctx.bugHole();
+    const person = ctx.person();
+    const place = ctx.place();
+    const date = ctx.date();
     if (furigana) {
       const target = furigana._target.text;
-      const kana = furigana
-        .FuriganaParen()
-        .text.replace("（", "")
-        .replace("）", "");
+      const right = furigana._right.text;
+      const left = furigana._left.text;
       return {
         name: "振り仮名",
         type: "inline",
         children: [target],
-        extra: [[kana]],
+        extra: [[right], [left]],
         location: this.loc(ctx)
       };
     } else if (annotation) {
       return {
         type: "inline",
         name: "注釈",
-        children: [annotation.text],
+        children: [annotation._content.text],
         location: this.loc(ctx)
       };
     } else if (okurigana) {
       return {
         type: "inline",
         name: "送り仮名",
-        children: [okurigana.text.replace("￣", "")],
+        children: [okurigana._content.text],
         location: this.loc(ctx)
       };
     } else if (kaeriten) {
       return {
         type: "inline",
         name: "返り点",
-        children: [kaeriten.text.replace("＿", "")],
+        children: [kaeriten._content.text],
         location: this.loc(ctx)
       };
     } else if (illegible) {
@@ -319,6 +320,30 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any>
         children: [bugHole.text],
         location: this.loc(ctx)
       };
+    } else if (person) {
+      const child = this.visitInlineContent(person._content)
+      return {
+        type: "inline",
+        name: "人物",
+        children: [child],
+        location: this.loc(ctx)
+      }
+    } else if (place) {
+      const child = this.visitInlineContent(place._content)
+      return {
+        type: "inline",
+        name: "場所",
+        children: [child],
+        location: this.loc(ctx)
+      }
+    } else if (date) {
+      const child = this.visitInlineContent(date._content)
+      return {
+        type: "inline",
+        name: "日時",
+        children: [child],
+        location: this.loc(ctx)
+      }
     } else {
       throw new Error("parsing error");
     }

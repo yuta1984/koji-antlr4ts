@@ -1663,7 +1663,7 @@ export class KojiParser extends Parser {
 			this.state = 312;
 			this.match(KojiParser.PersonOpen);
 			this.state = 313;
-			this.inlineContent();
+			_localctx._content = this.inlineContent();
 			this.state = 314;
 			this.match(KojiParser.PersonClose);
 			}
@@ -1692,7 +1692,7 @@ export class KojiParser extends Parser {
 			this.state = 316;
 			this.match(KojiParser.PlaceOpen);
 			this.state = 317;
-			this.inlineContent();
+			_localctx._content = this.inlineContent();
 			this.state = 318;
 			this.match(KojiParser.PlaceClose);
 			}
@@ -1721,7 +1721,7 @@ export class KojiParser extends Parser {
 			this.state = 320;
 			this.match(KojiParser.DateOpen);
 			this.state = 321;
-			this.inlineContent();
+			_localctx._content = this.inlineContent();
 			this.state = 322;
 			this.match(KojiParser.DateClose);
 			}
@@ -3028,11 +3028,12 @@ export class BugHoleContext extends ParserRuleContext {
 
 
 export class PersonContext extends ParserRuleContext {
+	public _content: InlineContentContext;
 	public PersonOpen(): TerminalNode { return this.getToken(KojiParser.PersonOpen, 0); }
+	public PersonClose(): TerminalNode { return this.getToken(KojiParser.PersonClose, 0); }
 	public inlineContent(): InlineContentContext {
 		return this.getRuleContext(0, InlineContentContext);
 	}
-	public PersonClose(): TerminalNode { return this.getToken(KojiParser.PersonClose, 0); }
 	constructor(parent: ParserRuleContext | undefined, invokingState: number) {
 		super(parent, invokingState);
 	}
@@ -3062,11 +3063,12 @@ export class PersonContext extends ParserRuleContext {
 
 
 export class PlaceContext extends ParserRuleContext {
+	public _content: InlineContentContext;
 	public PlaceOpen(): TerminalNode { return this.getToken(KojiParser.PlaceOpen, 0); }
+	public PlaceClose(): TerminalNode { return this.getToken(KojiParser.PlaceClose, 0); }
 	public inlineContent(): InlineContentContext {
 		return this.getRuleContext(0, InlineContentContext);
 	}
-	public PlaceClose(): TerminalNode { return this.getToken(KojiParser.PlaceClose, 0); }
 	constructor(parent: ParserRuleContext | undefined, invokingState: number) {
 		super(parent, invokingState);
 	}
@@ -3096,11 +3098,12 @@ export class PlaceContext extends ParserRuleContext {
 
 
 export class DateContext extends ParserRuleContext {
+	public _content: InlineContentContext;
 	public DateOpen(): TerminalNode { return this.getToken(KojiParser.DateOpen, 0); }
+	public DateClose(): TerminalNode { return this.getToken(KojiParser.DateClose, 0); }
 	public inlineContent(): InlineContentContext {
 		return this.getRuleContext(0, InlineContentContext);
 	}
-	public DateClose(): TerminalNode { return this.getToken(KojiParser.DateClose, 0); }
 	constructor(parent: ParserRuleContext | undefined, invokingState: number) {
 		super(parent, invokingState);
 	}
