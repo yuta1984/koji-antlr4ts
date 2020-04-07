@@ -11,7 +11,8 @@
     "antlr": "antlr src/KojiLexer.g4 src/KojiParser.g4 -o java/",
     "javac": "javac java/src/*.java -classpath lib/antlr-4.8-complete.jar -d classes",
     "grun": "java -classpath classes/:lib/antlr-4.8-complete.jar org.antlr.v4.gui.TestRig Koji koji test/test.txt -gui ",
-    "grun-token": "java -classpath classes/:lib/antlr-4.8-complete.jar org.antlr.v4.gui.TestRig Koji koji test/test.txt -tokens"
+    "grun-token": "java -classpath classes/:lib/antlr-4.8-complete.jar org.antlr.v4.gui.TestRig Koji koji test/test.txt -tokens",
+    "test": "ts-node test/test"
   },
   "author": "Yuta Hashimoto",
   "license": "ISC",
