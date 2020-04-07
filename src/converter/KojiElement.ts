@@ -41,19 +41,34 @@ export class Furigana extends KojiElement {
 
   toText(node: KojiASTNode): string {
     const text = this.converter.convertChildren(node.children);
-    const kana = this.converter.convertChildren(node.extra[0]);
-    return `${text}（${kana}）`;
+    const right = this.converter.convertChildren(node.extra[0]);
+    if (node.extra[1]) {
+      const left = this.converter.convertChildren(node.extra[1]);
+      return `${text}（${right}｜${left}）`;
+    } else {
+      return `${text}（${right}）`;
+    }
   }
 
   toHTML(node: KojiASTNode) {
     const text = this.converter.convertChildren(node.children);
-    let kana = "";
-    if (node.extra[0]) kana = this.converter.convertChildren(node.extra[0]);
-    return `
+    const right = this.converter.convertChildren(node.extra[0]);
+    if (node.extra[1]) {
+      const left = this.converter.convertChildren(node.extra[1]);
+      return `
           <ruby class="Furigana">
-              ${text}<rt>${kana}</rt>
+              ${text}<rt class="right">${right}</rt>
+              <rt class="left">${left}</rt>
           </ruby>
         `;
+    } else {
+      return `
+          <ruby class="Furigana">
+              ${text}<rt>${right}</rt>
+          </ruby>
+        `;
+    }
+
   }
 }
 
@@ -69,7 +84,7 @@ export class Warigaki extends KojiElement {
   toText(node: KojiASTNode): string {
     const text = this.converter.convertChildren(node.children);
     const kana = this.converter.convertChildren(node.extra[0]);
-    return `＜割書：${text}｜${kana}＞`;
+    return `《割書：${text}｜${kana}》`;
   }
 
   toHTML(node: KojiASTNode) {

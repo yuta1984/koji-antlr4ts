@@ -22,13 +22,14 @@ import { KojiParserVisitor } from "./KojiParserVisitor";
 import { KojiContext, BlockContext, ListContext } from "./KojiParser";
 
 export interface KojiASTNode {
-  type: "koji" | "block" | "inline";
+  type: "document" | "block" | "inline";
   name: string;
-  location: { start: number; stop: number };
+  location: { start: number; stop: number; };
   children: Array<KojiASTNode | string>;
   id?: string;
   classes?: Array<string>;
   extra?: Array<Array<KojiASTNode | string>>;
+  level?: number;
 }
 
 export class KojiAstBuilder extends AbstractParseTreeVisitor<any>
@@ -39,7 +40,7 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any>
 
   visit(ctx: KojiContext): KojiASTNode {
     return {
-      type: "koji",
+      type: "document",
       name: "koji",
       location: this.loc(ctx),
       children: ctx.list().map(l => this.visitList(l))
@@ -87,7 +88,8 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any>
       name: name,
       children: content.map(c => this.visitBlockContent1(c)),
       ...attrs,
-      location: this.loc(ctx)
+      location: this.loc(ctx),
+      level: 1
     };
   }
 
@@ -119,7 +121,8 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any>
       name: name,
       children: content.map(c => this.visitBlockContent2(c)),
       ...attrs,
-      location: this.loc(ctx)
+      location: this.loc(ctx),
+      level: 2
     };
   }
 
@@ -149,7 +152,8 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any>
       name: name,
       children: content.map(c => this.visitBlockContent3(c)),
       ...attrs,
-      location: this.loc(ctx)
+      location: this.loc(ctx),
+      level: 3
     };
   }
 
@@ -177,7 +181,8 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any>
       name: name,
       children: content.map(c => this.visitBlockContent4(c)),
       ...attrs,
-      location: this.loc(ctx)
+      location: this.loc(ctx),
+      level: 4
     };
   }
 
@@ -203,7 +208,8 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any>
       name: name,
       children: content.map(c => this.visitBlockContent5(c)),
       ...attrs,
-      location: this.loc(ctx)
+      location: this.loc(ctx),
+      level: 5
     };
   }
 
@@ -218,7 +224,7 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any>
     if (syntaxSugar) return this.visitSyntaxSugar(syntaxSugar);
   }
 
-  processAttrs(ctx: { ID(): TerminalNode; Class(): TerminalNode[] }) {
+  processAttrs(ctx: { ID(): TerminalNode; Class(): TerminalNode[]; }) {
     const id = ctx.ID();
     const classes = ctx.Class();
     const attrs: any = {};
@@ -275,13 +281,14 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any>
     const place = ctx.place();
     const date = ctx.date();
     if (furigana) {
-      const right = furigana._right.text;
-      const left = furigana._left ? furigana._left.text : null;
+      const extra = [];
+      if (furigana._right) extra.push([furigana._right.text]);
+      if (furigana._left) extra.push([furigana._left.text]);
       return {
         name: "振り仮名",
         type: "inline",
-        children: [right],
-        extra: [[left]],
+        children: [furigana._target.text],
+        extra,
         location: this.loc(ctx)
       };
     } else if (annotation) {
@@ -320,35 +327,35 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any>
         location: this.loc(ctx)
       };
     } else if (person) {
-      const child = this.visitInlineContent(person._content)
+      const child = this.visitInlineContent(person._content);
       return {
         type: "inline",
         name: "人物",
         children: [child],
         location: this.loc(ctx)
-      }
+      };
     } else if (place) {
-      const child = this.visitInlineContent(place._content)
+      const child = this.visitInlineContent(place._content);
       return {
         type: "inline",
         name: "場所",
         children: [child],
         location: this.loc(ctx)
-      }
+      };
     } else if (date) {
-      const child = this.visitInlineContent(date._content)
+      const child = this.visitInlineContent(date._content);
       return {
         type: "inline",
         name: "日時",
         children: [child],
         location: this.loc(ctx)
-      }
+      };
     } else {
       throw new Error("parsing error");
     }
   }
 
-  loc(ctx: { start: Token; stop: Token }) {
+  loc(ctx: { start: Token; stop: Token; }) {
     return { start: ctx.start.startIndex, stop: ctx.stop.stopIndex };
   }
 
