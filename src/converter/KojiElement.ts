@@ -8,7 +8,7 @@ export abstract class KojiElement {
   constructor(converter: KojiConverter) {
     this.converter = converter;
   }
-  abstract get elemName(): string;  
+  abstract get elemName(): string;
   abstract toHTML(node: KojiASTNode): string;
   abstract toTEI(node: KojiASTNode): string;
   abstract toText(node: KojiASTNode): string;
@@ -47,8 +47,8 @@ export class Furigana extends KojiElement {
 
   toHTML(node: KojiASTNode) {
     const text = this.converter.convertChildren(node.children);
-    let kana = ""
-    if(node.extra[0]) kana = this.converter.convertChildren(node.extra[0]);    
+    let kana = "";
+    if (node.extra[0]) kana = this.converter.convertChildren(node.extra[0]);
     return `
           <ruby class="Furigana">
               ${text}<rt>${kana}</rt>
@@ -74,8 +74,8 @@ export class Warigaki extends KojiElement {
 
   toHTML(node: KojiASTNode) {
     const right = this.converter.convertChildren(node.children);
-    let left = ""
-    if(node.extra[0]) left = this.converter.convertChildren(node.extra[0]);
+    let left = "";
+    if (node.extra[0]) left = this.converter.convertChildren(node.extra[0]);
     return `
     <span class="Warigaki">
       <span class="warigaki-left">${left}</span>
@@ -105,7 +105,7 @@ export class Kaeriten extends KojiElement {
 }
 
 export class Okurigana extends KojiElement {
-  get elemName() {    
+  get elemName() {
     return "送り仮名";
   }
 

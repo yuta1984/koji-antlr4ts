@@ -1438,7 +1438,7 @@ export class KojiParser extends Parser {
 			this.state = 281;
 			this.match(KojiParser.FuriganaOpen);
 			this.state = 282;
-			_localctx._left = this.match(KojiParser.FuriganaContent);
+			_localctx._right = this.match(KojiParser.FuriganaContent);
 			this.state = 285;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
@@ -1447,7 +1447,7 @@ export class KojiParser extends Parser {
 				this.state = 283;
 				this.match(KojiParser.FuriganaSep);
 				this.state = 284;
-				_localctx._right = this.match(KojiParser.FuriganaContent);
+				_localctx._left = this.match(KojiParser.FuriganaContent);
 				}
 			}
 
@@ -2799,8 +2799,8 @@ export class SyntaxSugarContext extends ParserRuleContext {
 
 export class FuriganaContext extends ParserRuleContext {
 	public _target: Token;
-	public _left: Token;
 	public _right: Token;
+	public _left: Token;
 	public FuriganaOpen(): TerminalNode { return this.getToken(KojiParser.FuriganaOpen, 0); }
 	public FuriganaClose(): TerminalNode { return this.getToken(KojiParser.FuriganaClose, 0); }
 	public FuriganaContent(): TerminalNode[];

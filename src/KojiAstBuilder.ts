@@ -275,14 +275,13 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any>
     const place = ctx.place();
     const date = ctx.date();
     if (furigana) {
-      const target = furigana._target.text;
       const right = furigana._right.text;
-      const left = furigana._left.text;
+      const left = furigana._left ? furigana._left.text : null;
       return {
         name: "振り仮名",
         type: "inline",
-        children: [target],
-        extra: [[right], [left]],
+        children: [right],
+        extra: [[left]],
         location: this.loc(ctx)
       };
     } else if (annotation) {

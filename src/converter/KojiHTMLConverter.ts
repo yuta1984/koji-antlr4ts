@@ -15,10 +15,10 @@ import {
 } from "./KojiElement";
 import { KojiConverter } from "./KojiConverter";
 
-type KojiElementClass = { new (c: KojiConverter): KojiElement };
+type KojiElementClass = { new(c: KojiConverter): KojiElement; };
 
 export class KojiHTMLConverter implements KojiConverter {
-  elementMap: { [str: string]: KojiElement } = {};
+  elementMap: { [str: string]: KojiElement; } = {};
   elementClasses: Array<KojiElementClass> = [
     Furigana,
     Warigaki,
@@ -34,13 +34,13 @@ export class KojiHTMLConverter implements KojiConverter {
   ];
 
   constructor(elements?: Array<KojiElementClass>) {
-    if(elements) this.elementClasses.concat(elements);
+    if (elements) this.elementClasses.concat(elements);
     this.elementClasses.forEach(klass => {
       const element = new klass(this);
       this.elementMap[element.elemName] = element;
     });
   }
-  
+
   convert(ast: KojiASTNode) {
     const children = this.convertChildren(ast.children);
     return `<div class='koji'>${children}</div>`;
@@ -52,7 +52,7 @@ export class KojiHTMLConverter implements KojiConverter {
         if (typeof c === "string") {
           if (c === "\n") return "<br>";
           return c;
-        } else if (c.type === "block") {          
+        } else if (c.type === "block") {
           return this.convertBlock(c);
         } else if (c.type === "inline") {
           return this.convertInline(c);
@@ -73,7 +73,7 @@ export class KojiHTMLConverter implements KojiConverter {
       const children = this.convertChildren(node.children);
       return `<span ${idStr} ${classesStr} name='${
         node.name
-      }'>${children}</span>`;
+        }'>${children}</span>`;
     }
   }
 
@@ -85,11 +85,11 @@ export class KojiHTMLConverter implements KojiConverter {
       let idStr = "",
         classesStr = "";
       if (node.id) idStr = `id='${node.id}'`;
-      if (node.classes) classesStr = `class='${node.classes.join(" ")}'`;    
-      const children = this.convertChildren(node.children);      
+      if (node.classes) classesStr = `class='${node.classes.join(" ")}'`;
+      const children = this.convertChildren(node.children);
       return `<div ${idStr} ${classesStr} name='${
         node.name
-      }'>${children}</div>`;
+        }'>${children}</div>`;
     }
   }
 }
