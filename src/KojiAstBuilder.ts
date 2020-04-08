@@ -41,7 +41,7 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any>
   visit(ctx: KojiContext): KojiASTNode {
     return {
       type: "document",
-      name: "koji",
+      name: "document",
       location: this.loc(ctx),
       children: ctx.list().map(l => this.visitList(l))
     };

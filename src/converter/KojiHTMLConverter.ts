@@ -1,37 +1,14 @@
 import { KojiASTNode } from "../KojiAstBuilder";
-import {
-  KojiElement,
-  Furigana,
-  Warigaki,
-  Okurigana,
-  Kaeriten,
-  Annotation,
-  Illegible,
-  BugHole,
-  Title,
-  Indent1,
-  Indent2,
-  Indent3
-} from "./KojiElement";
+import { KojiElement } from "./KojiElement";
 import { KojiConverter } from "./KojiConverter";
+import * as fs from 'fs'
 
+function requireAll(r) { return r.keys().map(r); }
 type KojiElementClass = { new(c: KojiConverter): KojiElement; };
 
 export class KojiHTMLConverter implements KojiConverter {
   elementMap: { [str: string]: KojiElement; } = {};
-  elementClasses: Array<KojiElementClass> = [
-    Furigana,
-    Warigaki,
-    Okurigana,
-    Kaeriten,
-    Annotation,
-    Illegible,
-    BugHole,
-    Title,
-    Indent1,
-    Indent2,
-    Indent3
-  ];
+  elementClasses: Array<KojiElementClass> = requireAll(require.context('./elements/', true, /\.ts$/));
 
   constructor(elements?: Array<KojiElementClass>) {
     if (elements) this.elementClasses.concat(elements);
