@@ -1,22 +1,22 @@
 import { KojiElement } from "../KojiElement";
 import { KojiASTNode } from "../../KojiAstBuilder";
 
-export class Indent3 extends KojiElement {
+export default class Kaeriten extends KojiElement {
     get elemName() {
-        return "字下げ三";
+        return "返り点";
     }
 
-    toTEI(node: KojiASTNode): string {
+    toXML(node: KojiASTNode): string {
         throw new Error("Method not implemented.");
     }
 
     toText(node: KojiASTNode): string {
         const text = this.converter.convertChildren(node.children);
-        return `${text}`;
+        return `＿${text}`;
     }
 
     toHTML(node: KojiASTNode) {
         const text = this.convertChildren(node.children);
-        return `<div class="Indent3 block" >${text}</div>`;
+        return `<span class="Kaeriten inline" >${text}</span>`;
     }
 }

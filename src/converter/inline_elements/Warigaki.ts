@@ -1,12 +1,12 @@
 import { KojiElement } from "../KojiElement";
 import { KojiASTNode } from "../../KojiAstBuilder";
 
-export class Warigaki extends KojiElement {
+export default class Warigaki extends KojiElement {
     get elemName() {
         return "割書";
     }
 
-    toTEI(node: KojiASTNode): string {
+    toXML(node: KojiASTNode): string {
         throw new Error("Method not implemented.");
     }
 

@@ -1,12 +1,12 @@
 import { KojiElement } from "../KojiElement"; import { KojiASTNode } from "../../KojiAstBuilder";
 
 
-export class BugHole extends KojiElement {
+export default class BugHole extends KojiElement {
     get elemName() {
         return "虫損";
     }
 
-    toTEI(node: KojiASTNode): string {
+    toXML(node: KojiASTNode): string {
         throw new Error("Method not implemented.");
     }
 

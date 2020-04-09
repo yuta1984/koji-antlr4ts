@@ -1,22 +1,22 @@
-import { KojiASTNode } from "../../KojiAstBuilder";
 import { KojiElement } from "../KojiElement";
+import { KojiASTNode } from "../../KojiAstBuilder";
 
-export class Annotation extends KojiElement {
+export default class Person extends KojiElement {
     get elemName() {
-        return "注釈";
+        return "場所";
     }
 
-    toTEI(node: KojiASTNode): string {
+    toXML(node: KojiASTNode): string {
         throw new Error("Method not implemented.");
     }
 
     toText(node: KojiASTNode): string {
         const text = this.converter.convertChildren(node.children);
-        return `【${text}】`;
+        return `${text}`;
     }
 
     toHTML(node: KojiASTNode) {
         const text = this.convertChildren(node.children);
-        return `<span class="Annotation inline" >${text}</span>`;
+        return `<span class="Place inline" >${text}</span>`;
     }
 }

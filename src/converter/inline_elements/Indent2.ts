@@ -1,12 +1,11 @@
-import { KojiElement } from "../KojiElement";
-import { KojiASTNode } from "../../KojiAstBuilder";
+import { KojiElement } from "../KojiElement"; import { KojiASTNode } from "../../KojiAstBuilder";
 
-export class Illegible extends KojiElement {
+export default class Indent2 extends KojiElement {
     get elemName() {
-        return "難読";
+        return "字下げ二";
     }
 
-    toTEI(node: KojiASTNode): string {
+    toXML(node: KojiASTNode): string {
         throw new Error("Method not implemented.");
     }
 
@@ -17,6 +16,6 @@ export class Illegible extends KojiElement {
 
     toHTML(node: KojiASTNode) {
         const text = this.convertChildren(node.children);
-        return `<span class="Illegible inline" >${text}</span>`;
+        return `<div class="Indent2 block" >${text}</div>`;
     }
 }

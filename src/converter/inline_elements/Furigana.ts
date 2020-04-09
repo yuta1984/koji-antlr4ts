@@ -1,12 +1,12 @@
 import { KojiElement } from "../KojiElement";
 import { KojiASTNode } from "../../KojiAstBuilder";
 
-export class Furigana extends KojiElement {
+export default class Furigana extends KojiElement {
     get elemName() {
         return "振り仮名";
     }
 
-    toTEI(node: KojiASTNode): string {
+    toXML(node: KojiASTNode): string {
         throw new Error("Method not implemented.");
     }
 

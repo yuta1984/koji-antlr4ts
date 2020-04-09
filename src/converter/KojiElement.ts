@@ -2,7 +2,7 @@ import { KojiASTNode } from "../KojiAstBuilder";
 import { KojiConverter } from "./KojiConverter";
 
 export abstract class KojiElement {
-  static elemName: string;
+
   node: KojiASTNode;
   converter: KojiConverter;
   constructor(converter: KojiConverter) {
@@ -10,7 +10,7 @@ export abstract class KojiElement {
   }
   abstract get elemName(): string;
   abstract toHTML(node: KojiASTNode): string;
-  abstract toTEI(node: KojiASTNode): string;
+  abstract toXML(node: KojiASTNode): string;
   abstract toText(node: KojiASTNode): string;
 
   convertChildren(children: Array<KojiASTNode | string>) {
@@ -29,13 +29,3 @@ export abstract class KojiElement {
     return this.toText(node);
   }
 }
-
-
-
-
-
-
-
-
-
-

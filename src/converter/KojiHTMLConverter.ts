@@ -1,20 +1,26 @@
 import { KojiASTNode } from "../KojiAstBuilder";
 import { KojiElement } from "./KojiElement";
 import { KojiConverter } from "./KojiConverter";
-import * as fs from 'fs'
 
-function requireAll(r) { return r.keys().map(r); }
+function requireAll(r) { return r.keys().map(r).map(module => module.default); }
 type KojiElementClass = { new(c: KojiConverter): KojiElement; };
 
 export class KojiHTMLConverter implements KojiConverter {
-  elementMap: { [str: string]: KojiElement; } = {};
-  elementClasses: Array<KojiElementClass> = requireAll(require.context('./elements/', true, /\.ts$/));
+  inlineElementMap: { [str: string]: KojiElement; } = {};
+  blockElementMap: { [str: string]: KojiElement; } = {};
+  inlineElementClasses: Array<KojiElementClass> =
+    requireAll(require.context('./inline_elements/', true, /\.ts$/));
+  blockElementClasses: Array<KojiElementClass> =
+    requireAll(require.context('./block_elements/', true, /\.ts$/));
 
-  constructor(elements?: Array<KojiElementClass>) {
-    if (elements) this.elementClasses.concat(elements);
-    this.elementClasses.forEach(klass => {
+  constructor() {
+    this.inlineElementClasses.forEach(klass => {
       const element = new klass(this);
-      this.elementMap[element.elemName] = element;
+      this.inlineElementMap[element.elemName] = element;
+    });
+    this.blockElementClasses.forEach(klass => {
+      const element = new klass(this);
+      this.blockElementMap[element.elemName] = element;
     });
   }
 
@@ -39,14 +45,14 @@ export class KojiHTMLConverter implements KojiConverter {
   }
 
   convertInline(node: KojiASTNode): string {
-    if (this.elementMap[node.name]) {
-      const elem: KojiElement = this.elementMap[node.name];
+    if (this.inlineElementMap[node.name]) {
+      const elem: KojiElement = this.inlineElementMap[node.name];
       return elem.toHTML(node);
     } else {
       let idStr = "",
         classesStr = "";
       if (node.id) idStr = `id='${node.id}'`;
-      if (node.classes) classesStr = `class='${node.classes.join(" ")}'`;
+      if (node.classes) classesStr = `class='inline ${node.classes.join(" ")}'`;
       const children = this.convertChildren(node.children);
       return `<span ${idStr} ${classesStr} name='${
         node.name
@@ -55,14 +61,14 @@ export class KojiHTMLConverter implements KojiConverter {
   }
 
   convertBlock(node: KojiASTNode): string {
-    if (this.elementMap[node.name]) {
-      const elem: KojiElement = this.elementMap[node.name];
+    if (this.blockElementMap[node.name]) {
+      const elem: KojiElement = this.blockElementMap[node.name];
       return elem.toHTML(node);
     } else {
       let idStr = "",
         classesStr = "";
       if (node.id) idStr = `id='${node.id}'`;
-      if (node.classes) classesStr = `class='${node.classes.join(" ")}'`;
+      if (node.classes) classesStr = `class='block block${node.level} ${node.classes.join(" ")}'`;
       const children = this.convertChildren(node.children);
       return `<div ${idStr} ${classesStr} name='${
         node.name

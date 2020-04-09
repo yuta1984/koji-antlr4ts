@@ -1,11 +1,11 @@
 import { KojiElement } from "../KojiElement"; import { KojiASTNode } from "../../KojiAstBuilder";
 
-export class Indent2 extends KojiElement {
+export default class Indent1 extends KojiElement {
     get elemName() {
-        return "字下げ二";
+        return "字下げ一";
     }
 
-    toTEI(node: KojiASTNode): string {
+    toXML(node: KojiASTNode): string {
         throw new Error("Method not implemented.");
     }
 
@@ -16,6 +16,6 @@ export class Indent2 extends KojiElement {
 
     toHTML(node: KojiASTNode) {
         const text = this.convertChildren(node.children);
-        return `<div class="Indent2 block" >${text}</div>`;
+        return `<div class="Indent1 block" >${text}</div>`;
     }
 }

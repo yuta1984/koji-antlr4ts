@@ -1,22 +1,22 @@
 import { KojiElement } from "../KojiElement";
 import { KojiASTNode } from "../../KojiAstBuilder";
 
-export class Okurigana extends KojiElement {
+export default class Person extends KojiElement {
     get elemName() {
-        return "送り仮名";
+        return "日時";
     }
 
-    toTEI(node: KojiASTNode): string {
+    toXML(node: KojiASTNode): string {
         throw new Error("Method not implemented.");
     }
 
     toText(node: KojiASTNode): string {
         const text = this.converter.convertChildren(node.children);
-        return `￣${text}`;
+        return `${text}`;
     }
 
     toHTML(node: KojiASTNode) {
         const text = this.convertChildren(node.children);
-        return `<span class="Okurigana inline" >${text}</span>`;
+        return `<span class="Date inline" >${text}</span>`;
     }
 }

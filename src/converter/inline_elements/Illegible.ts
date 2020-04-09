@@ -1,11 +1,12 @@
-import { KojiElement } from "../KojiElement"; import { KojiASTNode } from "../../KojiAstBuilder";
+import { KojiElement } from "../KojiElement";
+import { KojiASTNode } from "../../KojiAstBuilder";
 
-export class Title extends KojiElement {
+export default class Illegible extends KojiElement {
     get elemName() {
-        return "題";
+        return "難読";
     }
 
-    toTEI(node: KojiASTNode): string {
+    toXML(node: KojiASTNode): string {
         throw new Error("Method not implemented.");
     }
 
@@ -16,6 +17,6 @@ export class Title extends KojiElement {
 
     toHTML(node: KojiASTNode) {
         const text = this.convertChildren(node.children);
-        return `<h1 class="Title inline" >${text}</h1>`;
+        return `<span class="Illegible inline" >${text}</span>`;
     }
 }
