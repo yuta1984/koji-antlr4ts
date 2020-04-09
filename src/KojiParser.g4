@@ -59,6 +59,9 @@ blockContent5: syntaxSugar | textSegment | inline | Lb;
 
 textSegment: (Kanji | Kana | NonJp)+;
 
+postPositionedAttrs:
+	AttrsOpen ID? Class* AttrsClose;
+
 syntaxSugar:
 	furigana
 	| kaeriten
@@ -70,13 +73,13 @@ syntaxSugar:
 	| place
 	| date;
 
-furigana: (target = Kanji | target = Kana | target = NonJp) 
+furigana: (target = Kanji | target = Kana | target = NonJp)
 FuriganaOpen right = FuriganaContent (FuriganaSep left = FuriganaContent)? FuriganaClose;
 kaeriten: KaeritenMark content = KaeritenChar+;
 okurigana: OkuriganaMark content = Kana;
 annotation: AnnotationOpen content = textSegment AnnotationClose;
 illegible: Illegible+;
 bugHole: BugHole+;
-person: PersonOpen content = inlineContent PersonClose;
-place: PlaceOpen content = inlineContent PlaceClose;
-date: DateOpen content = inlineContent DateClose;
+person: PersonOpen content = inlineContent PersonClose postPositionedAttrs?;
+place: PlaceOpen content = inlineContent PlaceClose postPositionedAttrs?;
+date: DateOpen content = inlineContent DateClose postPositionedAttrs?;

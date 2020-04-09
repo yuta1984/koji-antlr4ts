@@ -32,6 +32,7 @@ PlaceOpen: '〔';
 PlaceClose: '〕';
 DateOpen: '＜';
 DateClose: '＞';
+AttrsOpen: '［' -> pushMode(HEADER);
 
 KaeritenMark: '＿';
 KaeritenChar: [レ一二三上中下甲乙丙点];
@@ -59,6 +60,7 @@ mode HEADER;
 ElemName: (Kana | KanjiChar)+;
 Colon: '：' -> popMode;
 HeaderLb: '\n' -> popMode;
+AttrsClose: '］' -> popMode;
 ID: ('#' | '＃') AttrName;
 Class: ('*' | '＊' | '.') AttrName;
 fragment AttrName: (Kana | Kanji | [:a-zA-Z] | [0-9])+;

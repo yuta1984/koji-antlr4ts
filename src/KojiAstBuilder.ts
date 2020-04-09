@@ -19,12 +19,17 @@ import {
 } from "./KojiParser";
 import { AbstractParseTreeVisitor } from "antlr4ts/tree/AbstractParseTreeVisitor";
 import { KojiParserVisitor } from "./KojiParserVisitor";
-import { KojiContext, BlockContext, ListContext } from "./KojiParser";
+import {
+  KojiContext,
+  BlockContext,
+  ListContext,
+  PostPositionedAttrsContext
+} from "./KojiParser";
 
 export interface KojiASTNode {
   type: "document" | "block" | "inline";
   name: string;
-  location: { start: number; stop: number; };
+  location: { start: number; stop: number };
   children: Array<KojiASTNode | string>;
   id?: string;
   classes?: Array<string>;
@@ -36,7 +41,7 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any>
   implements KojiParserVisitor<any> {
   ast: KojiASTNode;
 
-  defaultResult() { }
+  defaultResult() {}
 
   visit(ctx: KojiContext): KojiASTNode {
     return {
@@ -224,10 +229,19 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any>
     if (syntaxSugar) return this.visitSyntaxSugar(syntaxSugar);
   }
 
-  processAttrs(ctx: { ID(): TerminalNode; Class(): TerminalNode[]; }) {
+  processAttrs(ctx: { ID(): TerminalNode; Class(): TerminalNode[] }) {
     const id = ctx.ID();
     const classes = ctx.Class();
     const attrs: any = {};
+    if (id) attrs.id = id.text.slice(1);
+    if (classes) attrs.classes = classes.map(c => c.text.slice(1));
+    return attrs;
+  }
+
+  processPostAttrs(ctx: PostPositionedAttrsContext) {
+    const attrs: any = {};
+    const id = ctx.ID();
+    const classes = ctx.Class();
     if (id) attrs.id = id.text.slice(1);
     if (classes) attrs.classes = classes.map(c => c.text.slice(1));
     return attrs;
@@ -328,25 +342,40 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any>
       };
     } else if (person) {
       const child = this.visitInlineContent(person._content);
+      const attrsCtx = person.postPositionedAttrs();
+      const attrs = attrsCtx
+        ? this.processAttrs(person.postPositionedAttrs())
+        : {};
       return {
         type: "inline",
         name: "人物",
+        ...attrs,
         children: [child],
         location: this.loc(ctx)
       };
     } else if (place) {
       const child = this.visitInlineContent(place._content);
+      const attrsCtx = place.postPositionedAttrs();
+      const attrs = attrsCtx
+        ? this.processAttrs(place.postPositionedAttrs())
+        : {};
       return {
         type: "inline",
         name: "場所",
+        ...attrs,
         children: [child],
         location: this.loc(ctx)
       };
     } else if (date) {
       const child = this.visitInlineContent(date._content);
+      const attrsCtx = date.postPositionedAttrs();
+      const attrs = attrsCtx
+        ? this.processAttrs(date.postPositionedAttrs())
+        : {};
       return {
         type: "inline",
         name: "日時",
+        ...attrs,
         children: [child],
         location: this.loc(ctx)
       };
@@ -355,15 +384,15 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any>
     }
   }
 
-  loc(ctx: { start: Token; stop: Token; }) {
+  loc(ctx: { start: Token; stop: Token }) {
     return { start: ctx.start.startIndex, stop: ctx.stop.stopIndex };
   }
 
-  visitChildren() { }
+  visitChildren() {}
 
-  visitErrorNode() { }
+  visitErrorNode() {}
 
-  visitTerminal() { }
+  visitTerminal() {}
 
-  visitKoji(ctx: KojiContext): any { }
+  visitKoji(ctx: KojiContext): any {}
 }
