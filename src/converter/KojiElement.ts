@@ -2,7 +2,6 @@ import { KojiASTNode } from "../KojiAstBuilder";
 import { KojiConverter } from "./KojiConverter";
 
 export abstract class KojiElement {
-
   node: KojiASTNode;
   converter: KojiConverter;
   constructor(converter: KojiConverter) {
@@ -15,17 +14,5 @@ export abstract class KojiElement {
 
   convertChildren(children: Array<KojiASTNode | string>) {
     return this.converter.convertChildren(children);
-  }
-
-  toPDF(node: KojiASTNode): string {
-    return this.toText(node);
-  }
-
-  toEPUB(node: KojiASTNode): string {
-    return this.toText(node);
-  }
-
-  toMSWord(node: KojiASTNode): string {
-    return this.toText(node);
   }
 }
