@@ -1,38 +1,35 @@
+const TerserPlugin = require("terser-webpack-plugin");
 const path = require("path");
-const rootPath = path.join(__dirname, "..");
-const CompressionPlugin = require('compression-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
+const bundles = path.resolve(__dirname, "_bundles");
 
-module.exports = {
-  // モード値を production に設定すると最適化された状態で、
-  // development に設定するとソースマップ有効でJSファイルが出力される
-  mode: process.env.WEBPACK_ENV,
-
-  // メインとなるJavaScriptファイル（エントリーポイント）
-  entry: "./src/index.ts",
-  output: {
-    filename: "koji-lang.js",
-    path: __dirname + "/dist",
-    library: "Koji",
-    libraryTarget: "umd"
-  },
-  plugins: [new CompressionPlugin({
-    filename: '[path].gz[query]',
-    algorithm: 'gzip',
-    test: /\.js$/,
-    threshold: 10240,
-    minRatio: 0.8
-  })],
-  // import 文で .ts ファイルを解決するため
-  resolve: {
-    extensions: [".ts", ".js"]
-  },
-  module: {
-    rules: [
-      {
-        test: /\.ts$/,
-        use: "ts-loader"
-      }
-    ]
-  },
+console.log(process.env.WEBPACK_ENV);
+module.exports = (env, argv) => {
+  const isProd = argv.mode === "production";
+  return {
+    mode: argv.mode,
+    entry: "./src/index.ts",
+    output: {
+      filename: isProd ? "koji-lang.min.js" : "koji-lang.js",
+      path: bundles,
+      library: "Koji",
+      libraryTarget: "umd"
+    },
+    resolve: {
+      extensions: [".ts", ".js"]
+    },
+    module: {
+      rules: [
+        {
+          test: /\.ts$/,
+          use: "ts-loader",
+          exclude: /node_modules/
+        }
+      ]
+    },
+    devtool: isProd ? false : "inline-source-map",
+    optimization: {
+      minimize: isProd,
+      minimizer: [new TerserPlugin({ extractComments: "all" })]
+    }
+  };
 };
