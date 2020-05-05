@@ -32,7 +32,7 @@ class AccumlateErrorListener implements ANTLRErrorListener<any> {
     msg: string,
     exception: RecognitionException | undefined
   ) {
-    console.log(offendingSymbol);
+    //console.log(offendingSymbol);
     this.errors.push({ line, charPositionInLine, msg, offendingSymbol });
   }
 }
