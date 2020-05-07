@@ -53,25 +53,26 @@ export class KojiParser extends Parser {
 	public static readonly AttrsOpen = 23;
 	public static readonly KaeritenMark = 24;
 	public static readonly KaeritenChar = 25;
-	public static readonly OkuriganaMark = 26;
-	public static readonly Illegible = 27;
-	public static readonly BugHole = 28;
-	public static readonly NonJp = 29;
-	public static readonly Kanji = 30;
-	public static readonly Kana = 31;
-	public static readonly NonJpChar = 32;
-	public static readonly KanjiChar = 33;
-	public static readonly Lb = 34;
-	public static readonly WS = 35;
-	public static readonly ElemName = 36;
-	public static readonly Colon = 37;
-	public static readonly HeaderLb = 38;
-	public static readonly AttrsClose = 39;
-	public static readonly ID = 40;
-	public static readonly Class = 41;
-	public static readonly FuriganaContent = 42;
-	public static readonly FuriganaSep = 43;
-	public static readonly FuriganaClose = 44;
+	public static readonly TatetenChar = 26;
+	public static readonly OkuriganaMark = 27;
+	public static readonly Illegible = 28;
+	public static readonly BugHole = 29;
+	public static readonly NonJp = 30;
+	public static readonly Kanji = 31;
+	public static readonly Kana = 32;
+	public static readonly NonJpChar = 33;
+	public static readonly KanjiChar = 34;
+	public static readonly Lb = 35;
+	public static readonly WS = 36;
+	public static readonly ElemName = 37;
+	public static readonly Colon = 38;
+	public static readonly HeaderLb = 39;
+	public static readonly AttrsClose = 40;
+	public static readonly ID = 41;
+	public static readonly Class = 42;
+	public static readonly FuriganaContent = 43;
+	public static readonly FuriganaSep = 44;
+	public static readonly FuriganaClose = 45;
 	public static readonly RULE_koji = 0;
 	public static readonly RULE_list = 1;
 	public static readonly RULE_inline = 2;
@@ -94,19 +95,20 @@ export class KojiParser extends Parser {
 	public static readonly RULE_furigana = 19;
 	public static readonly RULE_kaeriten = 20;
 	public static readonly RULE_okurigana = 21;
-	public static readonly RULE_annotation = 22;
-	public static readonly RULE_illegible = 23;
-	public static readonly RULE_bugHole = 24;
-	public static readonly RULE_person = 25;
-	public static readonly RULE_place = 26;
-	public static readonly RULE_date = 27;
+	public static readonly RULE_tateten = 22;
+	public static readonly RULE_annotation = 23;
+	public static readonly RULE_illegible = 24;
+	public static readonly RULE_bugHole = 25;
+	public static readonly RULE_person = 26;
+	public static readonly RULE_place = 27;
+	public static readonly RULE_date = 28;
 	// tslint:disable:no-trailing-whitespace
 	public static readonly ruleNames: string[] = [
 		"koji", "list", "inline", "inlineContentSeq", "inlineContent", "block", 
 		"block1", "blockContent1", "block2", "blockContent2", "block3", "blockContent3", 
 		"block4", "blockContent4", "block5", "blockContent5", "textSegment", "postPositionedAttrs", 
-		"syntaxSugar", "furigana", "kaeriten", "okurigana", "annotation", "illegible", 
-		"bugHole", "person", "place", "date",
+		"syntaxSugar", "furigana", "kaeriten", "okurigana", "tateten", "annotation", 
+		"illegible", "bugHole", "person", "place", "date",
 	];
 
 	private static readonly _LITERAL_NAMES: Array<string | undefined> = [
@@ -115,10 +117,10 @@ export class KojiParser extends Parser {
 		"'\uFF05\uFF05\uFF05\uFF05\uFF05'", "'\n\uFF05\uFF05\uFF05\uFF05\n'", 
 		"'\u300A'", "'\u300B'", undefined, "'\uFF08'", "'\u3010'", "'\u3011'", 
 		"'\uFF5B'", "'\uFF5D'", "'\u3014'", "'\u3015'", "'\uFF1C'", "'\uFF1E'", 
-		"'\uFF3B'", "'\uFF3F'", undefined, "'\uFFE3'", "'\u25A0'", "'\u25A1'", 
-		undefined, undefined, undefined, undefined, undefined, undefined, undefined, 
-		undefined, "'\uFF1A'", undefined, "'\uFF3D'", undefined, undefined, undefined, 
-		undefined, "'\uFF09'",
+		"'\uFF3B'", "'\uFF3F'", undefined, undefined, "'\uFFE3'", "'\u25A1'", 
+		"'\u25A0'", undefined, undefined, undefined, undefined, undefined, undefined, 
+		undefined, undefined, "'\uFF1A'", undefined, "'\uFF3D'", undefined, undefined, 
+		undefined, undefined, "'\uFF09'",
 	];
 	private static readonly _SYMBOLIC_NAMES: Array<string | undefined> = [
 		undefined, "OpenBlock1", "CloseBlock1", "OpenBlock2", "CloseBlock2", "OpenBlock3", 
@@ -126,9 +128,9 @@ export class KojiParser extends Parser {
 		"OpenInline", "CloseInline", "Bar", "FuriganaOpen", "AnnotationOpen", 
 		"AnnotationClose", "PersonOpen", "PersonClose", "PlaceOpen", "PlaceClose", 
 		"DateOpen", "DateClose", "AttrsOpen", "KaeritenMark", "KaeritenChar", 
-		"OkuriganaMark", "Illegible", "BugHole", "NonJp", "Kanji", "Kana", "NonJpChar", 
-		"KanjiChar", "Lb", "WS", "ElemName", "Colon", "HeaderLb", "AttrsClose", 
-		"ID", "Class", "FuriganaContent", "FuriganaSep", "FuriganaClose",
+		"TatetenChar", "OkuriganaMark", "Illegible", "BugHole", "NonJp", "Kanji", 
+		"Kana", "NonJpChar", "KanjiChar", "Lb", "WS", "ElemName", "Colon", "HeaderLb", 
+		"AttrsClose", "ID", "Class", "FuriganaContent", "FuriganaSep", "FuriganaClose",
 	];
 	public static readonly VOCABULARY: Vocabulary = new VocabularyImpl(KojiParser._LITERAL_NAMES, KojiParser._SYMBOLIC_NAMES, []);
 
@@ -160,21 +162,21 @@ export class KojiParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 59;
+			this.state = 61;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			while ((((_la) & ~0x1F) === 0 && ((1 << _la) & ((1 << KojiParser.OpenBlock1) | (1 << KojiParser.OpenBlock2) | (1 << KojiParser.OpenBlock3) | (1 << KojiParser.OpenBlock4) | (1 << KojiParser.OpenBlock5) | (1 << KojiParser.OpenInline) | (1 << KojiParser.AnnotationOpen) | (1 << KojiParser.PersonOpen) | (1 << KojiParser.PlaceOpen) | (1 << KojiParser.DateOpen) | (1 << KojiParser.KaeritenMark) | (1 << KojiParser.OkuriganaMark) | (1 << KojiParser.Illegible) | (1 << KojiParser.BugHole) | (1 << KojiParser.NonJp) | (1 << KojiParser.Kanji) | (1 << KojiParser.Kana))) !== 0) || _la === KojiParser.Lb) {
+			while ((((_la) & ~0x1F) === 0 && ((1 << _la) & ((1 << KojiParser.OpenBlock1) | (1 << KojiParser.OpenBlock2) | (1 << KojiParser.OpenBlock3) | (1 << KojiParser.OpenBlock4) | (1 << KojiParser.OpenBlock5) | (1 << KojiParser.OpenInline) | (1 << KojiParser.AnnotationOpen) | (1 << KojiParser.PersonOpen) | (1 << KojiParser.PlaceOpen) | (1 << KojiParser.DateOpen) | (1 << KojiParser.KaeritenMark) | (1 << KojiParser.TatetenChar) | (1 << KojiParser.OkuriganaMark) | (1 << KojiParser.Illegible) | (1 << KojiParser.BugHole) | (1 << KojiParser.NonJp) | (1 << KojiParser.Kanji))) !== 0) || _la === KojiParser.Kana || _la === KojiParser.Lb) {
 				{
 				{
-				this.state = 56;
+				this.state = 58;
 				this.list();
 				}
 				}
-				this.state = 61;
+				this.state = 63;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 			}
-			this.state = 62;
+			this.state = 64;
 			this.match(KojiParser.EOF);
 			}
 		}
@@ -197,13 +199,13 @@ export class KojiParser extends Parser {
 		let _localctx: ListContext = new ListContext(this._ctx, this.state);
 		this.enterRule(_localctx, 2, KojiParser.RULE_list);
 		try {
-			this.state = 69;
+			this.state = 71;
 			this._errHandler.sync(this);
 			switch ( this.interpreter.adaptivePredict(this._input, 1, this._ctx) ) {
 			case 1:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 64;
+				this.state = 66;
 				this.block();
 				}
 				break;
@@ -211,7 +213,7 @@ export class KojiParser extends Parser {
 			case 2:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 65;
+				this.state = 67;
 				this.inline();
 				}
 				break;
@@ -219,7 +221,7 @@ export class KojiParser extends Parser {
 			case 3:
 				this.enterOuterAlt(_localctx, 3);
 				{
-				this.state = 66;
+				this.state = 68;
 				this.syntaxSugar();
 				}
 				break;
@@ -227,7 +229,7 @@ export class KojiParser extends Parser {
 			case 4:
 				this.enterOuterAlt(_localctx, 4);
 				{
-				this.state = 67;
+				this.state = 69;
 				this.textSegment();
 				}
 				break;
@@ -235,7 +237,7 @@ export class KojiParser extends Parser {
 			case 5:
 				this.enterOuterAlt(_localctx, 5);
 				{
-				this.state = 68;
+				this.state = 70;
 				this.match(KojiParser.Lb);
 				}
 				break;
@@ -263,69 +265,69 @@ export class KojiParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 71;
+			this.state = 73;
 			this.match(KojiParser.OpenInline);
-			this.state = 72;
-			this.match(KojiParser.ElemName);
 			this.state = 74;
+			this.match(KojiParser.ElemName);
+			this.state = 76;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la === KojiParser.ID) {
 				{
-				this.state = 73;
+				this.state = 75;
 				this.match(KojiParser.ID);
 				}
 			}
 
-			this.state = 79;
+			this.state = 81;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			while (_la === KojiParser.Class) {
 				{
 				{
-				this.state = 76;
+				this.state = 78;
 				this.match(KojiParser.Class);
 				}
 				}
-				this.state = 81;
+				this.state = 83;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 			}
-			this.state = 82;
+			this.state = 84;
 			this.match(KojiParser.Colon);
-			this.state = 86;
+			this.state = 88;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			while (((((_la - 11)) & ~0x1F) === 0 && ((1 << (_la - 11)) & ((1 << (KojiParser.OpenInline - 11)) | (1 << (KojiParser.AnnotationOpen - 11)) | (1 << (KojiParser.PersonOpen - 11)) | (1 << (KojiParser.PlaceOpen - 11)) | (1 << (KojiParser.DateOpen - 11)) | (1 << (KojiParser.KaeritenMark - 11)) | (1 << (KojiParser.OkuriganaMark - 11)) | (1 << (KojiParser.Illegible - 11)) | (1 << (KojiParser.BugHole - 11)) | (1 << (KojiParser.NonJp - 11)) | (1 << (KojiParser.Kanji - 11)) | (1 << (KojiParser.Kana - 11)) | (1 << (KojiParser.Lb - 11)))) !== 0)) {
+			while (((((_la - 11)) & ~0x1F) === 0 && ((1 << (_la - 11)) & ((1 << (KojiParser.OpenInline - 11)) | (1 << (KojiParser.AnnotationOpen - 11)) | (1 << (KojiParser.PersonOpen - 11)) | (1 << (KojiParser.PlaceOpen - 11)) | (1 << (KojiParser.DateOpen - 11)) | (1 << (KojiParser.KaeritenMark - 11)) | (1 << (KojiParser.TatetenChar - 11)) | (1 << (KojiParser.OkuriganaMark - 11)) | (1 << (KojiParser.Illegible - 11)) | (1 << (KojiParser.BugHole - 11)) | (1 << (KojiParser.NonJp - 11)) | (1 << (KojiParser.Kanji - 11)) | (1 << (KojiParser.Kana - 11)) | (1 << (KojiParser.Lb - 11)))) !== 0)) {
 				{
 				{
-				this.state = 83;
+				this.state = 85;
 				_localctx._inlineContent = this.inlineContent();
 				_localctx._content.push(_localctx._inlineContent);
 				}
 				}
-				this.state = 88;
+				this.state = 90;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 			}
-			this.state = 93;
+			this.state = 95;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			while (_la === KojiParser.Bar) {
 				{
 				{
-				this.state = 89;
+				this.state = 91;
 				this.match(KojiParser.Bar);
-				this.state = 90;
+				this.state = 92;
 				_localctx._inlineContentSeq = this.inlineContentSeq();
 				_localctx._extra.push(_localctx._inlineContentSeq);
 				}
 				}
-				this.state = 95;
+				this.state = 97;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 			}
-			this.state = 96;
+			this.state = 98;
 			this.match(KojiParser.CloseInline);
 			}
 		}
@@ -351,17 +353,17 @@ export class KojiParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 101;
+			this.state = 103;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			while (((((_la - 11)) & ~0x1F) === 0 && ((1 << (_la - 11)) & ((1 << (KojiParser.OpenInline - 11)) | (1 << (KojiParser.AnnotationOpen - 11)) | (1 << (KojiParser.PersonOpen - 11)) | (1 << (KojiParser.PlaceOpen - 11)) | (1 << (KojiParser.DateOpen - 11)) | (1 << (KojiParser.KaeritenMark - 11)) | (1 << (KojiParser.OkuriganaMark - 11)) | (1 << (KojiParser.Illegible - 11)) | (1 << (KojiParser.BugHole - 11)) | (1 << (KojiParser.NonJp - 11)) | (1 << (KojiParser.Kanji - 11)) | (1 << (KojiParser.Kana - 11)) | (1 << (KojiParser.Lb - 11)))) !== 0)) {
+			while (((((_la - 11)) & ~0x1F) === 0 && ((1 << (_la - 11)) & ((1 << (KojiParser.OpenInline - 11)) | (1 << (KojiParser.AnnotationOpen - 11)) | (1 << (KojiParser.PersonOpen - 11)) | (1 << (KojiParser.PlaceOpen - 11)) | (1 << (KojiParser.DateOpen - 11)) | (1 << (KojiParser.KaeritenMark - 11)) | (1 << (KojiParser.TatetenChar - 11)) | (1 << (KojiParser.OkuriganaMark - 11)) | (1 << (KojiParser.Illegible - 11)) | (1 << (KojiParser.BugHole - 11)) | (1 << (KojiParser.NonJp - 11)) | (1 << (KojiParser.Kanji - 11)) | (1 << (KojiParser.Kana - 11)) | (1 << (KojiParser.Lb - 11)))) !== 0)) {
 				{
 				{
-				this.state = 98;
+				this.state = 100;
 				this.inlineContent();
 				}
 				}
-				this.state = 103;
+				this.state = 105;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 			}
@@ -388,33 +390,33 @@ export class KojiParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 108;
+			this.state = 110;
 			this._errHandler.sync(this);
 			switch ( this.interpreter.adaptivePredict(this._input, 7, this._ctx) ) {
 			case 1:
 				{
-				this.state = 104;
+				this.state = 106;
 				this.syntaxSugar();
 				}
 				break;
 
 			case 2:
 				{
-				this.state = 105;
+				this.state = 107;
 				this.textSegment();
 				}
 				break;
 
 			case 3:
 				{
-				this.state = 106;
+				this.state = 108;
 				this.inline();
 				}
 				break;
 
 			case 4:
 				{
-				this.state = 107;
+				this.state = 109;
 				this.match(KojiParser.Lb);
 				}
 				break;
@@ -440,41 +442,41 @@ export class KojiParser extends Parser {
 		let _localctx: BlockContext = new BlockContext(this._ctx, this.state);
 		this.enterRule(_localctx, 10, KojiParser.RULE_block);
 		try {
-			this.state = 115;
+			this.state = 117;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
 			case KojiParser.OpenBlock1:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 110;
+				this.state = 112;
 				this.block1();
 				}
 				break;
 			case KojiParser.OpenBlock2:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 111;
+				this.state = 113;
 				this.block2();
 				}
 				break;
 			case KojiParser.OpenBlock3:
 				this.enterOuterAlt(_localctx, 3);
 				{
-				this.state = 112;
+				this.state = 114;
 				this.block3();
 				}
 				break;
 			case KojiParser.OpenBlock4:
 				this.enterOuterAlt(_localctx, 4);
 				{
-				this.state = 113;
+				this.state = 115;
 				this.block4();
 				}
 				break;
 			case KojiParser.OpenBlock5:
 				this.enterOuterAlt(_localctx, 5);
 				{
-				this.state = 114;
+				this.state = 116;
 				this.block5();
 				}
 				break;
@@ -505,59 +507,59 @@ export class KojiParser extends Parser {
 			let _alt: number;
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 117;
+			this.state = 119;
 			this.match(KojiParser.OpenBlock1);
-			this.state = 118;
-			this.match(KojiParser.ElemName);
 			this.state = 120;
+			this.match(KojiParser.ElemName);
+			this.state = 122;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la === KojiParser.ID) {
 				{
-				this.state = 119;
+				this.state = 121;
 				this.match(KojiParser.ID);
 				}
 			}
 
-			this.state = 125;
+			this.state = 127;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			while (_la === KojiParser.Class) {
 				{
 				{
-				this.state = 122;
+				this.state = 124;
 				this.match(KojiParser.Class);
 				}
 				}
-				this.state = 127;
+				this.state = 129;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 			}
-			this.state = 128;
+			this.state = 130;
 			this.match(KojiParser.HeaderLb);
-			this.state = 132;
+			this.state = 134;
 			this._errHandler.sync(this);
 			_alt = this.interpreter.adaptivePredict(this._input, 11, this._ctx);
 			while (_alt !== 2 && _alt !== ATN.INVALID_ALT_NUMBER) {
 				if (_alt === 1) {
 					{
 					{
-					this.state = 129;
+					this.state = 131;
 					_localctx._blockContent1 = this.blockContent1();
 					_localctx._content.push(_localctx._blockContent1);
 					}
 					}
 				}
-				this.state = 134;
+				this.state = 136;
 				this._errHandler.sync(this);
 				_alt = this.interpreter.adaptivePredict(this._input, 11, this._ctx);
 			}
-			this.state = 136;
+			this.state = 138;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la === KojiParser.CloseBlock1) {
 				{
-				this.state = 135;
+				this.state = 137;
 				this.match(KojiParser.CloseBlock1);
 				}
 			}
@@ -583,13 +585,13 @@ export class KojiParser extends Parser {
 		let _localctx: BlockContent1Context = new BlockContent1Context(this._ctx, this.state);
 		this.enterRule(_localctx, 14, KojiParser.RULE_blockContent1);
 		try {
-			this.state = 146;
+			this.state = 148;
 			this._errHandler.sync(this);
 			switch ( this.interpreter.adaptivePredict(this._input, 13, this._ctx) ) {
 			case 1:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 138;
+				this.state = 140;
 				this.syntaxSugar();
 				}
 				break;
@@ -597,7 +599,7 @@ export class KojiParser extends Parser {
 			case 2:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 139;
+				this.state = 141;
 				this.textSegment();
 				}
 				break;
@@ -605,7 +607,7 @@ export class KojiParser extends Parser {
 			case 3:
 				this.enterOuterAlt(_localctx, 3);
 				{
-				this.state = 140;
+				this.state = 142;
 				this.inline();
 				}
 				break;
@@ -613,7 +615,7 @@ export class KojiParser extends Parser {
 			case 4:
 				this.enterOuterAlt(_localctx, 4);
 				{
-				this.state = 141;
+				this.state = 143;
 				this.match(KojiParser.Lb);
 				}
 				break;
@@ -621,7 +623,7 @@ export class KojiParser extends Parser {
 			case 5:
 				this.enterOuterAlt(_localctx, 5);
 				{
-				this.state = 142;
+				this.state = 144;
 				this.block2();
 				}
 				break;
@@ -629,7 +631,7 @@ export class KojiParser extends Parser {
 			case 6:
 				this.enterOuterAlt(_localctx, 6);
 				{
-				this.state = 143;
+				this.state = 145;
 				this.block3();
 				}
 				break;
@@ -637,7 +639,7 @@ export class KojiParser extends Parser {
 			case 7:
 				this.enterOuterAlt(_localctx, 7);
 				{
-				this.state = 144;
+				this.state = 146;
 				this.block4();
 				}
 				break;
@@ -645,7 +647,7 @@ export class KojiParser extends Parser {
 			case 8:
 				this.enterOuterAlt(_localctx, 8);
 				{
-				this.state = 145;
+				this.state = 147;
 				this.block5();
 				}
 				break;
@@ -674,59 +676,59 @@ export class KojiParser extends Parser {
 			let _alt: number;
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 148;
+			this.state = 150;
 			this.match(KojiParser.OpenBlock2);
-			this.state = 149;
-			this.match(KojiParser.ElemName);
 			this.state = 151;
+			this.match(KojiParser.ElemName);
+			this.state = 153;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la === KojiParser.ID) {
 				{
-				this.state = 150;
+				this.state = 152;
 				this.match(KojiParser.ID);
 				}
 			}
 
-			this.state = 156;
+			this.state = 158;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			while (_la === KojiParser.Class) {
 				{
 				{
-				this.state = 153;
+				this.state = 155;
 				this.match(KojiParser.Class);
 				}
 				}
-				this.state = 158;
+				this.state = 160;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 			}
-			this.state = 159;
+			this.state = 161;
 			this.match(KojiParser.HeaderLb);
-			this.state = 163;
+			this.state = 165;
 			this._errHandler.sync(this);
 			_alt = this.interpreter.adaptivePredict(this._input, 16, this._ctx);
 			while (_alt !== 2 && _alt !== ATN.INVALID_ALT_NUMBER) {
 				if (_alt === 1) {
 					{
 					{
-					this.state = 160;
+					this.state = 162;
 					_localctx._blockContent2 = this.blockContent2();
 					_localctx._content.push(_localctx._blockContent2);
 					}
 					}
 				}
-				this.state = 165;
+				this.state = 167;
 				this._errHandler.sync(this);
 				_alt = this.interpreter.adaptivePredict(this._input, 16, this._ctx);
 			}
-			this.state = 167;
+			this.state = 169;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la === KojiParser.CloseBlock2) {
 				{
-				this.state = 166;
+				this.state = 168;
 				this.match(KojiParser.CloseBlock2);
 				}
 			}
@@ -752,13 +754,13 @@ export class KojiParser extends Parser {
 		let _localctx: BlockContent2Context = new BlockContent2Context(this._ctx, this.state);
 		this.enterRule(_localctx, 18, KojiParser.RULE_blockContent2);
 		try {
-			this.state = 176;
+			this.state = 178;
 			this._errHandler.sync(this);
 			switch ( this.interpreter.adaptivePredict(this._input, 18, this._ctx) ) {
 			case 1:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 169;
+				this.state = 171;
 				this.syntaxSugar();
 				}
 				break;
@@ -766,7 +768,7 @@ export class KojiParser extends Parser {
 			case 2:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 170;
+				this.state = 172;
 				this.textSegment();
 				}
 				break;
@@ -774,7 +776,7 @@ export class KojiParser extends Parser {
 			case 3:
 				this.enterOuterAlt(_localctx, 3);
 				{
-				this.state = 171;
+				this.state = 173;
 				this.inline();
 				}
 				break;
@@ -782,7 +784,7 @@ export class KojiParser extends Parser {
 			case 4:
 				this.enterOuterAlt(_localctx, 4);
 				{
-				this.state = 172;
+				this.state = 174;
 				this.match(KojiParser.Lb);
 				}
 				break;
@@ -790,7 +792,7 @@ export class KojiParser extends Parser {
 			case 5:
 				this.enterOuterAlt(_localctx, 5);
 				{
-				this.state = 173;
+				this.state = 175;
 				this.block3();
 				}
 				break;
@@ -798,7 +800,7 @@ export class KojiParser extends Parser {
 			case 6:
 				this.enterOuterAlt(_localctx, 6);
 				{
-				this.state = 174;
+				this.state = 176;
 				this.block4();
 				}
 				break;
@@ -806,7 +808,7 @@ export class KojiParser extends Parser {
 			case 7:
 				this.enterOuterAlt(_localctx, 7);
 				{
-				this.state = 175;
+				this.state = 177;
 				this.block5();
 				}
 				break;
@@ -835,59 +837,59 @@ export class KojiParser extends Parser {
 			let _alt: number;
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 178;
+			this.state = 180;
 			this.match(KojiParser.OpenBlock3);
-			this.state = 179;
-			this.match(KojiParser.ElemName);
 			this.state = 181;
+			this.match(KojiParser.ElemName);
+			this.state = 183;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la === KojiParser.ID) {
 				{
-				this.state = 180;
+				this.state = 182;
 				this.match(KojiParser.ID);
 				}
 			}
 
-			this.state = 186;
+			this.state = 188;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			while (_la === KojiParser.Class) {
 				{
 				{
-				this.state = 183;
+				this.state = 185;
 				this.match(KojiParser.Class);
 				}
 				}
-				this.state = 188;
+				this.state = 190;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 			}
-			this.state = 189;
+			this.state = 191;
 			this.match(KojiParser.HeaderLb);
-			this.state = 193;
+			this.state = 195;
 			this._errHandler.sync(this);
 			_alt = this.interpreter.adaptivePredict(this._input, 21, this._ctx);
 			while (_alt !== 2 && _alt !== ATN.INVALID_ALT_NUMBER) {
 				if (_alt === 1) {
 					{
 					{
-					this.state = 190;
+					this.state = 192;
 					_localctx._blockContent3 = this.blockContent3();
 					_localctx._content.push(_localctx._blockContent3);
 					}
 					}
 				}
-				this.state = 195;
+				this.state = 197;
 				this._errHandler.sync(this);
 				_alt = this.interpreter.adaptivePredict(this._input, 21, this._ctx);
 			}
-			this.state = 197;
+			this.state = 199;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la === KojiParser.CloseBlock3) {
 				{
-				this.state = 196;
+				this.state = 198;
 				this.match(KojiParser.CloseBlock3);
 				}
 			}
@@ -913,13 +915,13 @@ export class KojiParser extends Parser {
 		let _localctx: BlockContent3Context = new BlockContent3Context(this._ctx, this.state);
 		this.enterRule(_localctx, 22, KojiParser.RULE_blockContent3);
 		try {
-			this.state = 205;
+			this.state = 207;
 			this._errHandler.sync(this);
 			switch ( this.interpreter.adaptivePredict(this._input, 23, this._ctx) ) {
 			case 1:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 199;
+				this.state = 201;
 				this.syntaxSugar();
 				}
 				break;
@@ -927,7 +929,7 @@ export class KojiParser extends Parser {
 			case 2:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 200;
+				this.state = 202;
 				this.textSegment();
 				}
 				break;
@@ -935,7 +937,7 @@ export class KojiParser extends Parser {
 			case 3:
 				this.enterOuterAlt(_localctx, 3);
 				{
-				this.state = 201;
+				this.state = 203;
 				this.inline();
 				}
 				break;
@@ -943,7 +945,7 @@ export class KojiParser extends Parser {
 			case 4:
 				this.enterOuterAlt(_localctx, 4);
 				{
-				this.state = 202;
+				this.state = 204;
 				this.match(KojiParser.Lb);
 				}
 				break;
@@ -951,7 +953,7 @@ export class KojiParser extends Parser {
 			case 5:
 				this.enterOuterAlt(_localctx, 5);
 				{
-				this.state = 203;
+				this.state = 205;
 				this.block4();
 				}
 				break;
@@ -959,7 +961,7 @@ export class KojiParser extends Parser {
 			case 6:
 				this.enterOuterAlt(_localctx, 6);
 				{
-				this.state = 204;
+				this.state = 206;
 				this.block5();
 				}
 				break;
@@ -988,59 +990,59 @@ export class KojiParser extends Parser {
 			let _alt: number;
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 207;
+			this.state = 209;
 			this.match(KojiParser.OpenBlock4);
-			this.state = 208;
-			this.match(KojiParser.ElemName);
 			this.state = 210;
+			this.match(KojiParser.ElemName);
+			this.state = 212;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la === KojiParser.ID) {
 				{
-				this.state = 209;
+				this.state = 211;
 				this.match(KojiParser.ID);
 				}
 			}
 
-			this.state = 215;
+			this.state = 217;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			while (_la === KojiParser.Class) {
 				{
 				{
-				this.state = 212;
+				this.state = 214;
 				this.match(KojiParser.Class);
 				}
 				}
-				this.state = 217;
+				this.state = 219;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 			}
-			this.state = 218;
+			this.state = 220;
 			this.match(KojiParser.HeaderLb);
-			this.state = 222;
+			this.state = 224;
 			this._errHandler.sync(this);
 			_alt = this.interpreter.adaptivePredict(this._input, 26, this._ctx);
 			while (_alt !== 2 && _alt !== ATN.INVALID_ALT_NUMBER) {
 				if (_alt === 1) {
 					{
 					{
-					this.state = 219;
+					this.state = 221;
 					_localctx._blockContent4 = this.blockContent4();
 					_localctx._content.push(_localctx._blockContent4);
 					}
 					}
 				}
-				this.state = 224;
+				this.state = 226;
 				this._errHandler.sync(this);
 				_alt = this.interpreter.adaptivePredict(this._input, 26, this._ctx);
 			}
-			this.state = 226;
+			this.state = 228;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la === KojiParser.CloseBlock4) {
 				{
-				this.state = 225;
+				this.state = 227;
 				this.match(KojiParser.CloseBlock4);
 				}
 			}
@@ -1066,13 +1068,13 @@ export class KojiParser extends Parser {
 		let _localctx: BlockContent4Context = new BlockContent4Context(this._ctx, this.state);
 		this.enterRule(_localctx, 26, KojiParser.RULE_blockContent4);
 		try {
-			this.state = 233;
+			this.state = 235;
 			this._errHandler.sync(this);
 			switch ( this.interpreter.adaptivePredict(this._input, 28, this._ctx) ) {
 			case 1:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 228;
+				this.state = 230;
 				this.syntaxSugar();
 				}
 				break;
@@ -1080,7 +1082,7 @@ export class KojiParser extends Parser {
 			case 2:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 229;
+				this.state = 231;
 				this.textSegment();
 				}
 				break;
@@ -1088,7 +1090,7 @@ export class KojiParser extends Parser {
 			case 3:
 				this.enterOuterAlt(_localctx, 3);
 				{
-				this.state = 230;
+				this.state = 232;
 				this.inline();
 				}
 				break;
@@ -1096,7 +1098,7 @@ export class KojiParser extends Parser {
 			case 4:
 				this.enterOuterAlt(_localctx, 4);
 				{
-				this.state = 231;
+				this.state = 233;
 				this.match(KojiParser.Lb);
 				}
 				break;
@@ -1104,7 +1106,7 @@ export class KojiParser extends Parser {
 			case 5:
 				this.enterOuterAlt(_localctx, 5);
 				{
-				this.state = 232;
+				this.state = 234;
 				this.block5();
 				}
 				break;
@@ -1133,59 +1135,59 @@ export class KojiParser extends Parser {
 			let _alt: number;
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 235;
+			this.state = 237;
 			this.match(KojiParser.OpenBlock5);
-			this.state = 236;
-			this.match(KojiParser.ElemName);
 			this.state = 238;
+			this.match(KojiParser.ElemName);
+			this.state = 240;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la === KojiParser.ID) {
 				{
-				this.state = 237;
+				this.state = 239;
 				this.match(KojiParser.ID);
 				}
 			}
 
-			this.state = 243;
+			this.state = 245;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			while (_la === KojiParser.Class) {
 				{
 				{
-				this.state = 240;
+				this.state = 242;
 				this.match(KojiParser.Class);
 				}
 				}
-				this.state = 245;
+				this.state = 247;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 			}
-			this.state = 246;
+			this.state = 248;
 			this.match(KojiParser.HeaderLb);
-			this.state = 250;
+			this.state = 252;
 			this._errHandler.sync(this);
 			_alt = this.interpreter.adaptivePredict(this._input, 31, this._ctx);
 			while (_alt !== 2 && _alt !== ATN.INVALID_ALT_NUMBER) {
 				if (_alt === 1) {
 					{
 					{
-					this.state = 247;
+					this.state = 249;
 					_localctx._blockContent5 = this.blockContent5();
 					_localctx._content.push(_localctx._blockContent5);
 					}
 					}
 				}
-				this.state = 252;
+				this.state = 254;
 				this._errHandler.sync(this);
 				_alt = this.interpreter.adaptivePredict(this._input, 31, this._ctx);
 			}
-			this.state = 254;
+			this.state = 256;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la === KojiParser.CloseBlock5) {
 				{
-				this.state = 253;
+				this.state = 255;
 				this.match(KojiParser.CloseBlock5);
 				}
 			}
@@ -1211,13 +1213,13 @@ export class KojiParser extends Parser {
 		let _localctx: BlockContent5Context = new BlockContent5Context(this._ctx, this.state);
 		this.enterRule(_localctx, 30, KojiParser.RULE_blockContent5);
 		try {
-			this.state = 260;
+			this.state = 262;
 			this._errHandler.sync(this);
 			switch ( this.interpreter.adaptivePredict(this._input, 33, this._ctx) ) {
 			case 1:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 256;
+				this.state = 258;
 				this.syntaxSugar();
 				}
 				break;
@@ -1225,7 +1227,7 @@ export class KojiParser extends Parser {
 			case 2:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 257;
+				this.state = 259;
 				this.textSegment();
 				}
 				break;
@@ -1233,7 +1235,7 @@ export class KojiParser extends Parser {
 			case 3:
 				this.enterOuterAlt(_localctx, 3);
 				{
-				this.state = 258;
+				this.state = 260;
 				this.inline();
 				}
 				break;
@@ -1241,7 +1243,7 @@ export class KojiParser extends Parser {
 			case 4:
 				this.enterOuterAlt(_localctx, 4);
 				{
-				this.state = 259;
+				this.state = 261;
 				this.match(KojiParser.Lb);
 				}
 				break;
@@ -1270,7 +1272,7 @@ export class KojiParser extends Parser {
 			let _alt: number;
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 263;
+			this.state = 265;
 			this._errHandler.sync(this);
 			_alt = 1;
 			do {
@@ -1278,9 +1280,9 @@ export class KojiParser extends Parser {
 				case 1:
 					{
 					{
-					this.state = 262;
+					this.state = 264;
 					_la = this._input.LA(1);
-					if (!((((_la) & ~0x1F) === 0 && ((1 << _la) & ((1 << KojiParser.NonJp) | (1 << KojiParser.Kanji) | (1 << KojiParser.Kana))) !== 0))) {
+					if (!(((((_la - 30)) & ~0x1F) === 0 && ((1 << (_la - 30)) & ((1 << (KojiParser.NonJp - 30)) | (1 << (KojiParser.Kanji - 30)) | (1 << (KojiParser.Kana - 30)))) !== 0))) {
 					this._errHandler.recoverInline(this);
 					} else {
 						if (this._input.LA(1) === Token.EOF) {
@@ -1296,7 +1298,7 @@ export class KojiParser extends Parser {
 				default:
 					throw new NoViableAltException(this);
 				}
-				this.state = 265;
+				this.state = 267;
 				this._errHandler.sync(this);
 				_alt = this.interpreter.adaptivePredict(this._input, 34, this._ctx);
 			} while (_alt !== 2 && _alt !== ATN.INVALID_ALT_NUMBER);
@@ -1324,33 +1326,33 @@ export class KojiParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 267;
-			this.match(KojiParser.AttrsOpen);
 			this.state = 269;
+			this.match(KojiParser.AttrsOpen);
+			this.state = 271;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la === KojiParser.ID) {
 				{
-				this.state = 268;
+				this.state = 270;
 				this.match(KojiParser.ID);
 				}
 			}
 
-			this.state = 274;
+			this.state = 276;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			while (_la === KojiParser.Class) {
 				{
 				{
-				this.state = 271;
+				this.state = 273;
 				this.match(KojiParser.Class);
 				}
 				}
-				this.state = 276;
+				this.state = 278;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 			}
-			this.state = 277;
+			this.state = 279;
 			this.match(KojiParser.AttrsClose);
 			}
 		}
@@ -1373,7 +1375,7 @@ export class KojiParser extends Parser {
 		let _localctx: SyntaxSugarContext = new SyntaxSugarContext(this._ctx, this.state);
 		this.enterRule(_localctx, 36, KojiParser.RULE_syntaxSugar);
 		try {
-			this.state = 288;
+			this.state = 291;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
 			case KojiParser.NonJp:
@@ -1381,63 +1383,70 @@ export class KojiParser extends Parser {
 			case KojiParser.Kana:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 279;
+				this.state = 281;
 				this.furigana();
 				}
 				break;
 			case KojiParser.KaeritenMark:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 280;
+				this.state = 282;
 				this.kaeriten();
 				}
 				break;
 			case KojiParser.OkuriganaMark:
 				this.enterOuterAlt(_localctx, 3);
 				{
-				this.state = 281;
+				this.state = 283;
 				this.okurigana();
 				}
 				break;
-			case KojiParser.AnnotationOpen:
+			case KojiParser.TatetenChar:
 				this.enterOuterAlt(_localctx, 4);
 				{
-				this.state = 282;
+				this.state = 284;
+				this.tateten();
+				}
+				break;
+			case KojiParser.AnnotationOpen:
+				this.enterOuterAlt(_localctx, 5);
+				{
+				this.state = 285;
 				this.annotation();
 				}
 				break;
 			case KojiParser.Illegible:
-				this.enterOuterAlt(_localctx, 5);
+				this.enterOuterAlt(_localctx, 6);
 				{
-				this.state = 283;
+				this.state = 286;
 				this.illegible();
 				}
 				break;
 			case KojiParser.BugHole:
-				this.enterOuterAlt(_localctx, 6);
+				this.enterOuterAlt(_localctx, 7);
 				{
-				this.state = 284;
+				this.state = 287;
 				this.bugHole();
 				}
 				break;
 			case KojiParser.PersonOpen:
-				this.enterOuterAlt(_localctx, 7);
+				this.enterOuterAlt(_localctx, 8);
 				{
-				this.state = 285;
+				this.state = 288;
 				this.person();
 				}
 				break;
 			case KojiParser.PlaceOpen:
-				this.enterOuterAlt(_localctx, 8);
+				this.enterOuterAlt(_localctx, 9);
 				{
-				this.state = 286;
+				this.state = 289;
 				this.place();
 				}
 				break;
 			case KojiParser.DateOpen:
-				this.enterOuterAlt(_localctx, 9);
+				this.enterOuterAlt(_localctx, 10);
 				{
-				this.state = 287;
+				this.state = 290;
 				this.date();
 				}
 				break;
@@ -1467,47 +1476,47 @@ export class KojiParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 293;
+			this.state = 296;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
 			case KojiParser.Kanji:
 				{
-				this.state = 290;
+				this.state = 293;
 				_localctx._target = this.match(KojiParser.Kanji);
 				}
 				break;
 			case KojiParser.Kana:
 				{
-				this.state = 291;
+				this.state = 294;
 				_localctx._target = this.match(KojiParser.Kana);
 				}
 				break;
 			case KojiParser.NonJp:
 				{
-				this.state = 292;
+				this.state = 295;
 				_localctx._target = this.match(KojiParser.NonJp);
 				}
 				break;
 			default:
 				throw new NoViableAltException(this);
 			}
-			this.state = 295;
+			this.state = 298;
 			this.match(KojiParser.FuriganaOpen);
-			this.state = 296;
-			_localctx._right = this.match(KojiParser.FuriganaContent);
 			this.state = 299;
+			_localctx._right = this.match(KojiParser.FuriganaContent);
+			this.state = 302;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la === KojiParser.FuriganaSep) {
 				{
-				this.state = 297;
+				this.state = 300;
 				this.match(KojiParser.FuriganaSep);
-				this.state = 298;
+				this.state = 301;
 				_localctx._left = this.match(KojiParser.FuriganaContent);
 				}
 			}
 
-			this.state = 301;
+			this.state = 304;
 			this.match(KojiParser.FuriganaClose);
 			}
 		}
@@ -1533,19 +1542,19 @@ export class KojiParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 303;
+			this.state = 306;
 			this.match(KojiParser.KaeritenMark);
-			this.state = 305;
+			this.state = 308;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			do {
 				{
 				{
-				this.state = 304;
+				this.state = 307;
 				_localctx._content = this.match(KojiParser.KaeritenChar);
 				}
 				}
-				this.state = 307;
+				this.state = 310;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 			} while (_la === KojiParser.KaeritenChar);
@@ -1572,10 +1581,35 @@ export class KojiParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 309;
+			this.state = 312;
 			this.match(KojiParser.OkuriganaMark);
-			this.state = 310;
+			this.state = 313;
 			_localctx._content = this.match(KojiParser.Kana);
+			}
+		}
+		catch (re) {
+			if (re instanceof RecognitionException) {
+				_localctx.exception = re;
+				this._errHandler.reportError(this, re);
+				this._errHandler.recover(this, re);
+			} else {
+				throw re;
+			}
+		}
+		finally {
+			this.exitRule();
+		}
+		return _localctx;
+	}
+	// @RuleVersion(0)
+	public tateten(): TatetenContext {
+		let _localctx: TatetenContext = new TatetenContext(this._ctx, this.state);
+		this.enterRule(_localctx, 44, KojiParser.RULE_tateten);
+		try {
+			this.enterOuterAlt(_localctx, 1);
+			{
+			this.state = 315;
+			this.match(KojiParser.TatetenChar);
 			}
 		}
 		catch (re) {
@@ -1595,15 +1629,15 @@ export class KojiParser extends Parser {
 	// @RuleVersion(0)
 	public annotation(): AnnotationContext {
 		let _localctx: AnnotationContext = new AnnotationContext(this._ctx, this.state);
-		this.enterRule(_localctx, 44, KojiParser.RULE_annotation);
+		this.enterRule(_localctx, 46, KojiParser.RULE_annotation);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 312;
+			this.state = 317;
 			this.match(KojiParser.AnnotationOpen);
-			this.state = 313;
+			this.state = 318;
 			_localctx._content = this.textSegment();
-			this.state = 314;
+			this.state = 319;
 			this.match(KojiParser.AnnotationClose);
 			}
 		}
@@ -1624,31 +1658,12 @@ export class KojiParser extends Parser {
 	// @RuleVersion(0)
 	public illegible(): IllegibleContext {
 		let _localctx: IllegibleContext = new IllegibleContext(this._ctx, this.state);
-		this.enterRule(_localctx, 46, KojiParser.RULE_illegible);
+		this.enterRule(_localctx, 48, KojiParser.RULE_illegible);
 		try {
-			let _alt: number;
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 317;
-			this._errHandler.sync(this);
-			_alt = 1;
-			do {
-				switch (_alt) {
-				case 1:
-					{
-					{
-					this.state = 316;
-					this.match(KojiParser.Illegible);
-					}
-					}
-					break;
-				default:
-					throw new NoViableAltException(this);
-				}
-				this.state = 319;
-				this._errHandler.sync(this);
-				_alt = this.interpreter.adaptivePredict(this._input, 41, this._ctx);
-			} while (_alt !== 2 && _alt !== ATN.INVALID_ALT_NUMBER);
+			this.state = 321;
+			this.match(KojiParser.Illegible);
 			}
 		}
 		catch (re) {
@@ -1668,31 +1683,12 @@ export class KojiParser extends Parser {
 	// @RuleVersion(0)
 	public bugHole(): BugHoleContext {
 		let _localctx: BugHoleContext = new BugHoleContext(this._ctx, this.state);
-		this.enterRule(_localctx, 48, KojiParser.RULE_bugHole);
+		this.enterRule(_localctx, 50, KojiParser.RULE_bugHole);
 		try {
-			let _alt: number;
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 322;
-			this._errHandler.sync(this);
-			_alt = 1;
-			do {
-				switch (_alt) {
-				case 1:
-					{
-					{
-					this.state = 321;
-					this.match(KojiParser.BugHole);
-					}
-					}
-					break;
-				default:
-					throw new NoViableAltException(this);
-				}
-				this.state = 324;
-				this._errHandler.sync(this);
-				_alt = this.interpreter.adaptivePredict(this._input, 42, this._ctx);
-			} while (_alt !== 2 && _alt !== ATN.INVALID_ALT_NUMBER);
+			this.state = 323;
+			this.match(KojiParser.BugHole);
 			}
 		}
 		catch (re) {
@@ -1712,23 +1708,23 @@ export class KojiParser extends Parser {
 	// @RuleVersion(0)
 	public person(): PersonContext {
 		let _localctx: PersonContext = new PersonContext(this._ctx, this.state);
-		this.enterRule(_localctx, 50, KojiParser.RULE_person);
+		this.enterRule(_localctx, 52, KojiParser.RULE_person);
 		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 326;
+			this.state = 325;
 			this.match(KojiParser.PersonOpen);
-			this.state = 327;
+			this.state = 326;
 			_localctx._content = this.inlineContent();
-			this.state = 328;
+			this.state = 327;
 			this.match(KojiParser.PersonClose);
-			this.state = 330;
+			this.state = 329;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la === KojiParser.AttrsOpen) {
 				{
-				this.state = 329;
+				this.state = 328;
 				this.postPositionedAttrs();
 				}
 			}
@@ -1752,23 +1748,23 @@ export class KojiParser extends Parser {
 	// @RuleVersion(0)
 	public place(): PlaceContext {
 		let _localctx: PlaceContext = new PlaceContext(this._ctx, this.state);
-		this.enterRule(_localctx, 52, KojiParser.RULE_place);
+		this.enterRule(_localctx, 54, KojiParser.RULE_place);
 		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 332;
+			this.state = 331;
 			this.match(KojiParser.PlaceOpen);
-			this.state = 333;
+			this.state = 332;
 			_localctx._content = this.inlineContent();
-			this.state = 334;
+			this.state = 333;
 			this.match(KojiParser.PlaceClose);
-			this.state = 336;
+			this.state = 335;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la === KojiParser.AttrsOpen) {
 				{
-				this.state = 335;
+				this.state = 334;
 				this.postPositionedAttrs();
 				}
 			}
@@ -1792,23 +1788,23 @@ export class KojiParser extends Parser {
 	// @RuleVersion(0)
 	public date(): DateContext {
 		let _localctx: DateContext = new DateContext(this._ctx, this.state);
-		this.enterRule(_localctx, 54, KojiParser.RULE_date);
+		this.enterRule(_localctx, 56, KojiParser.RULE_date);
 		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 338;
+			this.state = 337;
 			this.match(KojiParser.DateOpen);
-			this.state = 339;
+			this.state = 338;
 			_localctx._content = this.inlineContent();
-			this.state = 340;
+			this.state = 339;
 			this.match(KojiParser.DateClose);
-			this.state = 342;
+			this.state = 341;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la === KojiParser.AttrsOpen) {
 				{
-				this.state = 341;
+				this.state = 340;
 				this.postPositionedAttrs();
 				}
 			}
@@ -1831,179 +1827,177 @@ export class KojiParser extends Parser {
 	}
 
 	public static readonly _serializedATN: string =
-		"\x03\uC91D\uCABA\u058D\uAFBA\u4F53\u0607\uEA8B\uC241\x03.\u015B\x04\x02" +
+		"\x03\uC91D\uCABA\u058D\uAFBA\u4F53\u0607\uEA8B\uC241\x03/\u015A\x04\x02" +
 		"\t\x02\x04\x03\t\x03\x04\x04\t\x04\x04\x05\t\x05\x04\x06\t\x06\x04\x07" +
 		"\t\x07\x04\b\t\b\x04\t\t\t\x04\n\t\n\x04\v\t\v\x04\f\t\f\x04\r\t\r\x04" +
 		"\x0E\t\x0E\x04\x0F\t\x0F\x04\x10\t\x10\x04\x11\t\x11\x04\x12\t\x12\x04" +
 		"\x13\t\x13\x04\x14\t\x14\x04\x15\t\x15\x04\x16\t\x16\x04\x17\t\x17\x04" +
 		"\x18\t\x18\x04\x19\t\x19\x04\x1A\t\x1A\x04\x1B\t\x1B\x04\x1C\t\x1C\x04" +
-		"\x1D\t\x1D\x03\x02\x07\x02<\n\x02\f\x02\x0E\x02?\v\x02\x03\x02\x03\x02" +
-		"\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x05\x03H\n\x03\x03\x04\x03\x04" +
-		"\x03\x04\x05\x04M\n\x04\x03\x04\x07\x04P\n\x04\f\x04\x0E\x04S\v\x04\x03" +
-		"\x04\x03\x04\x07\x04W\n\x04\f\x04\x0E\x04Z\v\x04\x03\x04\x03\x04\x07\x04" +
-		"^\n\x04\f\x04\x0E\x04a\v\x04\x03\x04\x03\x04\x03\x05\x07\x05f\n\x05\f" +
-		"\x05\x0E\x05i\v\x05\x03\x06\x03\x06\x03\x06\x03\x06\x05\x06o\n\x06\x03" +
-		"\x07\x03\x07\x03\x07\x03\x07\x03\x07\x05\x07v\n\x07\x03\b\x03\b\x03\b" +
-		"\x05\b{\n\b\x03\b\x07\b~\n\b\f\b\x0E\b\x81\v\b\x03\b\x03\b\x07\b\x85\n" +
-		"\b\f\b\x0E\b\x88\v\b\x03\b\x05\b\x8B\n\b\x03\t\x03\t\x03\t\x03\t\x03\t" +
-		"\x03\t\x03\t\x03\t\x05\t\x95\n\t\x03\n\x03\n\x03\n\x05\n\x9A\n\n\x03\n" +
-		"\x07\n\x9D\n\n\f\n\x0E\n\xA0\v\n\x03\n\x03\n\x07\n\xA4\n\n\f\n\x0E\n\xA7" +
-		"\v\n\x03\n\x05\n\xAA\n\n\x03\v\x03\v\x03\v\x03\v\x03\v\x03\v\x03\v\x05" +
-		"\v\xB3\n\v\x03\f\x03\f\x03\f\x05\f\xB8\n\f\x03\f\x07\f\xBB\n\f\f\f\x0E" +
-		"\f\xBE\v\f\x03\f\x03\f\x07\f\xC2\n\f\f\f\x0E\f\xC5\v\f\x03\f\x05\f\xC8" +
-		"\n\f\x03\r\x03\r\x03\r\x03\r\x03\r\x03\r\x05\r\xD0\n\r\x03\x0E\x03\x0E" +
-		"\x03\x0E\x05\x0E\xD5\n\x0E\x03\x0E\x07\x0E\xD8\n\x0E\f\x0E\x0E\x0E\xDB" +
-		"\v\x0E\x03\x0E\x03\x0E\x07\x0E\xDF\n\x0E\f\x0E\x0E\x0E\xE2\v\x0E\x03\x0E" +
-		"\x05\x0E\xE5\n\x0E\x03\x0F\x03\x0F\x03\x0F\x03\x0F\x03\x0F\x05\x0F\xEC" +
-		"\n\x0F\x03\x10\x03\x10\x03\x10\x05\x10\xF1\n\x10\x03\x10\x07\x10\xF4\n" +
-		"\x10\f\x10\x0E\x10\xF7\v\x10\x03\x10\x03\x10\x07\x10\xFB\n\x10\f\x10\x0E" +
-		"\x10\xFE\v\x10\x03\x10\x05\x10\u0101\n\x10\x03\x11\x03\x11\x03\x11\x03" +
-		"\x11\x05\x11\u0107\n\x11\x03\x12\x06\x12\u010A\n\x12\r\x12\x0E\x12\u010B" +
-		"\x03\x13\x03\x13\x05\x13\u0110\n\x13\x03\x13\x07\x13\u0113\n\x13\f\x13" +
-		"\x0E\x13\u0116\v\x13\x03\x13\x03\x13\x03\x14\x03\x14\x03\x14\x03\x14\x03" +
-		"\x14\x03\x14\x03\x14\x03\x14\x03\x14\x05\x14\u0123\n\x14\x03\x15\x03\x15" +
-		"\x03\x15\x05\x15\u0128\n\x15\x03\x15\x03\x15\x03\x15\x03\x15\x05\x15\u012E" +
-		"\n\x15\x03\x15\x03\x15\x03\x16\x03\x16\x06\x16\u0134\n\x16\r\x16\x0E\x16" +
-		"\u0135\x03\x17\x03\x17\x03\x17\x03\x18\x03\x18\x03\x18\x03\x18\x03\x19" +
-		"\x06\x19\u0140\n\x19\r\x19\x0E\x19\u0141\x03\x1A\x06\x1A\u0145\n\x1A\r" +
-		"\x1A\x0E\x1A\u0146\x03\x1B\x03\x1B\x03\x1B\x03\x1B\x05\x1B\u014D\n\x1B" +
-		"\x03\x1C\x03\x1C\x03\x1C\x03\x1C\x05\x1C\u0153\n\x1C\x03\x1D\x03\x1D\x03" +
-		"\x1D\x03\x1D\x05\x1D\u0159\n\x1D\x03\x1D\x02\x02\x02\x1E\x02\x02\x04\x02" +
-		"\x06\x02\b\x02\n\x02\f\x02\x0E\x02\x10\x02\x12\x02\x14\x02\x16\x02\x18" +
-		"\x02\x1A\x02\x1C\x02\x1E\x02 \x02\"\x02$\x02&\x02(\x02*\x02,\x02.\x02" +
-		"0\x022\x024\x026\x028\x02\x02\x03\x03\x02\x1F!\x02\u0190\x02=\x03\x02" +
-		"\x02\x02\x04G\x03\x02\x02\x02\x06I\x03\x02\x02\x02\bg\x03\x02\x02\x02" +
-		"\nn\x03\x02\x02\x02\fu\x03\x02\x02\x02\x0Ew\x03\x02\x02\x02\x10\x94\x03" +
-		"\x02\x02\x02\x12\x96\x03\x02\x02\x02\x14\xB2\x03\x02\x02\x02\x16\xB4\x03" +
-		"\x02\x02\x02\x18\xCF\x03\x02\x02\x02\x1A\xD1\x03\x02\x02\x02\x1C\xEB\x03" +
-		"\x02\x02\x02\x1E\xED\x03\x02\x02\x02 \u0106\x03\x02\x02\x02\"\u0109\x03" +
-		"\x02\x02\x02$\u010D\x03\x02\x02\x02&\u0122\x03\x02\x02\x02(\u0127\x03" +
-		"\x02\x02\x02*\u0131\x03\x02\x02\x02,\u0137\x03\x02\x02\x02.\u013A\x03" +
-		"\x02\x02\x020\u013F\x03\x02\x02\x022\u0144\x03\x02\x02\x024\u0148\x03" +
-		"\x02\x02\x026\u014E\x03\x02\x02\x028\u0154\x03\x02\x02\x02:<\x05\x04\x03" +
-		"\x02;:\x03\x02\x02\x02<?\x03\x02\x02\x02=;\x03\x02\x02\x02=>\x03\x02\x02" +
-		"\x02>@\x03\x02\x02\x02?=\x03\x02\x02\x02@A\x07\x02\x02\x03A\x03\x03\x02" +
-		"\x02\x02BH\x05\f\x07\x02CH\x05\x06\x04\x02DH\x05&\x14\x02EH\x05\"\x12" +
-		"\x02FH\x07$\x02\x02GB\x03\x02\x02\x02GC\x03\x02\x02\x02GD\x03\x02\x02" +
-		"\x02GE\x03\x02\x02\x02GF\x03\x02\x02\x02H\x05\x03\x02\x02\x02IJ\x07\r" +
-		"\x02\x02JL\x07&\x02\x02KM\x07*\x02\x02LK\x03\x02\x02\x02LM\x03\x02\x02" +
-		"\x02MQ\x03\x02\x02\x02NP\x07+\x02\x02ON\x03\x02\x02\x02PS\x03\x02\x02" +
-		"\x02QO\x03\x02\x02\x02QR\x03\x02\x02\x02RT\x03\x02\x02\x02SQ\x03\x02\x02" +
-		"\x02TX\x07\'\x02\x02UW\x05\n\x06\x02VU\x03\x02\x02\x02WZ\x03\x02\x02\x02" +
-		"XV\x03\x02\x02\x02XY\x03\x02\x02\x02Y_\x03\x02\x02\x02ZX\x03\x02\x02\x02" +
-		"[\\\x07\x0F\x02\x02\\^\x05\b\x05\x02][\x03\x02\x02\x02^a\x03\x02\x02\x02" +
-		"_]\x03\x02\x02\x02_`\x03\x02\x02\x02`b\x03\x02\x02\x02a_\x03\x02\x02\x02" +
-		"bc\x07\x0E\x02\x02c\x07\x03\x02\x02\x02df\x05\n\x06\x02ed\x03\x02\x02" +
-		"\x02fi\x03\x02\x02\x02ge\x03\x02\x02\x02gh\x03\x02\x02\x02h\t\x03\x02" +
-		"\x02\x02ig\x03\x02\x02\x02jo\x05&\x14\x02ko\x05\"\x12\x02lo\x05\x06\x04" +
-		"\x02mo\x07$\x02\x02nj\x03\x02\x02\x02nk\x03\x02\x02\x02nl\x03\x02\x02" +
-		"\x02nm\x03\x02\x02\x02o\v\x03\x02\x02\x02pv\x05\x0E\b\x02qv\x05\x12\n" +
-		"\x02rv\x05\x16\f\x02sv\x05\x1A\x0E\x02tv\x05\x1E\x10\x02up\x03\x02\x02" +
-		"\x02uq\x03\x02\x02\x02ur\x03\x02\x02\x02us\x03\x02\x02\x02ut\x03\x02\x02" +
-		"\x02v\r\x03\x02\x02\x02wx\x07\x03\x02\x02xz\x07&\x02\x02y{\x07*\x02\x02" +
-		"zy\x03\x02\x02\x02z{\x03\x02\x02\x02{\x7F\x03\x02\x02\x02|~\x07+\x02\x02" +
-		"}|\x03\x02\x02\x02~\x81\x03\x02\x02\x02\x7F}\x03\x02\x02\x02\x7F\x80\x03" +
-		"\x02\x02\x02\x80\x82\x03\x02\x02\x02\x81\x7F\x03\x02\x02\x02\x82\x86\x07" +
-		"(\x02\x02\x83\x85\x05\x10\t\x02\x84\x83\x03\x02\x02\x02\x85\x88\x03\x02" +
-		"\x02\x02\x86\x84\x03\x02\x02\x02\x86\x87\x03\x02\x02\x02\x87\x8A\x03\x02" +
-		"\x02\x02\x88\x86\x03\x02\x02\x02\x89\x8B\x07\x04\x02\x02\x8A\x89\x03\x02" +
-		"\x02\x02\x8A\x8B\x03\x02\x02\x02\x8B\x0F\x03\x02\x02\x02\x8C\x95\x05&" +
-		"\x14\x02\x8D\x95\x05\"\x12\x02\x8E\x95\x05\x06\x04\x02\x8F\x95\x07$\x02" +
-		"\x02\x90\x95\x05\x12\n\x02\x91\x95\x05\x16\f\x02\x92\x95\x05\x1A\x0E\x02" +
-		"\x93\x95\x05\x1E\x10\x02\x94\x8C\x03\x02\x02\x02\x94\x8D\x03\x02\x02\x02" +
-		"\x94\x8E\x03\x02\x02\x02\x94\x8F\x03\x02\x02\x02\x94\x90\x03\x02\x02\x02" +
-		"\x94\x91\x03\x02\x02\x02\x94\x92\x03\x02\x02\x02\x94\x93\x03\x02\x02\x02" +
-		"\x95\x11\x03\x02\x02\x02\x96\x97\x07\x05\x02\x02\x97\x99\x07&\x02\x02" +
-		"\x98\x9A\x07*\x02\x02\x99\x98\x03\x02\x02\x02\x99\x9A\x03\x02\x02\x02" +
-		"\x9A\x9E\x03\x02\x02\x02\x9B\x9D\x07+\x02\x02\x9C\x9B\x03\x02\x02\x02" +
-		"\x9D\xA0\x03\x02\x02\x02\x9E\x9C\x03\x02\x02\x02\x9E\x9F\x03\x02\x02\x02" +
-		"\x9F\xA1\x03\x02\x02\x02\xA0\x9E\x03\x02\x02\x02\xA1\xA5\x07(\x02\x02" +
-		"\xA2\xA4\x05\x14\v\x02\xA3\xA2\x03\x02\x02\x02\xA4\xA7\x03\x02\x02\x02" +
-		"\xA5\xA3\x03\x02\x02\x02\xA5\xA6\x03\x02\x02\x02\xA6\xA9\x03\x02\x02\x02" +
-		"\xA7\xA5\x03\x02\x02\x02\xA8\xAA\x07\x06\x02\x02\xA9\xA8\x03\x02\x02\x02" +
-		"\xA9\xAA\x03\x02\x02\x02\xAA\x13\x03\x02\x02\x02\xAB\xB3\x05&\x14\x02" +
-		"\xAC\xB3\x05\"\x12\x02\xAD\xB3\x05\x06\x04\x02\xAE\xB3\x07$\x02\x02\xAF" +
-		"\xB3\x05\x16\f\x02\xB0\xB3\x05\x1A\x0E\x02\xB1\xB3\x05\x1E\x10\x02\xB2" +
-		"\xAB\x03\x02\x02\x02\xB2\xAC\x03\x02\x02\x02\xB2\xAD\x03\x02\x02\x02\xB2" +
-		"\xAE\x03\x02\x02\x02\xB2\xAF\x03\x02\x02\x02\xB2\xB0\x03\x02\x02\x02\xB2" +
-		"\xB1\x03\x02\x02\x02\xB3\x15\x03\x02\x02\x02\xB4\xB5\x07\x07\x02\x02\xB5" +
-		"\xB7\x07&\x02\x02\xB6\xB8\x07*\x02\x02\xB7\xB6\x03\x02\x02\x02\xB7\xB8" +
-		"\x03\x02\x02\x02\xB8\xBC\x03\x02\x02\x02\xB9\xBB\x07+\x02\x02\xBA\xB9" +
-		"\x03\x02\x02\x02\xBB\xBE\x03\x02\x02\x02\xBC\xBA\x03\x02\x02\x02\xBC\xBD" +
-		"\x03\x02\x02\x02\xBD\xBF\x03\x02\x02\x02\xBE\xBC\x03\x02\x02\x02\xBF\xC3" +
-		"\x07(\x02\x02\xC0\xC2\x05\x18\r\x02\xC1\xC0\x03\x02\x02\x02\xC2\xC5\x03" +
-		"\x02\x02\x02\xC3\xC1\x03\x02\x02\x02\xC3\xC4\x03\x02\x02\x02\xC4\xC7\x03" +
-		"\x02\x02\x02\xC5\xC3\x03\x02\x02\x02\xC6\xC8\x07\b\x02\x02\xC7\xC6\x03" +
-		"\x02\x02\x02\xC7\xC8\x03\x02\x02\x02\xC8\x17\x03\x02\x02\x02\xC9\xD0\x05" +
-		"&\x14\x02\xCA\xD0\x05\"\x12\x02\xCB\xD0\x05\x06\x04\x02\xCC\xD0\x07$\x02" +
-		"\x02\xCD\xD0\x05\x1A\x0E\x02\xCE\xD0\x05\x1E\x10\x02\xCF\xC9\x03\x02\x02" +
-		"\x02\xCF\xCA\x03\x02\x02\x02\xCF\xCB\x03\x02\x02\x02\xCF\xCC\x03\x02\x02" +
-		"\x02\xCF\xCD\x03\x02\x02\x02\xCF\xCE\x03\x02\x02\x02\xD0\x19\x03\x02\x02" +
-		"\x02\xD1\xD2\x07\t\x02\x02\xD2\xD4\x07&\x02\x02\xD3\xD5\x07*\x02\x02\xD4" +
-		"\xD3\x03\x02\x02\x02\xD4\xD5\x03\x02\x02\x02\xD5\xD9\x03\x02\x02\x02\xD6" +
-		"\xD8\x07+\x02\x02\xD7\xD6\x03\x02\x02\x02\xD8\xDB\x03\x02\x02\x02\xD9" +
-		"\xD7\x03\x02\x02\x02\xD9\xDA\x03\x02\x02\x02\xDA\xDC\x03\x02\x02\x02\xDB" +
-		"\xD9\x03\x02\x02\x02\xDC\xE0\x07(\x02\x02\xDD\xDF\x05\x1C\x0F\x02\xDE" +
-		"\xDD\x03\x02\x02\x02\xDF\xE2\x03\x02\x02\x02\xE0\xDE\x03\x02\x02\x02\xE0" +
-		"\xE1\x03\x02\x02\x02\xE1\xE4\x03\x02\x02\x02\xE2\xE0\x03\x02\x02\x02\xE3" +
-		"\xE5\x07\n\x02\x02\xE4\xE3\x03\x02\x02\x02\xE4\xE5\x03\x02\x02\x02\xE5" +
-		"\x1B\x03\x02\x02\x02\xE6\xEC\x05&\x14\x02\xE7\xEC\x05\"\x12\x02\xE8\xEC" +
-		"\x05\x06\x04\x02\xE9\xEC\x07$\x02\x02\xEA\xEC\x05\x1E\x10\x02\xEB\xE6" +
-		"\x03\x02\x02\x02\xEB\xE7\x03\x02\x02\x02\xEB\xE8\x03\x02\x02\x02\xEB\xE9" +
-		"\x03\x02\x02\x02\xEB\xEA\x03\x02\x02\x02\xEC\x1D\x03\x02\x02\x02\xED\xEE" +
-		"\x07\v\x02\x02\xEE\xF0\x07&\x02\x02\xEF\xF1\x07*\x02\x02\xF0\xEF\x03\x02" +
-		"\x02\x02\xF0\xF1\x03\x02\x02\x02\xF1\xF5\x03\x02\x02\x02\xF2\xF4\x07+" +
-		"\x02\x02\xF3\xF2\x03\x02\x02\x02\xF4\xF7\x03\x02\x02\x02\xF5\xF3\x03\x02" +
-		"\x02\x02\xF5\xF6\x03\x02\x02\x02\xF6\xF8\x03\x02\x02\x02\xF7\xF5\x03\x02" +
-		"\x02\x02\xF8\xFC\x07(\x02\x02\xF9\xFB\x05 \x11\x02\xFA\xF9\x03\x02\x02" +
-		"\x02\xFB\xFE\x03\x02\x02\x02\xFC\xFA\x03\x02\x02\x02\xFC\xFD\x03\x02\x02" +
-		"\x02\xFD\u0100\x03\x02\x02\x02\xFE\xFC\x03\x02\x02\x02\xFF\u0101\x07\f" +
-		"\x02\x02\u0100\xFF\x03\x02\x02\x02\u0100\u0101\x03\x02\x02\x02\u0101\x1F" +
-		"\x03\x02\x02\x02\u0102\u0107\x05&\x14\x02\u0103\u0107\x05\"\x12\x02\u0104" +
-		"\u0107\x05\x06\x04\x02\u0105\u0107\x07$\x02\x02\u0106\u0102\x03\x02\x02" +
-		"\x02\u0106\u0103\x03\x02\x02\x02\u0106\u0104\x03\x02\x02\x02\u0106\u0105" +
-		"\x03\x02\x02\x02\u0107!\x03\x02\x02\x02\u0108\u010A\t\x02\x02\x02\u0109" +
-		"\u0108\x03\x02\x02\x02\u010A\u010B\x03\x02\x02\x02\u010B\u0109\x03\x02" +
-		"\x02\x02\u010B\u010C\x03\x02\x02\x02\u010C#\x03\x02\x02\x02\u010D\u010F" +
-		"\x07\x19\x02\x02\u010E\u0110\x07*\x02\x02\u010F\u010E\x03\x02\x02\x02" +
-		"\u010F\u0110\x03\x02\x02\x02\u0110\u0114\x03\x02\x02\x02\u0111\u0113\x07" +
-		"+\x02\x02\u0112\u0111\x03\x02\x02\x02\u0113\u0116\x03\x02\x02\x02\u0114" +
-		"\u0112\x03\x02\x02\x02\u0114\u0115\x03\x02\x02\x02\u0115\u0117\x03\x02" +
-		"\x02\x02\u0116\u0114\x03\x02\x02\x02\u0117\u0118\x07)\x02\x02\u0118%\x03" +
-		"\x02\x02\x02\u0119\u0123\x05(\x15\x02\u011A\u0123\x05*\x16\x02\u011B\u0123" +
-		"\x05,\x17\x02\u011C\u0123\x05.\x18\x02\u011D\u0123\x050\x19\x02\u011E" +
-		"\u0123\x052\x1A\x02\u011F\u0123\x054\x1B\x02\u0120\u0123\x056\x1C\x02" +
-		"\u0121\u0123\x058\x1D\x02\u0122\u0119\x03\x02\x02\x02\u0122\u011A\x03" +
-		"\x02\x02\x02\u0122\u011B\x03\x02\x02\x02\u0122\u011C\x03\x02\x02\x02\u0122" +
-		"\u011D\x03\x02\x02\x02\u0122\u011E\x03\x02\x02\x02\u0122\u011F\x03\x02" +
-		"\x02\x02\u0122\u0120\x03\x02\x02\x02\u0122\u0121\x03\x02\x02\x02\u0123" +
-		"\'\x03\x02\x02\x02\u0124\u0128\x07 \x02\x02\u0125\u0128\x07!\x02\x02\u0126" +
-		"\u0128\x07\x1F\x02\x02\u0127\u0124\x03\x02\x02\x02\u0127\u0125\x03\x02" +
-		"\x02\x02\u0127\u0126\x03\x02\x02\x02\u0128\u0129\x03\x02\x02\x02\u0129" +
-		"\u012A\x07\x10\x02\x02\u012A\u012D\x07,\x02\x02\u012B\u012C\x07-\x02\x02" +
-		"\u012C\u012E\x07,\x02\x02\u012D\u012B\x03\x02\x02\x02\u012D\u012E\x03" +
-		"\x02\x02\x02\u012E\u012F\x03\x02\x02\x02\u012F\u0130\x07.\x02\x02\u0130" +
-		")\x03\x02\x02\x02\u0131\u0133\x07\x1A\x02\x02\u0132\u0134\x07\x1B\x02" +
-		"\x02\u0133\u0132\x03\x02\x02\x02\u0134\u0135\x03\x02\x02\x02\u0135\u0133" +
-		"\x03\x02\x02\x02\u0135\u0136\x03\x02\x02\x02\u0136+\x03\x02\x02\x02\u0137" +
-		"\u0138\x07\x1C\x02\x02\u0138\u0139\x07!\x02\x02\u0139-\x03\x02\x02\x02" +
-		"\u013A\u013B\x07\x11\x02\x02\u013B\u013C\x05\"\x12\x02\u013C\u013D\x07" +
-		"\x12\x02\x02\u013D/\x03\x02\x02\x02\u013E\u0140\x07\x1D\x02\x02\u013F" +
-		"\u013E\x03\x02\x02\x02\u0140\u0141\x03\x02\x02\x02\u0141\u013F\x03\x02" +
-		"\x02\x02\u0141\u0142\x03\x02\x02\x02\u01421\x03\x02\x02\x02\u0143\u0145" +
-		"\x07\x1E\x02\x02\u0144\u0143\x03\x02\x02\x02\u0145\u0146\x03\x02\x02\x02" +
-		"\u0146\u0144\x03\x02\x02\x02\u0146\u0147\x03\x02\x02\x02\u01473\x03\x02" +
-		"\x02\x02\u0148\u0149\x07\x13\x02\x02\u0149\u014A\x05\n\x06\x02\u014A\u014C" +
-		"\x07\x14\x02\x02\u014B\u014D\x05$\x13\x02\u014C\u014B\x03\x02\x02\x02" +
-		"\u014C\u014D\x03\x02\x02\x02\u014D5\x03\x02\x02\x02\u014E\u014F\x07\x15" +
-		"\x02\x02\u014F\u0150\x05\n\x06\x02\u0150\u0152\x07\x16\x02\x02\u0151\u0153" +
-		"\x05$\x13\x02\u0152\u0151\x03\x02\x02\x02\u0152\u0153\x03\x02\x02\x02" +
-		"\u01537\x03\x02\x02\x02\u0154\u0155\x07\x17\x02\x02\u0155\u0156\x05\n" +
-		"\x06\x02\u0156\u0158\x07\x18\x02\x02\u0157\u0159\x05$\x13\x02\u0158\u0157" +
-		"\x03\x02\x02\x02\u0158\u0159\x03\x02\x02\x02\u01599\x03\x02\x02\x020=" +
-		"GLQX_gnuz\x7F\x86\x8A\x94\x99\x9E\xA5\xA9\xB2\xB7\xBC\xC3\xC7\xCF\xD4" +
-		"\xD9\xE0\xE4\xEB\xF0\xF5\xFC\u0100\u0106\u010B\u010F\u0114\u0122\u0127" +
-		"\u012D\u0135\u0141\u0146\u014C\u0152\u0158";
+		"\x1D\t\x1D\x04\x1E\t\x1E\x03\x02\x07\x02>\n\x02\f\x02\x0E\x02A\v\x02\x03" +
+		"\x02\x03\x02\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x05\x03J\n\x03\x03" +
+		"\x04\x03\x04\x03\x04\x05\x04O\n\x04\x03\x04\x07\x04R\n\x04\f\x04\x0E\x04" +
+		"U\v\x04\x03\x04\x03\x04\x07\x04Y\n\x04\f\x04\x0E\x04\\\v\x04\x03\x04\x03" +
+		"\x04\x07\x04`\n\x04\f\x04\x0E\x04c\v\x04\x03\x04\x03\x04\x03\x05\x07\x05" +
+		"h\n\x05\f\x05\x0E\x05k\v\x05\x03\x06\x03\x06\x03\x06\x03\x06\x05\x06q" +
+		"\n\x06\x03\x07\x03\x07\x03\x07\x03\x07\x03\x07\x05\x07x\n\x07\x03\b\x03" +
+		"\b\x03\b\x05\b}\n\b\x03\b\x07\b\x80\n\b\f\b\x0E\b\x83\v\b\x03\b\x03\b" +
+		"\x07\b\x87\n\b\f\b\x0E\b\x8A\v\b\x03\b\x05\b\x8D\n\b\x03\t\x03\t\x03\t" +
+		"\x03\t\x03\t\x03\t\x03\t\x03\t\x05\t\x97\n\t\x03\n\x03\n\x03\n\x05\n\x9C" +
+		"\n\n\x03\n\x07\n\x9F\n\n\f\n\x0E\n\xA2\v\n\x03\n\x03\n\x07\n\xA6\n\n\f" +
+		"\n\x0E\n\xA9\v\n\x03\n\x05\n\xAC\n\n\x03\v\x03\v\x03\v\x03\v\x03\v\x03" +
+		"\v\x03\v\x05\v\xB5\n\v\x03\f\x03\f\x03\f\x05\f\xBA\n\f\x03\f\x07\f\xBD" +
+		"\n\f\f\f\x0E\f\xC0\v\f\x03\f\x03\f\x07\f\xC4\n\f\f\f\x0E\f\xC7\v\f\x03" +
+		"\f\x05\f\xCA\n\f\x03\r\x03\r\x03\r\x03\r\x03\r\x03\r\x05\r\xD2\n\r\x03" +
+		"\x0E\x03\x0E\x03\x0E\x05\x0E\xD7\n\x0E\x03\x0E\x07\x0E\xDA\n\x0E\f\x0E" +
+		"\x0E\x0E\xDD\v\x0E\x03\x0E\x03\x0E\x07\x0E\xE1\n\x0E\f\x0E\x0E\x0E\xE4" +
+		"\v\x0E\x03\x0E\x05\x0E\xE7\n\x0E\x03\x0F\x03\x0F\x03\x0F\x03\x0F\x03\x0F" +
+		"\x05\x0F\xEE\n\x0F\x03\x10\x03\x10\x03\x10\x05\x10\xF3\n\x10\x03\x10\x07" +
+		"\x10\xF6\n\x10\f\x10\x0E\x10\xF9\v\x10\x03\x10\x03\x10\x07\x10\xFD\n\x10" +
+		"\f\x10\x0E\x10\u0100\v\x10\x03\x10\x05\x10\u0103\n\x10\x03\x11\x03\x11" +
+		"\x03\x11\x03\x11\x05\x11\u0109\n\x11\x03\x12\x06\x12\u010C\n\x12\r\x12" +
+		"\x0E\x12\u010D\x03\x13\x03\x13\x05\x13\u0112\n\x13\x03\x13\x07\x13\u0115" +
+		"\n\x13\f\x13\x0E\x13\u0118\v\x13\x03\x13\x03\x13\x03\x14\x03\x14\x03\x14" +
+		"\x03\x14\x03\x14\x03\x14\x03\x14\x03\x14\x03\x14\x03\x14\x05\x14\u0126" +
+		"\n\x14\x03\x15\x03\x15\x03\x15\x05\x15\u012B\n\x15\x03\x15\x03\x15\x03" +
+		"\x15\x03\x15\x05\x15\u0131\n\x15\x03\x15\x03\x15\x03\x16\x03\x16\x06\x16" +
+		"\u0137\n\x16\r\x16\x0E\x16\u0138\x03\x17\x03\x17\x03\x17\x03\x18\x03\x18" +
+		"\x03\x19\x03\x19\x03\x19\x03\x19\x03\x1A\x03\x1A\x03\x1B\x03\x1B\x03\x1C" +
+		"\x03\x1C\x03\x1C\x03\x1C\x05\x1C\u014C\n\x1C\x03\x1D\x03\x1D\x03\x1D\x03" +
+		"\x1D\x05\x1D\u0152\n\x1D\x03\x1E\x03\x1E\x03\x1E\x03\x1E\x05\x1E\u0158" +
+		"\n\x1E\x03\x1E\x02\x02\x02\x1F\x02\x02\x04\x02\x06\x02\b\x02\n\x02\f\x02" +
+		"\x0E\x02\x10\x02\x12\x02\x14\x02\x16\x02\x18\x02\x1A\x02\x1C\x02\x1E\x02" +
+		" \x02\"\x02$\x02&\x02(\x02*\x02,\x02.\x020\x022\x024\x026\x028\x02:\x02" +
+		"\x02\x03\x03\x02 \"\x02\u018D\x02?\x03\x02\x02\x02\x04I\x03\x02\x02\x02" +
+		"\x06K\x03\x02\x02\x02\bi\x03\x02\x02\x02\np\x03\x02\x02\x02\fw\x03\x02" +
+		"\x02\x02\x0Ey\x03\x02\x02\x02\x10\x96\x03\x02\x02\x02\x12\x98\x03\x02" +
+		"\x02\x02\x14\xB4\x03\x02\x02\x02\x16\xB6\x03\x02\x02\x02\x18\xD1\x03\x02" +
+		"\x02\x02\x1A\xD3\x03\x02\x02\x02\x1C\xED\x03\x02\x02\x02\x1E\xEF\x03\x02" +
+		"\x02\x02 \u0108\x03\x02\x02\x02\"\u010B\x03\x02\x02\x02$\u010F\x03\x02" +
+		"\x02\x02&\u0125\x03\x02\x02\x02(\u012A\x03\x02\x02\x02*\u0134\x03\x02" +
+		"\x02\x02,\u013A\x03\x02\x02\x02.\u013D\x03\x02\x02\x020\u013F\x03\x02" +
+		"\x02\x022\u0143\x03\x02\x02\x024\u0145\x03\x02\x02\x026\u0147\x03\x02" +
+		"\x02\x028\u014D\x03\x02\x02\x02:\u0153\x03\x02\x02\x02<>\x05\x04\x03\x02" +
+		"=<\x03\x02\x02\x02>A\x03\x02\x02\x02?=\x03\x02\x02\x02?@\x03\x02\x02\x02" +
+		"@B\x03\x02\x02\x02A?\x03\x02\x02\x02BC\x07\x02\x02\x03C\x03\x03\x02\x02" +
+		"\x02DJ\x05\f\x07\x02EJ\x05\x06\x04\x02FJ\x05&\x14\x02GJ\x05\"\x12\x02" +
+		"HJ\x07%\x02\x02ID\x03\x02\x02\x02IE\x03\x02\x02\x02IF\x03\x02\x02\x02" +
+		"IG\x03\x02\x02\x02IH\x03\x02\x02\x02J\x05\x03\x02\x02\x02KL\x07\r\x02" +
+		"\x02LN\x07\'\x02\x02MO\x07+\x02\x02NM\x03\x02\x02\x02NO\x03\x02\x02\x02" +
+		"OS\x03\x02\x02\x02PR\x07,\x02\x02QP\x03\x02\x02\x02RU\x03\x02\x02\x02" +
+		"SQ\x03\x02\x02\x02ST\x03\x02\x02\x02TV\x03\x02\x02\x02US\x03\x02\x02\x02" +
+		"VZ\x07(\x02\x02WY\x05\n\x06\x02XW\x03\x02\x02\x02Y\\\x03\x02\x02\x02Z" +
+		"X\x03\x02\x02\x02Z[\x03\x02\x02\x02[a\x03\x02\x02\x02\\Z\x03\x02\x02\x02" +
+		"]^\x07\x0F\x02\x02^`\x05\b\x05\x02_]\x03\x02\x02\x02`c\x03\x02\x02\x02" +
+		"a_\x03\x02\x02\x02ab\x03\x02\x02\x02bd\x03\x02\x02\x02ca\x03\x02\x02\x02" +
+		"de\x07\x0E\x02\x02e\x07\x03\x02\x02\x02fh\x05\n\x06\x02gf\x03\x02\x02" +
+		"\x02hk\x03\x02\x02\x02ig\x03\x02\x02\x02ij\x03\x02\x02\x02j\t\x03\x02" +
+		"\x02\x02ki\x03\x02\x02\x02lq\x05&\x14\x02mq\x05\"\x12\x02nq\x05\x06\x04" +
+		"\x02oq\x07%\x02\x02pl\x03\x02\x02\x02pm\x03\x02\x02\x02pn\x03\x02\x02" +
+		"\x02po\x03\x02\x02\x02q\v\x03\x02\x02\x02rx\x05\x0E\b\x02sx\x05\x12\n" +
+		"\x02tx\x05\x16\f\x02ux\x05\x1A\x0E\x02vx\x05\x1E\x10\x02wr\x03\x02\x02" +
+		"\x02ws\x03\x02\x02\x02wt\x03\x02\x02\x02wu\x03\x02\x02\x02wv\x03\x02\x02" +
+		"\x02x\r\x03\x02\x02\x02yz\x07\x03\x02\x02z|\x07\'\x02\x02{}\x07+\x02\x02" +
+		"|{\x03\x02\x02\x02|}\x03\x02\x02\x02}\x81\x03\x02\x02\x02~\x80\x07,\x02" +
+		"\x02\x7F~\x03\x02\x02\x02\x80\x83\x03\x02\x02\x02\x81\x7F\x03\x02\x02" +
+		"\x02\x81\x82\x03\x02\x02\x02\x82\x84\x03\x02\x02\x02\x83\x81\x03\x02\x02" +
+		"\x02\x84\x88\x07)\x02\x02\x85\x87\x05\x10\t\x02\x86\x85\x03\x02\x02\x02" +
+		"\x87\x8A\x03\x02\x02\x02\x88\x86\x03\x02\x02\x02\x88\x89\x03\x02\x02\x02" +
+		"\x89\x8C\x03\x02\x02\x02\x8A\x88\x03\x02\x02\x02\x8B\x8D\x07\x04\x02\x02" +
+		"\x8C\x8B\x03\x02\x02\x02\x8C\x8D\x03\x02\x02\x02\x8D\x0F\x03\x02\x02\x02" +
+		"\x8E\x97\x05&\x14\x02\x8F\x97\x05\"\x12\x02\x90\x97\x05\x06\x04\x02\x91" +
+		"\x97\x07%\x02\x02\x92\x97\x05\x12\n\x02\x93\x97\x05\x16\f\x02\x94\x97" +
+		"\x05\x1A\x0E\x02\x95\x97\x05\x1E\x10\x02\x96\x8E\x03\x02\x02\x02\x96\x8F" +
+		"\x03\x02\x02\x02\x96\x90\x03\x02\x02\x02\x96\x91\x03\x02\x02\x02\x96\x92" +
+		"\x03\x02\x02\x02\x96\x93\x03\x02\x02\x02\x96\x94\x03\x02\x02\x02\x96\x95" +
+		"\x03\x02\x02\x02\x97\x11\x03\x02\x02\x02\x98\x99\x07\x05\x02\x02\x99\x9B" +
+		"\x07\'\x02\x02\x9A\x9C\x07+\x02\x02\x9B\x9A\x03\x02\x02\x02\x9B\x9C\x03" +
+		"\x02\x02\x02\x9C\xA0\x03\x02\x02\x02\x9D\x9F\x07,\x02\x02\x9E\x9D\x03" +
+		"\x02\x02\x02\x9F\xA2\x03\x02\x02\x02\xA0\x9E\x03\x02\x02\x02\xA0\xA1\x03" +
+		"\x02\x02\x02\xA1\xA3\x03\x02\x02\x02\xA2\xA0\x03\x02\x02\x02\xA3\xA7\x07" +
+		")\x02\x02\xA4\xA6\x05\x14\v\x02\xA5\xA4\x03\x02\x02\x02\xA6\xA9\x03\x02" +
+		"\x02\x02\xA7\xA5\x03\x02\x02\x02\xA7\xA8\x03\x02\x02\x02\xA8\xAB\x03\x02" +
+		"\x02\x02\xA9\xA7\x03\x02\x02\x02\xAA\xAC\x07\x06\x02\x02\xAB\xAA\x03\x02" +
+		"\x02\x02\xAB\xAC\x03\x02\x02\x02\xAC\x13\x03\x02\x02\x02\xAD\xB5\x05&" +
+		"\x14\x02\xAE\xB5\x05\"\x12\x02\xAF\xB5\x05\x06\x04\x02\xB0\xB5\x07%\x02" +
+		"\x02\xB1\xB5\x05\x16\f\x02\xB2\xB5\x05\x1A\x0E\x02\xB3\xB5\x05\x1E\x10" +
+		"\x02\xB4\xAD\x03\x02\x02\x02\xB4\xAE\x03\x02\x02\x02\xB4\xAF\x03\x02\x02" +
+		"\x02\xB4\xB0\x03\x02\x02\x02\xB4\xB1\x03\x02\x02\x02\xB4\xB2\x03\x02\x02" +
+		"\x02\xB4\xB3\x03\x02\x02\x02\xB5\x15\x03\x02\x02\x02\xB6\xB7\x07\x07\x02" +
+		"\x02\xB7\xB9\x07\'\x02\x02\xB8\xBA\x07+\x02\x02\xB9\xB8\x03\x02\x02\x02" +
+		"\xB9\xBA\x03\x02\x02\x02\xBA\xBE\x03\x02\x02\x02\xBB\xBD\x07,\x02\x02" +
+		"\xBC\xBB\x03\x02\x02\x02\xBD\xC0\x03\x02\x02\x02\xBE\xBC\x03\x02\x02\x02" +
+		"\xBE\xBF\x03\x02\x02\x02\xBF\xC1\x03\x02\x02\x02\xC0\xBE\x03\x02\x02\x02" +
+		"\xC1\xC5\x07)\x02\x02\xC2\xC4\x05\x18\r\x02\xC3\xC2\x03\x02\x02\x02\xC4" +
+		"\xC7\x03\x02\x02\x02\xC5\xC3\x03\x02\x02\x02\xC5\xC6\x03\x02\x02\x02\xC6" +
+		"\xC9\x03\x02\x02\x02\xC7\xC5\x03\x02\x02\x02\xC8\xCA\x07\b\x02\x02\xC9" +
+		"\xC8\x03\x02\x02\x02\xC9\xCA\x03\x02\x02\x02\xCA\x17\x03\x02\x02\x02\xCB" +
+		"\xD2\x05&\x14\x02\xCC\xD2\x05\"\x12\x02\xCD\xD2\x05\x06\x04\x02\xCE\xD2" +
+		"\x07%\x02\x02\xCF\xD2\x05\x1A\x0E\x02\xD0\xD2\x05\x1E\x10\x02\xD1\xCB" +
+		"\x03\x02\x02\x02\xD1\xCC\x03\x02\x02\x02\xD1\xCD\x03\x02\x02\x02\xD1\xCE" +
+		"\x03\x02\x02\x02\xD1\xCF\x03\x02\x02\x02\xD1\xD0\x03\x02\x02\x02\xD2\x19" +
+		"\x03\x02\x02\x02\xD3\xD4\x07\t\x02\x02\xD4\xD6\x07\'\x02\x02\xD5\xD7\x07" +
+		"+\x02\x02\xD6\xD5\x03\x02\x02\x02\xD6\xD7\x03\x02\x02\x02\xD7\xDB\x03" +
+		"\x02\x02\x02\xD8\xDA\x07,\x02\x02\xD9\xD8\x03\x02\x02\x02\xDA\xDD\x03" +
+		"\x02\x02\x02\xDB\xD9\x03\x02\x02\x02\xDB\xDC\x03\x02\x02\x02\xDC\xDE\x03" +
+		"\x02\x02\x02\xDD\xDB\x03\x02\x02\x02\xDE\xE2\x07)\x02\x02\xDF\xE1\x05" +
+		"\x1C\x0F\x02\xE0\xDF\x03\x02\x02\x02\xE1\xE4\x03\x02\x02\x02\xE2\xE0\x03" +
+		"\x02\x02\x02\xE2\xE3\x03\x02\x02\x02\xE3\xE6\x03\x02\x02\x02\xE4\xE2\x03" +
+		"\x02\x02\x02\xE5\xE7\x07\n\x02\x02\xE6\xE5\x03\x02\x02\x02\xE6\xE7\x03" +
+		"\x02\x02\x02\xE7\x1B\x03\x02\x02\x02\xE8\xEE\x05&\x14\x02\xE9\xEE\x05" +
+		"\"\x12\x02\xEA\xEE\x05\x06\x04\x02\xEB\xEE\x07%\x02\x02\xEC\xEE\x05\x1E" +
+		"\x10\x02\xED\xE8\x03\x02\x02\x02\xED\xE9\x03\x02\x02\x02\xED\xEA\x03\x02" +
+		"\x02\x02\xED\xEB\x03\x02\x02\x02\xED\xEC\x03\x02\x02\x02\xEE\x1D\x03\x02" +
+		"\x02\x02\xEF\xF0\x07\v\x02\x02\xF0\xF2\x07\'\x02\x02\xF1\xF3\x07+\x02" +
+		"\x02\xF2\xF1\x03\x02\x02\x02\xF2\xF3\x03\x02\x02\x02\xF3\xF7\x03\x02\x02" +
+		"\x02\xF4\xF6\x07,\x02\x02\xF5\xF4\x03\x02\x02\x02\xF6\xF9\x03\x02\x02" +
+		"\x02\xF7\xF5\x03\x02\x02\x02\xF7\xF8\x03\x02\x02\x02\xF8\xFA\x03\x02\x02" +
+		"\x02\xF9\xF7\x03\x02\x02\x02\xFA\xFE\x07)\x02\x02\xFB\xFD\x05 \x11\x02" +
+		"\xFC\xFB\x03\x02\x02\x02\xFD\u0100\x03\x02\x02\x02\xFE\xFC\x03\x02\x02" +
+		"\x02\xFE\xFF\x03\x02\x02\x02\xFF\u0102\x03\x02\x02\x02\u0100\xFE\x03\x02" +
+		"\x02\x02\u0101\u0103\x07\f\x02\x02\u0102\u0101\x03\x02\x02\x02\u0102\u0103" +
+		"\x03\x02\x02\x02\u0103\x1F\x03\x02\x02\x02\u0104\u0109\x05&\x14\x02\u0105" +
+		"\u0109\x05\"\x12\x02\u0106\u0109\x05\x06\x04\x02\u0107\u0109\x07%\x02" +
+		"\x02\u0108\u0104\x03\x02\x02\x02\u0108\u0105\x03\x02\x02\x02\u0108\u0106" +
+		"\x03\x02\x02\x02\u0108\u0107\x03\x02\x02\x02\u0109!\x03\x02\x02\x02\u010A" +
+		"\u010C\t\x02\x02\x02\u010B\u010A\x03\x02\x02\x02\u010C\u010D\x03\x02\x02" +
+		"\x02\u010D\u010B\x03\x02\x02\x02\u010D\u010E\x03\x02\x02\x02\u010E#\x03" +
+		"\x02\x02\x02\u010F\u0111\x07\x19\x02\x02\u0110\u0112\x07+\x02\x02\u0111" +
+		"\u0110\x03\x02\x02\x02\u0111\u0112\x03\x02\x02\x02\u0112\u0116\x03\x02" +
+		"\x02\x02\u0113\u0115\x07,\x02\x02\u0114\u0113\x03\x02\x02\x02\u0115\u0118" +
+		"\x03\x02\x02\x02\u0116\u0114\x03\x02\x02\x02\u0116\u0117\x03\x02\x02\x02" +
+		"\u0117\u0119\x03\x02\x02\x02\u0118\u0116\x03\x02\x02\x02\u0119\u011A\x07" +
+		"*\x02\x02\u011A%\x03\x02\x02\x02\u011B\u0126\x05(\x15\x02\u011C\u0126" +
+		"\x05*\x16\x02\u011D\u0126\x05,\x17\x02\u011E\u0126\x05.\x18\x02\u011F" +
+		"\u0126\x050\x19\x02\u0120\u0126\x052\x1A\x02\u0121\u0126\x054\x1B\x02" +
+		"\u0122\u0126\x056\x1C\x02\u0123\u0126\x058\x1D\x02\u0124\u0126\x05:\x1E" +
+		"\x02\u0125\u011B\x03\x02\x02\x02\u0125\u011C\x03\x02\x02\x02\u0125\u011D" +
+		"\x03\x02\x02\x02\u0125\u011E\x03\x02\x02\x02\u0125\u011F\x03\x02\x02\x02" +
+		"\u0125\u0120\x03\x02\x02\x02\u0125\u0121\x03\x02\x02\x02\u0125\u0122\x03" +
+		"\x02\x02\x02\u0125\u0123\x03\x02\x02\x02\u0125\u0124\x03\x02\x02\x02\u0126" +
+		"\'\x03\x02\x02\x02\u0127\u012B\x07!\x02\x02\u0128\u012B\x07\"\x02\x02" +
+		"\u0129\u012B\x07 \x02\x02\u012A\u0127\x03\x02\x02\x02\u012A\u0128\x03" +
+		"\x02\x02\x02\u012A\u0129\x03\x02\x02\x02\u012B\u012C\x03\x02\x02\x02\u012C" +
+		"\u012D\x07\x10\x02\x02\u012D\u0130\x07-\x02\x02\u012E\u012F\x07.\x02\x02" +
+		"\u012F\u0131\x07-\x02\x02\u0130\u012E\x03\x02\x02\x02\u0130\u0131\x03" +
+		"\x02\x02\x02\u0131\u0132\x03\x02\x02\x02\u0132\u0133\x07/\x02\x02\u0133" +
+		")\x03\x02\x02\x02\u0134\u0136\x07\x1A\x02\x02\u0135\u0137\x07\x1B\x02" +
+		"\x02\u0136\u0135\x03\x02\x02\x02\u0137\u0138\x03\x02\x02\x02\u0138\u0136" +
+		"\x03\x02\x02\x02\u0138\u0139\x03\x02\x02\x02\u0139+\x03\x02\x02\x02\u013A" +
+		"\u013B\x07\x1D\x02\x02\u013B\u013C\x07\"\x02\x02\u013C-\x03\x02\x02\x02" +
+		"\u013D\u013E\x07\x1C\x02\x02\u013E/\x03\x02\x02\x02\u013F\u0140\x07\x11" +
+		"\x02\x02\u0140\u0141\x05\"\x12\x02\u0141\u0142\x07\x12\x02\x02\u01421" +
+		"\x03\x02\x02\x02\u0143\u0144\x07\x1E\x02\x02\u01443\x03\x02\x02\x02\u0145" +
+		"\u0146\x07\x1F\x02\x02\u01465\x03\x02\x02\x02\u0147\u0148\x07\x13\x02" +
+		"\x02\u0148\u0149\x05\n\x06\x02\u0149\u014B\x07\x14\x02\x02\u014A\u014C" +
+		"\x05$\x13\x02\u014B\u014A\x03\x02\x02\x02\u014B\u014C\x03\x02\x02\x02" +
+		"\u014C7\x03\x02\x02\x02\u014D\u014E\x07\x15\x02\x02\u014E\u014F\x05\n" +
+		"\x06\x02\u014F\u0151\x07\x16\x02\x02\u0150\u0152\x05$\x13\x02\u0151\u0150" +
+		"\x03\x02\x02\x02\u0151\u0152\x03\x02\x02\x02\u01529\x03\x02\x02\x02\u0153" +
+		"\u0154\x07\x17\x02\x02\u0154\u0155\x05\n\x06\x02\u0155\u0157\x07\x18\x02" +
+		"\x02\u0156\u0158\x05$\x13\x02\u0157\u0156\x03\x02\x02\x02\u0157\u0158" +
+		"\x03\x02\x02\x02\u0158;\x03\x02\x02\x02.?INSZaipw|\x81\x88\x8C\x96\x9B" +
+		"\xA0\xA7\xAB\xB4\xB9\xBE\xC5\xC9\xD1\xD6\xDB\xE2\xE6\xED\xF2\xF7\xFE\u0102" +
+		"\u0108\u010D\u0111\u0116\u0125\u012A\u0130\u0138\u014B\u0151\u0157";
 	public static __ATN: ATN;
 	public static get _ATN(): ATN {
 		if (!KojiParser.__ATN) {
@@ -2893,6 +2887,9 @@ export class SyntaxSugarContext extends ParserRuleContext {
 	public okurigana(): OkuriganaContext | undefined {
 		return this.tryGetRuleContext(0, OkuriganaContext);
 	}
+	public tateten(): TatetenContext | undefined {
+		return this.tryGetRuleContext(0, TatetenContext);
+	}
 	public annotation(): AnnotationContext | undefined {
 		return this.tryGetRuleContext(0, AnnotationContext);
 	}
@@ -3058,6 +3055,36 @@ export class OkuriganaContext extends ParserRuleContext {
 }
 
 
+export class TatetenContext extends ParserRuleContext {
+	public TatetenChar(): TerminalNode { return this.getToken(KojiParser.TatetenChar, 0); }
+	constructor(parent: ParserRuleContext | undefined, invokingState: number) {
+		super(parent, invokingState);
+	}
+	// @Override
+	public get ruleIndex(): number { return KojiParser.RULE_tateten; }
+	// @Override
+	public enterRule(listener: KojiParserListener): void {
+		if (listener.enterTateten) {
+			listener.enterTateten(this);
+		}
+	}
+	// @Override
+	public exitRule(listener: KojiParserListener): void {
+		if (listener.exitTateten) {
+			listener.exitTateten(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: KojiParserVisitor<Result>): Result {
+		if (visitor.visitTateten) {
+			return visitor.visitTateten(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
+}
+
+
 export class AnnotationContext extends ParserRuleContext {
 	public _content: TextSegmentContext;
 	public AnnotationOpen(): TerminalNode { return this.getToken(KojiParser.AnnotationOpen, 0); }
@@ -3094,15 +3121,7 @@ export class AnnotationContext extends ParserRuleContext {
 
 
 export class IllegibleContext extends ParserRuleContext {
-	public Illegible(): TerminalNode[];
-	public Illegible(i: number): TerminalNode;
-	public Illegible(i?: number): TerminalNode | TerminalNode[] {
-		if (i === undefined) {
-			return this.getTokens(KojiParser.Illegible);
-		} else {
-			return this.getToken(KojiParser.Illegible, i);
-		}
-	}
+	public Illegible(): TerminalNode { return this.getToken(KojiParser.Illegible, 0); }
 	constructor(parent: ParserRuleContext | undefined, invokingState: number) {
 		super(parent, invokingState);
 	}
@@ -3132,15 +3151,7 @@ export class IllegibleContext extends ParserRuleContext {
 
 
 export class BugHoleContext extends ParserRuleContext {
-	public BugHole(): TerminalNode[];
-	public BugHole(i: number): TerminalNode;
-	public BugHole(i?: number): TerminalNode | TerminalNode[] {
-		if (i === undefined) {
-			return this.getTokens(KojiParser.BugHole);
-		} else {
-			return this.getToken(KojiParser.BugHole, i);
-		}
-	}
+	public BugHole(): TerminalNode { return this.getToken(KojiParser.BugHole, 0); }
 	constructor(parent: ParserRuleContext | undefined, invokingState: number) {
 		super(parent, invokingState);
 	}

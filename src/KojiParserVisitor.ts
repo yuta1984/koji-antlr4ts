@@ -25,6 +25,7 @@ import { SyntaxSugarContext } from "./KojiParser";
 import { FuriganaContext } from "./KojiParser";
 import { KaeritenContext } from "./KojiParser";
 import { OkuriganaContext } from "./KojiParser";
+import { TatetenContext } from "./KojiParser";
 import { AnnotationContext } from "./KojiParser";
 import { IllegibleContext } from "./KojiParser";
 import { BugHoleContext } from "./KojiParser";
@@ -194,6 +195,13 @@ export interface KojiParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitOkurigana?: (ctx: OkuriganaContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `KojiParser.tateten`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitTateten?: (ctx: TatetenContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `KojiParser.annotation`.

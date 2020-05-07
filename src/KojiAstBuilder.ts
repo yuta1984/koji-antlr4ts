@@ -78,15 +78,12 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any> implements Koj
 		const lb = ctx.Lb();
 		if (block) {
 			const blockNode = this.visitBlock(block);
-			this.blocks.push(blockNode);
 			return blockNode;
 		} else if (inline) {
 			const inlineNode = this.visitInline(inline);
-			this.inlines.push(inlineNode);
 			return inlineNode;
 		} else if (syntaxSugar) {
 			const inlineNode = this.visitSyntaxSugar(syntaxSugar);
-			this.inlines.push(inlineNode);
 			return inlineNode;
 		} else if (textSegment) {
 			return textSegment.text;
@@ -101,11 +98,13 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any> implements Koj
 		const block3 = ctx.block3();
 		const block4 = ctx.block4();
 		const block5 = ctx.block5();
-		if (block1) return this.visitBlock1(block1);
-		if (block2) return this.visitBlock2(block2);
-		if (block3) return this.visitBlock3(block3);
-		if (block4) return this.visitBlock4(block4);
-		if (block5) return this.visitBlock5(block5);
+		let node: KojiBlockNode;
+		if (block1) node = this.visitBlock1(block1);
+		if (block2) node = this.visitBlock2(block2);
+		if (block3) node = this.visitBlock3(block3);
+		if (block4) node = this.visitBlock4(block4);
+		if (block5) node = this.visitBlock5(block5);
+		return node;
 	}
 
 	private locationOfBlockContent(ctx: ParserRuleContext): Location {
@@ -118,7 +117,7 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any> implements Koj
 		const content = ctx.blockContent1();
 		const name = ctx.ElemName().text;
 		const attrs = this.processAttrs(ctx);
-		return {
+		const node: KojiBlockNode = {
 			type: 'block',
 			name: name,
 			children: content.map((c) => this.visitBlockContent1(c)),
@@ -127,6 +126,8 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any> implements Koj
 			level: 1,
 			content: this.locationOfBlockContent(ctx)
 		};
+		this.blocks.push(node);
+		return node;
 	}
 
 	visitBlockContent1(ctx: BlockContent1Context): KojiASTNode | string {
@@ -152,7 +153,7 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any> implements Koj
 		const content = ctx.blockContent2();
 		const name = ctx.ElemName().text;
 		const attrs = this.processAttrs(ctx);
-		return {
+		const node: KojiBlockNode = {
 			type: 'block',
 			name: name,
 			children: content.map((c) => this.visitBlockContent2(c)),
@@ -161,6 +162,8 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any> implements Koj
 			level: 2,
 			content: this.locationOfBlockContent(ctx)
 		};
+		this.blocks.push(node);
+		return node;
 	}
 
 	visitBlockContent2(ctx: BlockContent2Context): KojiASTNode | string {
@@ -184,7 +187,7 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any> implements Koj
 		const content = ctx.blockContent3();
 		const name = ctx.ElemName().text;
 		const attrs = this.processAttrs(ctx);
-		return {
+		const node: KojiBlockNode = {
 			type: 'block',
 			name: name,
 			children: content.map((c) => this.visitBlockContent3(c)),
@@ -193,6 +196,8 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any> implements Koj
 			level: 3,
 			content: this.locationOfBlockContent(ctx)
 		};
+		this.blocks.push(node);
+		return node;
 	}
 
 	visitBlockContent3(ctx: BlockContent3Context): KojiASTNode | string {
@@ -214,7 +219,7 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any> implements Koj
 		const content = ctx.blockContent4();
 		const name = ctx.ElemName().text;
 		const attrs = this.processAttrs(ctx);
-		return {
+		const node: KojiBlockNode = {
 			type: 'block',
 			name: name,
 			children: content.map((c) => this.visitBlockContent4(c)),
@@ -223,6 +228,8 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any> implements Koj
 			level: 4,
 			content: this.locationOfBlockContent(ctx)
 		};
+		this.blocks.push(node);
+		return node;
 	}
 
 	visitBlockContent4(ctx: BlockContent4Context): KojiASTNode | string {
@@ -242,7 +249,7 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any> implements Koj
 		const content = ctx.blockContent5();
 		const name = ctx.ElemName().text;
 		const attrs = this.processAttrs(ctx);
-		return {
+		const node: KojiBlockNode = {
 			type: 'block',
 			name: name,
 			children: content.map((c) => this.visitBlockContent5(c)),
@@ -251,6 +258,8 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any> implements Koj
 			level: 5,
 			content: this.locationOfBlockContent(ctx)
 		};
+		this.blocks.push(node);
+		return node;
 	}
 
 	visitBlockContent5(ctx: BlockContent5Context): KojiASTNode | string {
@@ -291,7 +300,7 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any> implements Koj
 		const attrs = this.processAttrs(ctx);
 		const location = this.loc(ctx);
 		this.parens.push(location);
-		return {
+		const node: KojiInlineNode = {
 			type: 'inline',
 			name: name,
 			children: children,
@@ -301,6 +310,8 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any> implements Koj
 			paren: { start: location.start, stop: location.stop },
 			isSyntaxSugar: false
 		};
+		this.inlines.push(node);
+		return node;
 	}
 
 	visitInlineContentSeq(ctx: InlineContentSeqContext) {
@@ -328,19 +339,21 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any> implements Koj
 		const annotation = ctx.annotation();
 		const okurigana = ctx.okurigana();
 		const kaeriten = ctx.kaeriten();
+		const tateten = ctx.tateten();
 		const illegible = ctx.illegible();
 		const bugHole = ctx.bugHole();
 		const person = ctx.person();
 		const place = ctx.place();
 		const date = ctx.date();
 		const location = this.loc(ctx);
+		let node: KojiInlineNode;
 		if (furigana) {
 			const parenStart = location.start + ctx.text.indexOf('（');
 			this.parens.push({ start: parenStart, stop: location.stop });
 			const extra = [];
 			if (furigana._right) extra.push([ furigana._right.text ]);
 			if (furigana._left) extra.push([ furigana._left.text ]);
-			return {
+			node = {
 				name: '振り仮名',
 				type: 'inline',
 				children: [ furigana._target.text ],
@@ -350,7 +363,7 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any> implements Koj
 			};
 		} else if (annotation) {
 			this.parens.push(location);
-			return {
+			node = {
 				type: 'inline',
 				name: '注釈',
 				children: [ annotation._content.text ],
@@ -358,7 +371,7 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any> implements Koj
 				isSyntaxSugar: true
 			};
 		} else if (okurigana) {
-			return {
+			node = {
 				type: 'inline',
 				name: '送り仮名',
 				children: [ okurigana._content.text ],
@@ -366,15 +379,23 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any> implements Koj
 				isSyntaxSugar: true
 			};
 		} else if (kaeriten) {
-			return {
+			node = {
 				type: 'inline',
 				name: '返り点',
 				children: [ kaeriten._content.text ],
 				location: this.loc(ctx),
 				isSyntaxSugar: true
 			};
+		} else if (tateten) {
+			node = {
+				type: 'inline',
+				name: '竪点',
+				children: [ tateten.text ],
+				location: this.loc(ctx),
+				isSyntaxSugar: true
+			};
 		} else if (illegible) {
-			return {
+			node = {
 				type: 'inline',
 				name: '難読',
 				children: [ illegible.text ],
@@ -382,7 +403,7 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any> implements Koj
 				isSyntaxSugar: true
 			};
 		} else if (bugHole) {
-			return {
+			node = {
 				type: 'inline',
 				name: '虫損',
 				children: [ bugHole.text ],
@@ -394,7 +415,7 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any> implements Koj
 			const child = this.visitInlineContent(person._content);
 			const attrsCtx = person.postPositionedAttrs();
 			const attrs = attrsCtx ? this.processAttrs(person.postPositionedAttrs()) : {};
-			return {
+			node = {
 				type: 'inline',
 				name: '人物',
 				...attrs,
@@ -407,7 +428,7 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any> implements Koj
 			const child = this.visitInlineContent(place._content);
 			const attrsCtx = place.postPositionedAttrs();
 			const attrs = attrsCtx ? this.processAttrs(place.postPositionedAttrs()) : {};
-			return {
+			node = {
 				type: 'inline',
 				name: '場所',
 				...attrs,
@@ -420,7 +441,7 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any> implements Koj
 			const child = this.visitInlineContent(date._content);
 			const attrsCtx = date.postPositionedAttrs();
 			const attrs = attrsCtx ? this.processAttrs(date.postPositionedAttrs()) : {};
-			return {
+			node = {
 				type: 'inline',
 				name: '日時',
 				...attrs,
@@ -431,6 +452,8 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any> implements Koj
 		} else {
 			throw new Error('parsing error');
 		}
+		this.inlines.push(node);
+		return node;
 	}
 
 	loc(ctx: { start: Token; stop: Token }): Location {

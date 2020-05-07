@@ -66,6 +66,7 @@ syntaxSugar:
 	furigana
 	| kaeriten
 	| okurigana
+	| tateten
 	| annotation
 	| illegible
 	| bugHole
@@ -77,9 +78,10 @@ furigana: (target = Kanji | target = Kana | target = NonJp)
 FuriganaOpen right = FuriganaContent (FuriganaSep left = FuriganaContent)? FuriganaClose;
 kaeriten: KaeritenMark content = KaeritenChar+;
 okurigana: OkuriganaMark content = Kana;
+tateten: TatetenChar;
 annotation: AnnotationOpen content = textSegment AnnotationClose;
-illegible: Illegible+;
-bugHole: BugHole+;
+illegible: Illegible;
+bugHole: BugHole;
 person: PersonOpen content = inlineContent PersonClose postPositionedAttrs?;
 place: PlaceOpen content = inlineContent PlaceClose postPositionedAttrs?;
 date: DateOpen content = inlineContent DateClose postPositionedAttrs?;
