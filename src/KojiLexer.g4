@@ -33,9 +33,7 @@ PlaceClose: '〕';
 DateOpen: '＜';
 DateClose: '＞';
 AttrsOpen: '［' -> pushMode(HEADER);
-
-KaeritenMark: '＿';
-KaeritenChar: [レ一二三四五六七八九十上中下甲乙丙丁天地人];
+KaeritenMark: '＿' -> pushMode(KAERITEN);
 TatetenChar: [-‐ー―−];
 OkuriganaMark: '￣';
 Illegible: '□';
@@ -67,6 +65,9 @@ Class: ('*' | '＊' | '.') AttrName;
 fragment AttrName: (Kana | Kanji | [:a-zA-Z] | [0-9])+;
 
 mode FURIGANA;
-FuriganaContent: Kana | NonJpChar;
+FuriganaContent: (Kana | NonJpChar)+;
 FuriganaSep: '｜';
 FuriganaClose: '）' -> popMode;
+
+mode KAERITEN;
+KaeritenChar: [レ一二三四五六七八九十上中下甲乙丙丁天地人]+ -> popMode;

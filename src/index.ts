@@ -1,7 +1,14 @@
 import { KojiHTMLConverter } from './converter/KojiHTMLConverter';
 import { KojiAstBuilder, KojiASTNode, KojiDocumentNode } from './KojiAstBuilder';
 import { KojiParser } from './KojiParser';
-import { ANTLRInputStream, CommonTokenStream, ANTLRErrorListener, Recognizer, RecognitionException } from 'antlr4ts';
+import {
+	ANTLRInputStream,
+	CommonTokenStream,
+	ANTLRErrorListener,
+	Recognizer,
+	RecognitionException,
+	Token
+} from 'antlr4ts';
 import { KojiLexer } from './KojiLexer';
 
 interface KojiParseError {
@@ -31,12 +38,14 @@ class AccumlateErrorListener implements ANTLRErrorListener<any> {
 	}
 }
 
-export function tokenize(input: string): { tokens: CommonTokenStream; errors: KojiParseError[] } {
+export function tokenize(input: string): { tokens: Token[]; errors: KojiParseError[] } {
 	const is = new ANTLRInputStream(input);
 	const lexer = new KojiLexer(is);
 	const errorHandler = new AccumlateErrorListener();
 	lexer.addErrorListener(errorHandler);
-	return { tokens: new CommonTokenStream(lexer), errors: errorHandler.errors };
+	const stream = new CommonTokenStream(lexer);
+	stream.fill();
+	return { tokens: stream.getTokens(), errors: errorHandler.errors };
 }
 
 export function parse(input: string): { ast: KojiDocumentNode; errors: KojiParseError[] } {
