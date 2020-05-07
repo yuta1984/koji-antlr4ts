@@ -4,5 +4,4 @@ test/
 node_modules/
 .antlr/
 *.code-workspace
-tsconfig.json
 webpack.config.js
