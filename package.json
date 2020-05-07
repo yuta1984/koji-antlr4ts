@@ -1,6 +1,6 @@
 {
 	"name": "koji-lang",
-	"version": "0.3.1",
+	"version": "0.3.3",
 	"description": "A light-weight markup language for historical Japanese text",
 	"main": "lib/index.js",
 	"scripts": {
@@ -8,7 +8,8 @@
 		"clean": "rm -rf _bundles lib",
 		"build": "npm run clean & tsc && npm run webpack",
 		"webpack": "webpack --mode production",
-		"test": "mocha -r ts-node/register test/*.test.ts"
+		"test": "mocha -r ts-node/register test/*.test.ts",
+		"publish": "npm publish ./"
 	},
 	"author": "Yuta Hashimoto",
 	"license": "MIT",

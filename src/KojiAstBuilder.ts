@@ -412,40 +412,43 @@ export class KojiAstBuilder extends AbstractParseTreeVisitor<any> implements Koj
 			};
 		} else if (person) {
 			this.parens.push(location);
-			const child = this.visitInlineContent(person._content);
+			const content = person._content;
+			const children = content.map((c) => this.visitInlineContent(c));
 			const attrsCtx = person.postPositionedAttrs();
 			const attrs = attrsCtx ? this.processAttrs(person.postPositionedAttrs()) : {};
 			node = {
 				type: 'inline',
 				name: '人物',
 				...attrs,
-				children: [ child ],
+				children,
 				location: this.loc(ctx),
 				isSyntaxSugar: true
 			};
 		} else if (place) {
 			this.parens.push(location);
-			const child = this.visitInlineContent(place._content);
+			const content = place._content;
+			const children = content.map((c) => this.visitInlineContent(c));
 			const attrsCtx = place.postPositionedAttrs();
 			const attrs = attrsCtx ? this.processAttrs(place.postPositionedAttrs()) : {};
 			node = {
 				type: 'inline',
 				name: '場所',
 				...attrs,
-				children: [ child ],
+				children,
 				location: this.loc(ctx),
 				isSyntaxSugar: true
 			};
 		} else if (date) {
 			this.parens.push(location);
-			const child = this.visitInlineContent(date._content);
+			const content = date._content;
+			const children = content.map((c) => this.visitInlineContent(c));
 			const attrsCtx = date.postPositionedAttrs();
 			const attrs = attrsCtx ? this.processAttrs(date.postPositionedAttrs()) : {};
 			node = {
 				type: 'inline',
 				name: '日時',
 				...attrs,
-				children: [ child ],
+				children,
 				location: this.loc(ctx),
 				isSyntaxSugar: true
 			};
