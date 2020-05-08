@@ -17,6 +17,6 @@ export default class Cover extends KojiElement {
 
 	toHTML(node: KojiBlockNode) {
 		const text = this.convertChildren(node.children);
-		return `<div class="block block${node.level} Cover" >${text}</span>`;
+		return `<div class="block block${node.level} Cover" >${text}</div>`;
 	}
 }
