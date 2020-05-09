@@ -7,7 +7,12 @@ export default class Cover extends KojiElement {
 	}
 
 	toXML(node: KojiASTNode): string {
-		throw new Error('Method not implemented.');
+		const text = this.convertChildren(node.children);
+		let idStr = '',
+			classesStr = '';
+		if (node.id) idStr = `xml:id='${node.id}'`;
+		if (node.classes) classesStr = `subtype='${node.classes.join(' ')}'`;
+		return `<titlePage ${idStr} ${classesStr}>${text}</titlePage>`;
 	}
 
 	toText(node: KojiASTNode): string {

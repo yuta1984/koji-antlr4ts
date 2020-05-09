@@ -10,6 +10,7 @@ import {
 	Token
 } from 'antlr4ts';
 import { KojiLexer } from './KojiLexer';
+import { KojiXMLConverter } from './converter/KojiXMLConverter';
 
 interface KojiParseError {
 	offendingSymbol: any | undefined;
@@ -63,7 +64,12 @@ export function parse(input: string): { ast: KojiDocumentNode; errors: KojiParse
 	return { ast, errors };
 }
 
-export function convertToHTML(ast: KojiASTNode): string {
+export function convertToHTML(ast: KojiDocumentNode): string {
 	const converter = new KojiHTMLConverter();
+	return converter.convert(ast);
+}
+
+export function convertToXML(ast: KojiDocumentNode): string {
+	const converter = new KojiXMLConverter();
 	return converter.convert(ast);
 }

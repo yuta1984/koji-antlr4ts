@@ -123,5 +123,29 @@ describe('parser', function() {
 			const ast = parse('ホゲ〔日本橋〕フガ').ast;
 			expect(ast.children[1]).to.have.property('name', '場所');
 		});
+
+		it('recognizes attrs put after person syntactic sugar', function() {
+			const result = parse('｛山田太郎｝［＃id_string＊class_string］');
+			expect(result.errors).to.be.empty;
+			const node = result.ast.children[0];
+			expect(node).to.have.property('id', 'id_string');
+			expect(node).to.have.deep.property('classes', [ 'class_string' ]);
+		});
+
+		it('recognizes attrs put after date syntactic sugar', function() {
+			const result = parse('＜一月一日＞［＃id_string＊class_string］');
+			expect(result.errors).to.be.empty;
+			const node = result.ast.children[0];
+			expect(node).to.have.property('id', 'id_string');
+			expect(node).to.have.deep.property('classes', [ 'class_string' ]);
+		});
+
+		it('recognizes attrs put after place syntactic sugar', function() {
+			const result = parse('〔日本橋〕［＃id_string＊class_string］');
+			expect(result.errors).to.be.empty;
+			const node = result.ast.children[0];
+			expect(node).to.have.property('id', 'id_string');
+			expect(node).to.have.deep.property('classes', [ 'class_string' ]);
+		});
 	});
 });

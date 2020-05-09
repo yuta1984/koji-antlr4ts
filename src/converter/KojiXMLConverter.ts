@@ -3,10 +3,11 @@ import { KojiElement } from './KojiElement';
 import { KojiConverter } from './KojiConverter';
 import inlineElementClasses from './inline_elements';
 import blockElementClasses from './block_elements';
+import * as format from 'xml-formatter';
 
 type KojiElementClass = { new (c: KojiConverter): KojiElement };
 
-export class KojiHTMLConverter implements KojiConverter {
+export class KojiXMLConverter implements KojiConverter {
 	inlineElementMap: { [str: string]: KojiElement } = {};
 	blockElementMap: { [str: string]: KojiElement } = {};
 	inlineElementClasses: Array<KojiElementClass> = inlineElementClasses;
@@ -25,14 +26,15 @@ export class KojiHTMLConverter implements KojiConverter {
 
 	convert(ast: KojiDocumentNode) {
 		const children = this.convertChildren(ast.children);
-		return `<div class='koji'>${children}</div>`;
+		console.log(format);
+		return format(`<text>${children}</text>`);
 	}
 
 	convertChildren(children: Array<KojiASTNode | string>): string {
 		return children
 			.map((c) => {
 				if (typeof c === 'string') {
-					if (c === '\n') return '<br>';
+					if (c === '\n') return '<lb/>';
 					return c;
 				} else if (this.isBlockNode(c)) {
 					return this.convertBlock(c);
@@ -46,26 +48,26 @@ export class KojiHTMLConverter implements KojiConverter {
 	convertInline(node: KojiASTNode): string {
 		if (this.inlineElementMap[node.name]) {
 			const elem: KojiElement = this.inlineElementMap[node.name];
-			return elem.toHTML(node);
+			return elem.toXML(node);
 		} else {
 			let idStr = '',
 				classesStr = '';
-			if (node.id) idStr = `id='${node.id}'`;
-			if (node.classes) classesStr = `class='inline ${node.classes.join(' ')}'`;
+			if (node.id) idStr = `xml:id='${node.id}'`;
+			if (node.classes) classesStr = `subtype='${node.classes.join(' ')}'`;
 			const children = this.convertChildren(node.children);
-			return `<span ${idStr} ${classesStr} name='${node.name}'>${children}</span>`;
+			return `<span ${idStr} ${classesStr} type='${node.name}'>${children}</span>`;
 		}
 	}
 
 	convertBlock(node: KojiBlockNode): string {
 		if (this.blockElementMap[node.name]) {
 			const elem: KojiElement = this.blockElementMap[node.name];
-			return elem.toHTML(node);
+			return elem.toXML(node);
 		} else {
 			let idStr = '',
 				classesStr = '';
-			if (node.id) idStr = `id='${node.id}'`;
-			if (node.classes) classesStr = `class='block block${node.level} ${node.classes.join(' ')}'`;
+			if (node.id) idStr = `xml:id='${node.id}'`;
+			if (node.classes) classesStr = `subtype='${node.classes.join(' ')}'`;
 			const children = this.convertChildren(node.children);
 			return `<div ${idStr} ${classesStr} type='${node.name}'>${children}</div>`;
 		}
