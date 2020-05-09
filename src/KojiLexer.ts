@@ -42,8 +42,8 @@ export class KojiLexer extends Lexer {
 	public static readonly KaeritenMark = 24;
 	public static readonly TatetenChar = 25;
 	public static readonly OkuriganaMark = 26;
-	public static readonly Illegible = 27;
-	public static readonly BugHole = 28;
+	public static readonly IllegibleMark = 27;
+	public static readonly BugHoleMark = 28;
 	public static readonly NonJp = 29;
 	public static readonly Kanji = 30;
 	public static readonly Kana = 31;
@@ -81,10 +81,10 @@ export class KojiLexer extends Lexer {
 		"OpenInline", "CloseInline", "Bar", "FuriganaOpen", "AnnotationOpen", 
 		"AnnotationClose", "PersonOpen", "PersonClose", "PlaceOpen", "PlaceClose", 
 		"DateOpen", "DateClose", "AttrsOpen", "KaeritenMark", "TatetenChar", "OkuriganaMark", 
-		"Illegible", "BugHole", "NonJp", "Kanji", "Kana", "HiraganaChar", "KatakanaChar", 
-		"HentaikanaChar", "NonJpChar", "KanjiChar", "Lb", "WS", "ElemName", "Colon", 
-		"HeaderLb", "AttrsClose", "ID", "Class", "AttrName", "FuriganaContent", 
-		"FuriganaSep", "FuriganaClose", "KaeritenChar",
+		"IllegibleMark", "BugHoleMark", "NonJp", "Kanji", "Kana", "HiraganaChar", 
+		"KatakanaChar", "HentaikanaChar", "NonJpChar", "KanjiChar", "Lb", "WS", 
+		"ElemName", "Colon", "HeaderLb", "AttrsClose", "ID", "Class", "AttrName", 
+		"FuriganaContent", "FuriganaSep", "FuriganaClose", "KaeritenChar",
 	];
 
 	private static readonly _LITERAL_NAMES: Array<string | undefined> = [
@@ -104,9 +104,9 @@ export class KojiLexer extends Lexer {
 		"OpenInline", "CloseInline", "Bar", "FuriganaOpen", "AnnotationOpen", 
 		"AnnotationClose", "PersonOpen", "PersonClose", "PlaceOpen", "PlaceClose", 
 		"DateOpen", "DateClose", "AttrsOpen", "KaeritenMark", "TatetenChar", "OkuriganaMark", 
-		"Illegible", "BugHole", "NonJp", "Kanji", "Kana", "NonJpChar", "KanjiChar", 
-		"Lb", "WS", "ElemName", "Colon", "HeaderLb", "AttrsClose", "ID", "Class", 
-		"FuriganaContent", "FuriganaSep", "FuriganaClose", "KaeritenChar",
+		"IllegibleMark", "BugHoleMark", "NonJp", "Kanji", "Kana", "NonJpChar", 
+		"KanjiChar", "Lb", "WS", "ElemName", "Colon", "HeaderLb", "AttrsClose", 
+		"ID", "Class", "FuriganaContent", "FuriganaSep", "FuriganaClose", "KaeritenChar",
 	];
 	public static readonly VOCABULARY: Vocabulary = new VocabularyImpl(KojiLexer._LITERAL_NAMES, KojiLexer._SYMBOLIC_NAMES, []);
 

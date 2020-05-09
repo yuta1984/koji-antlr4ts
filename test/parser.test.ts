@@ -97,18 +97,16 @@ describe('parser', function() {
 
 		it('recognizes illegible mark', function() {
 			const ast = parse('読めない□□文字').ast;
-			const illegible1 = ast.children[1];
-			expect(illegible1).to.have.property('name', '難読');
-			const illegible2 = ast.children[2];
-			expect(illegible2).to.have.property('name', '難読');
+			const illegible = ast.children[1];
+			expect(illegible).to.have.property('name', '難読');
+			expect(illegible).to.have.deep.property('children', [ '□□' ]);
 		});
 
 		it('recognizes bughole mark', function() {
 			const ast = parse('虫損している■■文字').ast;
-			const hole1 = ast.children[1];
-			expect(hole1).to.have.property('name', '虫損');
-			const hole2 = ast.children[2];
-			expect(hole2).to.have.property('name', '虫損');
+			const hole = ast.children[1];
+			expect(hole).to.have.property('name', '虫損');
+			expect(hole).to.have.deep.property('children', [ '■■' ]);
 		});
 
 		it('recognizes person expression', function() {

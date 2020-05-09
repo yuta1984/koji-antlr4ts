@@ -25,7 +25,7 @@ describe('html converter', () => {
 	it('should convert case1 without any error', () => {
 		let ast = parse(case1).ast;
 		let fn = () => {
-			console.log(convertToHTML(ast));
+			convertToHTML(ast);
 		};
 		expect(fn).not.to.throw();
 	});
