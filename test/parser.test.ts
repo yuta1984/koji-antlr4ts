@@ -4,7 +4,7 @@ import { KojiASTNode, KojiBlockNode } from '../src/KojiAstBuilder';
 
 describe('ast', function() {
 	it('has an array of inline eleemtns', function() {
-		const ast = parse('《地名＃ほげ＊ふが.fuga：日本橋》').ast;
+		const ast = parse('《地名#hoge*fuga：日本橋》').ast;
 		expect(ast).to.have.property('inlines');
 		expect(ast.inlines).lengthOf(1);
 	});
@@ -19,13 +19,13 @@ describe('ast', function() {
 
 describe('parser', function() {
 	it('recognizes inline element', () => {
-		const result = parse('《地名＃ほげ＊ふが.fuga：日本橋》');
+		const result = parse('《地名#hoge*fuga*moge：日本橋》');
 		const inline = result.ast.children[0] as KojiASTNode;
 		expect(inline.children[0]).equal('日本橋');
-		expect(inline.id).equal('ほげ');
+		expect(inline.id).equal('hoge');
 		expect(inline.classes).lengthOf(2);
-		expect(inline.classes[0]).equal('ふが');
-		expect(inline.classes[1]).equal('fuga');
+		expect(inline.classes[0]).equal('fuga');
+		expect(inline.classes[1]).equal('moge');
 	});
 
 	it('recognizes  block elements', () => {

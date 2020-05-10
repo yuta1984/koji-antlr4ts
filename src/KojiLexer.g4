@@ -61,8 +61,8 @@ Colon: '：' -> popMode;
 HeaderLb: '\n' -> popMode;
 AttrsClose: '］' -> popMode;
 ID: ('#' | '＃') AttrName;
-Class: ('*' | '＊' | '.') AttrName;
-fragment AttrName: (Kana | Kanji | [:a-zA-Z] | [0-9])+;
+Class: ('*' | '＊' ) AttrName;
+fragment AttrName: [A-z][A-z0-9\-_.]*;
 
 mode FURIGANA;
 FuriganaContent: (Kana | NonJpChar)+;

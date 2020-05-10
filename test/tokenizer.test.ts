@@ -23,4 +23,17 @@ describe('tokenizer', () => {
 		assertTokenType(tokens[0], 'IllegibleMark');
 		assertTokenType(tokens[1], 'Kana');
 	});
+
+	it('should only accept ID in [A-z][A-z0-9-_:.]*', function() {
+		expect(tokenize('％要素#日本語ID').errors).not.to.be.empty;
+		expect(tokenize('％要素#1234').errors).not.to.be.empty;
+		expect(tokenize('％要素#valid_id-123').errors).to.be.empty;
+	});
+
+	it('should only accept class in [A-z][A-z0-9-_:.]*', function() {
+		expect(tokenize('％要素*日本語クラス').errors).not.to.be.empty;
+		expect(tokenize('％要素*1234').errors).not.to.be.empty;
+		expect(tokenize('％要素*valid:class:123').errors).to.be.empty;
+		expect(tokenize('％要素*valid_class-123').errors).to.be.empty;
+	});
 });
