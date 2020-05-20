@@ -11,7 +11,9 @@ import {
 } from 'antlr4ts';
 import { KojiLexer } from './KojiLexer';
 import { KojiXMLConverter } from './converter/KojiXMLConverter';
-import { ConversionOptions } from './converter/KojiConverter';
+import { ConversionOptions, ConversionRule } from './converter/KojiConverter';
+import inlineConversionRules from './converter/inline_rules';
+import blockConversionRules from './converter/block_rules';
 
 interface KojiParseError {
 	offendingSymbol: any | undefined;
@@ -71,6 +73,10 @@ export function convertToHTML(ast: KojiDocumentNode, options?: ConversionOptions
 }
 
 export function convertToXML(ast: KojiDocumentNode, options?: ConversionOptions): string {
-	const converter = new KojiXMLConverter();
+	const converter = new KojiXMLConverter(options);
 	return converter.convert(ast);
 }
+
+export const conversionRules: { [elemName: string]: ConversionRule } = {};
+inlineConversionRules.forEach((r) => (conversionRules[r.elemName] = r));
+blockConversionRules.forEach((r) => (conversionRules[r.elemName] = r));
