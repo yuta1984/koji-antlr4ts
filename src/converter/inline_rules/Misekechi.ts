@@ -9,7 +9,7 @@ const Kenten: ConversionRule = {
 	maxContentCount: 1,
 	textTemplate: '{{$2}}（見せ消ち：{{$1}}）',
 	htmlTemplate: `
-    <ruby {{$htmlId}} class="Misekechi {{$classes}}">
+    <ruby {{{$htmlId}}} class="Misekechi {{$classes}}">
         <rb><del>{{$1}}</del></rb>
         {{#$2}}
         <rt>{{$2}}</rt>

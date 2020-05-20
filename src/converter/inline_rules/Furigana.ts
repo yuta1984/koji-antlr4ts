@@ -8,7 +8,7 @@ const Furigana: ConversionRule = {
 	maxContentCount: 3,
 	textTemplate: '{{$text}}',
 	htmlTemplate: `
-	<ruby class="Furigana {{$classes}}" {{$htmlId}} >
+	<ruby class="Furigana {{$classes}}" {{{$htmlId}}} >
 		{{$1}}
 		<rt class="right">{{$2}}</rt>
 		{{#$3}}
@@ -17,7 +17,7 @@ const Furigana: ConversionRule = {
 	</ruby>
 	`,
 	xmlTemplate: `
-	<span type="ruby" {{$xmlId}} {{$xmlSubtypes}}>		
+	<span type="ruby" {{{$xmlId}}} {{{$xmlSubtypes}}}>		
 		<span type="rb">{{$1}}</span>
 		<span type="rt" rend="right">{{$2}}</span>
 		{{#$3}}

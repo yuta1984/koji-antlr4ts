@@ -8,8 +8,8 @@ const BugHole: ConversionRule = {
 	minContentCount: 1,
 	maxContentCount: 1,
 	textTemplate: '{{$text}}',
-	htmlTemplate: `<span {{$htmlId}} class="BugHole {{$classes}}">{{$1}}</span>`,
-	xmlTemplate: `<gap {{$xmlId}} {{$xmlSubtypes}}" quantity="{{$text.length}}" unit="chars" reason="wormhole"/>`
+	htmlTemplate: `<span {{{$htmlId}}} class="BugHole {{$classes}}">{{$1}}</span>`,
+	xmlTemplate: `<gap {{{$xmlId}}} {{{$xmlSubtypes}}}" quantity="{{$text.length}}" unit="chars" reason="wormhole"/>`
 };
 
 export default BugHole;

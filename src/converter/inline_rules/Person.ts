@@ -8,8 +8,8 @@ const Person: ConversionRule = {
 	minContentCount: 1,
 	maxContentCount: 1,
 	textTemplate: '{{$1}}',
-	htmlTemplate: `<span {{$htmlId}} class="Person {{$classes}}">{{$1}}</span>`,
-	xmlTemplate: `<persName {{$xmlId}} {{$xmlSubtypes}}>{{$1}}</persName>`
+	htmlTemplate: `<span {{{$htmlId}}} class="Person {{$classes}}">{{$1}}</span>`,
+	xmlTemplate: `<persName {{{$xmlId}}} {{{$xmlSubtypes}}}>{{$1}}</persName>`
 };
 
 export default Person;

@@ -9,7 +9,7 @@ const Kenten: ConversionRule = {
 	maxContentCount: 2,
 	textTemplate: '{{$text}}',
 	htmlTemplate: `
-    <span {{$htmlId}} class="Kenten {{$classes}}"
+    <span {{{$htmlId}}} class="Kenten {{$classes}}"
     {{#$2}}
     style="text-emphasis: '{{$2}}'; -webkit-text-emphasis: '{{$2}}'"
     {{/$2}}         

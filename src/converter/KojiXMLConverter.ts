@@ -81,9 +81,9 @@ export class KojiXMLConverter implements KojiConverter {
 		const children = this.convertChildren(node.children);
 		const vars = {};
 		vars['$0'] = children;
-		for (let i = 1; i < 10; i++) {
+		for (let i = 0; i < 10; i++) {
 			if (children[i]) {
-				vars[`$${i}`] = children[i];
+				vars[`$${i + 1}`] = children[i];
 			}
 		}
 		vars['$htmlId'] = node.id ? `id="${node.id}"` : '';

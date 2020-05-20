@@ -9,7 +9,7 @@ const Title: ConversionRule = {
 	maxContentCount: 1,
 	textTemplate: '{{$1}}',
 	htmlTemplate: `<h1 class="Title {{$classes}}" {{$htmlId}}>{{$1}}</h1>`,
-	xmlTemplate: `<docTitle {{$xmlId}} {{$xmlSubtypes}}>{{$1}}</docTitle>`
+	xmlTemplate: `<docTitle {{{$xmlId}}} {{{$xmlSubtypes}}}>{{$1}}</docTitle>`
 };
 
 export default Title;

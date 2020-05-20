@@ -6,8 +6,8 @@ const Indent1: ConversionRule = {
 	doc: '一文字分字下げがある箇所を囲むブロックです',
 	example: '％字下げ一\nこの部分が字下げされます\n％',
 	textTemplate: '{{$1}}',
-	htmlTemplate: `<div {{$htmlId}} class="Indent1 {{$classes}}">{{$1}}</div>`,
-	xmlTemplate: `<div rend="indent(-1)" {{$xmlId}} {{$xmlSubtypes}}>$1</div>`
+	htmlTemplate: `<div {{{$htmlId}}} class="Indent1 {{$classes}}">{{$1}}</div>`,
+	xmlTemplate: `<div rend="indent(-1)" {{{$xmlId}}} {{{$xmlSubtypes}}}>$1</div>`
 };
 
 export default Indent1;

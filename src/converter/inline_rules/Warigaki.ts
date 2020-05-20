@@ -9,14 +9,14 @@ const Warigaki: ConversionRule = {
 	maxContentCount: 4,
 	textTemplate: "（{{$0.join('／')}}）",
 	htmlTemplate: `
-	<span {{$htmlId}} class="Warigaki {{$classes}}">
+	<span {{{$htmlId}}} class="Warigaki {{$classes}}">
 		{{#$0}}
 		<span class="warigaki-line">{{.}}</span>
 		{{/$0}}
 	</span>
 	`,
 	xmlTemplate: `
-	<span {{$xmlId}} type="warigaki" {{$xmlSubtypes}}>
+	<span {{{$xmlId}}} type="warigaki" {{{$xmlSubtypes}}}>
 		{{#$0}}
 		<span>{{.}}</span><lb/>
 		{{/$0}}
