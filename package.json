@@ -1,6 +1,6 @@
 {
 	"name": "koji-lang",
-	"version": "0.4.3",
+	"version": "0.4.5",
 	"description": "Processor for Koji, a light-weight markup language for historical Japanese text",
 	"main": "lib/index.js",
 	"scripts": {
@@ -9,6 +9,7 @@
 		"build": "npm run clean & tsc && npm run webpack",
 		"webpack": "webpack --mode production",
 		"test": "mocha -r ts-node/register test/*.test.ts",
+		"prepublish": "npm run build",
 		"publish": "npm publish ./"
 	},
 	"author": "Yuta Hashimoto",

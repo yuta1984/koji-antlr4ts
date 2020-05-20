@@ -10,15 +10,15 @@ const Kenten: ConversionRule = {
 	textTemplate: '{{$2}}（見せ消ち：{{$1}}）',
 	htmlTemplate: `
     <ruby {{{$htmlId}}} class="Misekechi {{$classes}}">
-        <rb><del>{{$1}}</del></rb>
+        <rb><del>{{{$1}}}</del></rb>
         {{#$2}}
-        <rt>{{$2}}</rt>
+        <rt>{{{$2}}}</rt>
         {{/$2}}        
     </ruby>`,
 	xmlTemplate: `
-    <del rend="overstrike">{{$1}}</del>
+    <del rend="overstrike">{{{$1}}}</del>
     {{#$2}}
-    <add place="right">{{$2}}</add>
+    <add place="right">{{{$2}}}</add>
     {{/$2}}`
 };
 

@@ -14,9 +14,9 @@ const Kenten: ConversionRule = {
     style="text-emphasis: '{{$2}}'; -webkit-text-emphasis: '{{$2}}'"
     {{/$2}}         
     >
-        {{$1}}      
+        {{{$1}}}
     </span>`,
-	xmlTemplate: `<emph>{{$1}}</emph>`
+	xmlTemplate: `<emph>{{{$1}}}</emph>`
 };
 
 export default Kenten;

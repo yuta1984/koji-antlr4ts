@@ -8,8 +8,8 @@ const Place: ConversionRule = {
 	minContentCount: 1,
 	maxContentCount: 1,
 	textTemplate: '{{$1}}',
-	htmlTemplate: `<span {{{$htmlId}}} class="Place {{$classes}}">{{$1}}</span>`,
-	xmlTemplate: `<placeName {{{$xmlId}}} {{{$xmlSubtypes}}}>{{$1}}</placeName>`
+	htmlTemplate: `<span {{{$htmlId}}} class="Place {{$classes}}">{{{$1}}}</span>`,
+	xmlTemplate: `<placeName {{{$xmlId}}} {{{$xmlSubtypes}}}>{{{$1}}}</placeName>`
 };
 
 export default Place;

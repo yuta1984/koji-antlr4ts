@@ -7,8 +7,8 @@ const Okurigana: ConversionRule = {
 	minContentCount: 1,
 	maxContentCount: 1,
 	textTemplate: '￣{{$1}}',
-	htmlTemplate: `<span {{{$htmlId}}} class="Okurigana {{$classes}}">{{$1}}</span>`,
-	xmlTemplate: `<span type="okurigana" {{{$xmlId}}} {{{$xmlSubtypes}}}>{{$1}}</span>`
+	htmlTemplate: `<span {{{$htmlId}}} class="Okurigana {{$classes}}">{{{$1}}}</span>`,
+	xmlTemplate: `<span type="okurigana" {{{$xmlId}}} {{{$xmlSubtypes}}}>{{{$1}}}</span>`
 };
 
 export default Okurigana;

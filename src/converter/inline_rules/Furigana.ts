@@ -9,20 +9,20 @@ const Furigana: ConversionRule = {
 	textTemplate: '{{$text}}',
 	htmlTemplate: `
 	<ruby class="Furigana {{$classes}}" {{{$htmlId}}} >
-		{{$1}}
-		<rt class="right">{{$2}}</rt>
-		{{#$3}}
-		<span class="left">{{$3}}</span>
-		{{/$3}}
+		{{{$1}}}
+		<rt class="right">{{{$2}}}</rt>
+		{{{#$3}}}
+		<span class="left">{{{$3}}}</span>
+		{{{/$3}}}
 	</ruby>
 	`,
 	xmlTemplate: `
 	<span type="ruby" {{{$xmlId}}} {{{$xmlSubtypes}}}>		
-		<span type="rb">{{$1}}</span>
-		<span type="rt" rend="right">{{$2}}</span>
-		{{#$3}}
-		<span type="rt" rend="left">{{$3}}</span>
-		{{/$3}}
+		<span type="rb">{{{$1}}}</span>
+		<span type="rt" rend="right">{{{$2}}}</span>
+		{{{#$3}}}
+		<span type="rt" rend="left">{{{$3}}}</span>
+		{{{/$3}}}
 	</span>
 	`
 };

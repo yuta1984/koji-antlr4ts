@@ -8,8 +8,8 @@ const Date: ConversionRule = {
 	minContentCount: 1,
 	maxContentCount: 1,
 	textTemplate: '{{$1}}',
-	htmlTemplate: `<span {{{$htmlId}}} class="Date {{$classes}}">{{$1}}</spab>`,
-	xmlTemplate: `<date {{{$xmlId}}} {{{$xmlSubType}}}>{{$1}}</date>`
+	htmlTemplate: `<span {{{$htmlId}}} class="Date {{$classes}}">{{{$1}}}</spab>`,
+	xmlTemplate: `<date {{{$xmlId}}} {{{$xmlSubType}}}>{{{$1}}}</date>`
 };
 
 export default Date;

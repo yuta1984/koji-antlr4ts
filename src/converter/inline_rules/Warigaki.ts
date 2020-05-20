@@ -11,14 +11,14 @@ const Warigaki: ConversionRule = {
 	htmlTemplate: `
 	<span {{{$htmlId}}} class="Warigaki {{$classes}}">
 		{{#$0}}
-		<span class="warigaki-line">{{.}}</span>
+		<span class="warigaki-line">{{{.}}}</span>
 		{{/$0}}
 	</span>
 	`,
 	xmlTemplate: `
 	<span {{{$xmlId}}} type="warigaki" {{{$xmlSubtypes}}}>
 		{{#$0}}
-		<span>{{.}}</span><lb/>
+		<span>{{{.}}}</span><lb/>
 		{{/$0}}
 	</span>
 	`
