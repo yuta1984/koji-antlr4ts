@@ -39,6 +39,20 @@ describe('html converter', () => {
 		expect(html).to.contain('<span class="warigaki-line">３行目</span>');
 	});
 
+	it('should be able to convert kenten', () => {
+		const src = '《圏点：テキスト｜﹅》';
+		const ast = parse(src).ast;
+		const html = convertToHTML(ast);
+		expect(html).to.contain("text-emphasis: '﹅';");
+	});
+
+	it('should be able to convert misekechi', () => {
+		const src = '《見せ消ち：訂正前｜訂正後》';
+		const ast = parse(src).ast;
+		const html = convertToHTML(ast);
+		expect(html).to.contain('<ruby');
+	});
+
 	it('should convert ast with an additional conversion rule', () => {
 		const kakoigaki: ConversionRule = {
 			elemName: '箱',

@@ -10,5 +10,21 @@ import Person from './Person';
 import Place from './Place';
 import Title from './Title';
 import Warigaki from './Warigaki';
+import Misekechi from './Kenten';
+import Kenten from './Misekechi';
 
-export default [ Annotation, BugHole, Date, Furigana, Illegible, Kaeriten, Okurigana, Person, Place, Title, Warigaki ];
+export default [
+	Annotation,
+	BugHole,
+	Date,
+	Furigana,
+	Illegible,
+	Kaeriten,
+	Okurigana,
+	Person,
+	Place,
+	Title,
+	Warigaki,
+	Misekechi,
+	Kenten
+];
