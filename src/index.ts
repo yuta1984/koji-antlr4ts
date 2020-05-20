@@ -1,5 +1,5 @@
 import { KojiHTMLConverter } from './converter/KojiHTMLConverter';
-import { KojiAstBuilder, KojiASTNode, KojiDocumentNode } from './KojiAstBuilder';
+import { KojiAstBuilder, KojiASTNode, KojiDocumentNode, KojiInlineNode } from './KojiAstBuilder';
 import { KojiParser } from './KojiParser';
 import {
 	ANTLRInputStream,
@@ -11,6 +11,7 @@ import {
 } from 'antlr4ts';
 import { KojiLexer } from './KojiLexer';
 import { KojiXMLConverter } from './converter/KojiXMLConverter';
+import { ConversionOptions } from './converter/KojiConverter';
 
 interface KojiParseError {
 	offendingSymbol: any | undefined;
@@ -64,12 +65,12 @@ export function parse(input: string): { ast: KojiDocumentNode; errors: KojiParse
 	return { ast, errors };
 }
 
-export function convertToHTML(ast: KojiDocumentNode): string {
-	const converter = new KojiHTMLConverter();
+export function convertToHTML(ast: KojiDocumentNode, options?: ConversionOptions): string {
+	const converter = new KojiHTMLConverter(options);
 	return converter.convert(ast);
 }
 
-export function convertToXML(ast: KojiDocumentNode): string {
+export function convertToXML(ast: KojiDocumentNode, options?: ConversionOptions): string {
 	const converter = new KojiXMLConverter();
 	return converter.convert(ast);
 }

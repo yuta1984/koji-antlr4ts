@@ -9,8 +9,8 @@ koji: list* EOF;
 list: block | inline | syntaxSugar | textSegment | Lb;
 
 inline:
-	'《' ElemName ID? Class* '：' content += inlineContent* (
-		Bar extra += inlineContentSeq
+	'《' ElemName ID? Class* '：' content += inlineContentSeq (
+		Bar content += inlineContentSeq
 	)* '》';
 
 inlineContentSeq: inlineContent*;

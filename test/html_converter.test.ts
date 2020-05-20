@@ -1,5 +1,6 @@
 import { parse, convertToHTML } from '../src';
 import { expect } from 'chai';
+import { ConversionRule } from '../src/converter/KojiConverter';
 
 const case1 = `％表紙
 安政二改正
@@ -24,9 +25,62 @@ const case1 = `％表紙
 describe('html converter', () => {
 	it('should convert case1 without any error', () => {
 		let ast = parse(case1).ast;
+		convertToHTML(ast);
 		let fn = () => {
 			convertToHTML(ast);
 		};
 		expect(fn).not.to.throw();
+	});
+
+	it('should be able to convert warigaki with more than three lines', () => {
+		const src = '《割書：１行目｜２行目｜３行目》';
+		const ast = parse(src).ast;
+		const html = convertToHTML(ast);
+		expect(html).to.contain('<span class="warigaki-line">３行目</span>');
+	});
+
+	it('should convert ast with an additional conversion rule', () => {
+		const kakoigaki: ConversionRule = {
+			elemName: '箱',
+			type: 'inline',
+			doc: 'テスト',
+			example: 'テスト',
+			textTemplate: '{{$text}}',
+			htmlTemplate: `<span {{{$htmlId}}} class="box {{{$classes}}}">{{$1}}</span>`,
+			xmlTemplate: `<span rend="box">{{$1}}</span>`
+		};
+		const ast = parse('《箱#id*class1*class2：ホゲホゲ》').ast;
+		const html = convertToHTML(ast, { rules: [ kakoigaki ] });
+		expect(html).to.contain('<span id="id" class="box class1 class2">ホゲホゲ</span>');
+	});
+
+	it('should convert ast with an additional conversion rule having two contents', () => {
+		const kakoigaki: ConversionRule = {
+			elemName: 'ハイフン',
+			type: 'inline',
+			doc: 'テスト',
+			example: 'テスト',
+			textTemplate: '{{$text}}',
+			htmlTemplate: `<span {{{$htmlId}}} class="connected {{{$classes}}}">{{$1}}-{{$2}}</span>`,
+			xmlTemplate: `<span rend="tateten">{{$1}}</span>`
+		};
+		const ast = parse('《ハイフン#id*class1*class2：ホゲホゲ｜フガフガ》').ast;
+		const html = convertToHTML(ast, { rules: [ kakoigaki ] });
+		expect(html).to.contain('<span id="id" class="connected class1 class2">ホゲホゲ-フガフガ</span>');
+	});
+
+	it('should raise error if invalid conversion rule is given', () => {
+		const kakoigaki: ConversionRule = {
+			elemName: 'ハイフン',
+			type: 'inline',
+			doc: null,
+			example: 'テスト',
+			textTemplate: '{{$text}}',
+			htmlTemplate: `<span {{{$htmlId}}} class="connected {{{$classes}}}">{{$1}}-{{$2}}</span>`,
+			xmlTemplate: `<span rend="tateten">{{$1}}</span>`
+		};
+		const ast = parse('《ハイフン#id*class1*class2：ホゲホゲ｜フガフガ》').ast;
+		const func = () => convertToHTML(ast, { rules: [ kakoigaki ] });
+		expect(func).to.throw(Error);
 	});
 });

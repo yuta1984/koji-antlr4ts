@@ -1,6 +1,6 @@
 import { tokenize, parse } from '../src';
 import { expect } from 'chai';
-import { KojiASTNode, KojiBlockNode } from '../src/KojiAstBuilder';
+import { KojiASTNode, KojiBlockNode, KojiInlineNode } from '../src/KojiAstBuilder';
 
 describe('ast', function() {
 	it('has an array of inline eleemtns', function() {
@@ -20,8 +20,8 @@ describe('ast', function() {
 describe('parser', function() {
 	it('recognizes inline element', () => {
 		const result = parse('《地名#hoge*fuga*moge：日本橋》');
-		const inline = result.ast.children[0] as KojiASTNode;
-		expect(inline.children[0]).equal('日本橋');
+		const inline = result.ast.body[0] as KojiASTNode;
+		expect(inline.children[0][0]).equal('日本橋');
 		expect(inline.id).equal('hoge');
 		expect(inline.classes).lengthOf(2);
 		expect(inline.classes[0]).equal('fuga');
@@ -50,25 +50,23 @@ describe('parser', function() {
 	describe('on handling syntactic sugars', () => {
 		it('recognizes furigana element', () => {
 			const result = parse('大日本（だいにほん｜ジャパン）');
-			const furigana = result.ast.children[0] as KojiASTNode;
-			expect(furigana.children[0]).equal('大日本');
-			expect(furigana.extra[0]).lengthOf(1);
-			expect(furigana.extra[0][0]).equal('だいにほん');
-			expect(furigana.extra[1]).lengthOf(1);
-			expect(furigana.extra[1][0]).equal('ジャパン');
+			const furigana = result.ast.body[0] as KojiASTNode;
+			expect(furigana.children[0][0]).equal('大日本');
+			expect(furigana.children[1][0]).equal('だいにほん');
+			expect(furigana.children[2][0]).equal('ジャパン');
 		});
 
 		it('skips whitespace before furigana', () => {
 			const result = parse('地震 年代記（ねんだいき）');
-			const furigana = result.ast.children[1] as KojiASTNode;
-			expect(furigana.children[0]).equal('年代記');
-			expect(furigana.extra[0]).lengthOf(1);
-			expect(furigana.extra[0][0]).equal('ねんだいき');
+			const furigana = result.ast.body[1] as KojiASTNode;
+			expect(furigana.children[0][0]).equal('年代記');
+			expect(furigana.children[1]).lengthOf(1);
+			expect(furigana.children[1][0]).equal('ねんだいき');
 		});
 
 		it('recognizes okurigana and kaeriten', () => {
 			const result = parse('逐￣テ＿レ吹￣ヲ潛￣カニ');
-			const children = result.ast.children;
+			const children = result.ast.body;
 			expect(children[0]).equal('逐');
 			expect(children[1]).to.have.property('name', '送り仮名');
 			expect(children[2]).to.have.property('name', '返り点');
@@ -81,53 +79,53 @@ describe('parser', function() {
 			kaeriten.forEach((k) => {
 				const src = `犬＿${k}`;
 				const ast = parse(src).ast;
-				expect(ast.children[1]).to.have.property('name', '返り点');
+				expect(ast.body[1]).to.have.property('name', '返り点');
 			});
 		});
 
 		it('recognizes tateten', () => {
 			const ast = parse('犬ー猫').ast;
-			expect(ast.children[1]).to.have.property('name', '竪点');
+			expect(ast.body[1]).to.have.property('name', '竪点');
 		});
 
 		it('recognizes annotation paren', function() {
 			const ast = parse('【コメント】').ast;
-			expect(ast.children[0]).to.have.property('name', '注釈');
+			expect(ast.body[0]).to.have.property('name', '注釈');
 		});
 
 		it('recognizes illegible mark', function() {
 			const ast = parse('読めない□□文字').ast;
-			const illegible = ast.children[1];
+			const illegible = ast.body[1] as KojiASTNode;
 			expect(illegible).to.have.property('name', '難読');
-			expect(illegible).to.have.deep.property('children', [ '□□' ]);
+			expect(illegible.children[0]).to.deep.equal([ '□□' ]);
 		});
 
 		it('recognizes bughole mark', function() {
 			const ast = parse('虫損している■■文字').ast;
-			const hole = ast.children[1];
+			const hole = ast.body[1] as KojiASTNode;
 			expect(hole).to.have.property('name', '虫損');
-			expect(hole).to.have.deep.property('children', [ '■■' ]);
+			expect(hole.children[0]).to.deep.equal([ '■■' ]);
 		});
 
 		it('recognizes person expression', function() {
 			const ast = parse('ホゲ｛山田太郎｝フガ').ast;
-			expect(ast.children[1]).to.have.property('name', '人物');
+			expect(ast.body[1]).to.have.property('name', '人物');
 		});
 
 		it('recognizes date expression', function() {
 			const ast = parse('ホゲ＜令和二年五月五日＞フガ').ast;
-			expect(ast.children[1]).to.have.property('name', '日時');
+			expect(ast.body[1]).to.have.property('name', '日時');
 		});
 
 		it('recognizes place expression', function() {
 			const ast = parse('ホゲ〔日本橋〕フガ').ast;
-			expect(ast.children[1]).to.have.property('name', '場所');
+			expect(ast.body[1]).to.have.property('name', '場所');
 		});
 
 		it('recognizes attrs put after person syntactic sugar', function() {
 			const result = parse('｛山田太郎｝［＃id_string＊class_string］');
 			expect(result.errors).to.be.empty;
-			const node = result.ast.children[0];
+			const node = result.ast.body[0];
 			expect(node).to.have.property('id', 'id_string');
 			expect(node).to.have.deep.property('classes', [ 'class_string' ]);
 		});
@@ -135,7 +133,7 @@ describe('parser', function() {
 		it('recognizes attrs put after date syntactic sugar', function() {
 			const result = parse('＜一月一日＞［＃id_string＊class_string］');
 			expect(result.errors).to.be.empty;
-			const node = result.ast.children[0];
+			const node = result.ast.body[0];
 			expect(node).to.have.property('id', 'id_string');
 			expect(node).to.have.deep.property('classes', [ 'class_string' ]);
 		});
@@ -143,7 +141,7 @@ describe('parser', function() {
 		it('recognizes attrs put after place syntactic sugar', function() {
 			const result = parse('〔日本橋〕［＃id_string＊class_string］');
 			expect(result.errors).to.be.empty;
-			const node = result.ast.children[0];
+			const node = result.ast.body[0];
 			expect(node).to.have.property('id', 'id_string');
 			expect(node).to.have.deep.property('classes', [ 'class_string' ]);
 		});
