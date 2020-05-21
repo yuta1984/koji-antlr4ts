@@ -36,8 +36,8 @@ AttrsOpen: '［' -> pushMode(HEADER);
 KaeritenMark: '＿' -> pushMode(KAERITEN);
 TatetenChar: [-‐ー―−];
 OkuriganaMark: '￣';
-IllegibleMark: '□';
-BugHoleMark: '■';
+IllegibleMark: '■';
+BugHoleMark: '□';
 
 // text segments
 NonJp: NonJpChar+;

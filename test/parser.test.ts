@@ -94,17 +94,17 @@ describe('parser', function() {
 		});
 
 		it('recognizes illegible mark', function() {
-			const ast = parse('読めない□□文字').ast;
+			const ast = parse('読めない■■文字').ast;
 			const illegible = ast.body[1] as KojiASTNode;
 			expect(illegible).to.have.property('name', '難読');
-			expect(illegible.children[0]).to.deep.equal([ '□□' ]);
+			expect(illegible.children[0]).to.deep.equal([ '■■' ]);
 		});
 
 		it('recognizes bughole mark', function() {
-			const ast = parse('虫損している■■文字').ast;
+			const ast = parse('虫損している□□文字').ast;
 			const hole = ast.body[1] as KojiASTNode;
 			expect(hole).to.have.property('name', '虫損');
-			expect(hole.children[0]).to.deep.equal([ '■■' ]);
+			expect(hole.children[0]).to.deep.equal([ '□□' ]);
 		});
 
 		it('recognizes person expression', function() {

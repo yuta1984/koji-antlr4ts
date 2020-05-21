@@ -20,7 +20,7 @@ describe('tokenizer', () => {
 		const src = '□ほげ〳〵';
 		const result = tokenize(src);
 		const tokens = result.tokens;
-		assertTokenType(tokens[0], 'IllegibleMark');
+		assertTokenType(tokens[0], 'BugHoleMark');
 		assertTokenType(tokens[1], 'Kana');
 	});
 
