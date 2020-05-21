@@ -12,7 +12,7 @@ const Furigana: ConversionRule = {
 		{{{$1}}}
 		<rt class="right">{{{$2}}}</rt>
 		{{{#$3}}}
-		<span class="left">{{{$3}}}</span>
+		<rtc class="left">{{{$3}}}</rtc>
 		{{{/$3}}}
 	</ruby>
 	`,
