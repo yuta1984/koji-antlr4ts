@@ -26,7 +26,7 @@ describe('xml converter', () => {
 		let ast = parse(case1).ast;
 		let fn = () => {
 			const xml = convertToXML(ast);
-			//console.log(xml);
+			console.log(xml);
 		};
 		expect(fn).not.to.throw();
 	});

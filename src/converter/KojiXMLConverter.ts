@@ -3,6 +3,7 @@ import { KojiConverter, ConversionRule, ConversionOptions, assertConversionRuleI
 import inlineConversionRules from './inline_rules';
 import blockConversionRules from './block_rules';
 import * as Mustache from 'mustache';
+import * as format from 'xml-formatter';
 
 export class KojiXMLConverter implements KojiConverter {
 	inlineConversionRuleMap: { [str: string]: ConversionRule } = {};
@@ -29,7 +30,7 @@ export class KojiXMLConverter implements KojiConverter {
 
 	convert(ast: KojiDocumentNode) {
 		const children = this.convertChildren([ ast.body ]);
-		return `<text>${children.join('')}</text>`;
+		return format(`<text>${children.join('')}</text>`);
 	}
 
 	convertChildren(children: Array<Array<KojiASTNode | string>>): string[] {
