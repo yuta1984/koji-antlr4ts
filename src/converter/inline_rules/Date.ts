@@ -8,7 +8,7 @@ const Date: ConversionRule = {
 	minContentCount: 1,
 	maxContentCount: 1,
 	textTemplate: '{{$1}}',
-	htmlTemplate: `<span {{{$htmlId}}} class="Date {{$classes}}">{{{$1}}}</spab>`,
+	htmlTemplate: `<span {{{$htmlId}}} class="Date {{$classes}}">{{{$1}}}</span>`,
 	xmlTemplate: `<date {{{$xmlId}}} {{{$xmlSubType}}}>{{{$1}}}</date>`
 };
 

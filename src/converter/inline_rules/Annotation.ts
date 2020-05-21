@@ -8,7 +8,7 @@ const Annotation: ConversionRule = {
 	minContentCount: 1,
 	maxContentCount: 1,
 	textTemplate: '{{$text}}',
-	htmlTemplate: `<span {{{$htmlId}}} class="Annotation {{$classes}}">{{$1}}</span>`,
+	htmlTemplate: `<span {{{$htmlId}}} class="Annotation {{$classes}}">{{{$1}}}</span>`,
 	xmlTemplate: `<!-- {{$1}} -->`
 };
 
