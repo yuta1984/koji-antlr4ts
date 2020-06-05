@@ -64,6 +64,17 @@ describe('parser', function() {
 			expect(furigana.children[1][0]).equal('ねんだいき');
 		});
 
+		it('also skips slash before furigana', () => {
+			const result = parse('地震／年代記（ねんだいき）');
+			const pre = result.ast.body[0] as string;
+			const furigana = result.ast.body[1] as KojiASTNode;
+			expect(pre).to.equals('地震');
+			expect(furigana.children[0][0]).equal('年代記');
+			expect(furigana.children[1]).lengthOf(1);
+			expect(furigana.children[1][0]).equal('ねんだいき');
+			expect(result.errors).to.be.empty;
+		});
+
 		it('recognizes okurigana and kaeriten', () => {
 			const result = parse('逐￣テ＿レ吹￣ヲ潛￣カニ');
 			const children = result.ast.body;

@@ -22,6 +22,7 @@ CloseInline: '》';
 Bar: '｜';
 
 // // syntax sugars
+FuriganaPre: ('／' | '/');
 FuriganaOpen: '（' -> pushMode(FURIGANA);
 AnnotationOpen: '【';
 AnnotationClose: '】';
@@ -47,7 +48,7 @@ fragment HiraganaChar: [\u3040-\u309F];
 fragment KatakanaChar: [\u30A0-\u30FF\u31F0-\u31FF];
 fragment HentaikanaChar: [\u1B000-\u1B000\u1B100-\u1B12F];
 NonJpChar:
-	~[\n｜（）《》＜＞【】｛｝〔〕［］％□■\--‐ー―−\u3040-\u309F\u30A0-\u30FF\u31F0-\u31FF\u4E00-\u9FEA\u3400-\u4DFF];
+	~[\n｜（）《》＜＞【】｛｝〔〕［］％□■／/\--‐ー―−\u3040-\u309F\u30A0-\u30FF\u31F0-\u31FF\u4E00-\u9FEA\u3400-\u4DFF];
 //~[\u3040-\u309F\u30A0-\u30FF\u31F0-\u31FF\u4E00-\u9FEA\u3400-\u4DFF];
 KanjiChar:
 	[\u2E80-\u2FDF\u3000-\u3007\u4E00-\u9FEA\u3400-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF];

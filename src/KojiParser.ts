@@ -41,38 +41,39 @@ export class KojiParser extends Parser {
 	public static readonly OpenInline = 11;
 	public static readonly CloseInline = 12;
 	public static readonly Bar = 13;
-	public static readonly FuriganaOpen = 14;
-	public static readonly AnnotationOpen = 15;
-	public static readonly AnnotationClose = 16;
-	public static readonly PersonOpen = 17;
-	public static readonly PersonClose = 18;
-	public static readonly PlaceOpen = 19;
-	public static readonly PlaceClose = 20;
-	public static readonly DateOpen = 21;
-	public static readonly DateClose = 22;
-	public static readonly AttrsOpen = 23;
-	public static readonly KaeritenMark = 24;
-	public static readonly TatetenChar = 25;
-	public static readonly OkuriganaMark = 26;
-	public static readonly IllegibleMark = 27;
-	public static readonly BugHoleMark = 28;
-	public static readonly NonJp = 29;
-	public static readonly Kanji = 30;
-	public static readonly Kana = 31;
-	public static readonly NonJpChar = 32;
-	public static readonly KanjiChar = 33;
-	public static readonly Lb = 34;
-	public static readonly WS = 35;
-	public static readonly ElemName = 36;
-	public static readonly Colon = 37;
-	public static readonly HeaderLb = 38;
-	public static readonly AttrsClose = 39;
-	public static readonly ID = 40;
-	public static readonly Class = 41;
-	public static readonly FuriganaContent = 42;
-	public static readonly FuriganaSep = 43;
-	public static readonly FuriganaClose = 44;
-	public static readonly KaeritenChar = 45;
+	public static readonly FuriganaPre = 14;
+	public static readonly FuriganaOpen = 15;
+	public static readonly AnnotationOpen = 16;
+	public static readonly AnnotationClose = 17;
+	public static readonly PersonOpen = 18;
+	public static readonly PersonClose = 19;
+	public static readonly PlaceOpen = 20;
+	public static readonly PlaceClose = 21;
+	public static readonly DateOpen = 22;
+	public static readonly DateClose = 23;
+	public static readonly AttrsOpen = 24;
+	public static readonly KaeritenMark = 25;
+	public static readonly TatetenChar = 26;
+	public static readonly OkuriganaMark = 27;
+	public static readonly IllegibleMark = 28;
+	public static readonly BugHoleMark = 29;
+	public static readonly NonJp = 30;
+	public static readonly Kanji = 31;
+	public static readonly Kana = 32;
+	public static readonly NonJpChar = 33;
+	public static readonly KanjiChar = 34;
+	public static readonly Lb = 35;
+	public static readonly WS = 36;
+	public static readonly ElemName = 37;
+	public static readonly Colon = 38;
+	public static readonly HeaderLb = 39;
+	public static readonly AttrsClose = 40;
+	public static readonly ID = 41;
+	public static readonly Class = 42;
+	public static readonly FuriganaContent = 43;
+	public static readonly FuriganaSep = 44;
+	public static readonly FuriganaClose = 45;
+	public static readonly KaeritenChar = 46;
 	public static readonly RULE_koji = 0;
 	public static readonly RULE_list = 1;
 	public static readonly RULE_inline = 2;
@@ -115,17 +116,17 @@ export class KojiParser extends Parser {
 		undefined, "'\uFF05'", "'\n\n'", "'\uFF05\uFF05'", "'\n\uFF05\n'", "'\uFF05\uFF05\uFF05'", 
 		"'\n\uFF05\uFF05\n'", "'\uFF05\uFF05\uFF05\uFF05'", "'\n\uFF05\uFF05\uFF05\n'", 
 		"'\uFF05\uFF05\uFF05\uFF05\uFF05'", "'\n\uFF05\uFF05\uFF05\uFF05\n'", 
-		"'\u300A'", "'\u300B'", undefined, "'\uFF08'", "'\u3010'", "'\u3011'", 
-		"'\uFF5B'", "'\uFF5D'", "'\u3014'", "'\u3015'", "'\uFF1C'", "'\uFF1E'", 
-		"'\uFF3B'", "'\uFF3F'", undefined, "'\uFFE3'", "'\u25A0'", "'\u25A1'", 
-		undefined, undefined, undefined, undefined, undefined, undefined, undefined, 
-		undefined, "'\uFF1A'", undefined, "'\uFF3D'", undefined, undefined, undefined, 
-		undefined, "'\uFF09'",
+		"'\u300A'", "'\u300B'", undefined, undefined, "'\uFF08'", "'\u3010'", 
+		"'\u3011'", "'\uFF5B'", "'\uFF5D'", "'\u3014'", "'\u3015'", "'\uFF1C'", 
+		"'\uFF1E'", "'\uFF3B'", "'\uFF3F'", undefined, "'\uFFE3'", "'\u25A0'", 
+		"'\u25A1'", undefined, undefined, undefined, undefined, undefined, undefined, 
+		undefined, undefined, "'\uFF1A'", undefined, "'\uFF3D'", undefined, undefined, 
+		undefined, undefined, "'\uFF09'",
 	];
 	private static readonly _SYMBOLIC_NAMES: Array<string | undefined> = [
 		undefined, "OpenBlock1", "CloseBlock1", "OpenBlock2", "CloseBlock2", "OpenBlock3", 
 		"CloseBlock3", "OpenBlock4", "CloseBlock4", "OpenBlock5", "CloseBlock5", 
-		"OpenInline", "CloseInline", "Bar", "FuriganaOpen", "AnnotationOpen", 
+		"OpenInline", "CloseInline", "Bar", "FuriganaPre", "FuriganaOpen", "AnnotationOpen", 
 		"AnnotationClose", "PersonOpen", "PersonClose", "PlaceOpen", "PlaceClose", 
 		"DateOpen", "DateClose", "AttrsOpen", "KaeritenMark", "TatetenChar", "OkuriganaMark", 
 		"IllegibleMark", "BugHoleMark", "NonJp", "Kanji", "Kana", "NonJpChar", 
@@ -165,7 +166,7 @@ export class KojiParser extends Parser {
 			this.state = 61;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			while ((((_la) & ~0x1F) === 0 && ((1 << _la) & ((1 << KojiParser.OpenBlock1) | (1 << KojiParser.OpenBlock2) | (1 << KojiParser.OpenBlock3) | (1 << KojiParser.OpenBlock4) | (1 << KojiParser.OpenBlock5) | (1 << KojiParser.OpenInline) | (1 << KojiParser.AnnotationOpen) | (1 << KojiParser.PersonOpen) | (1 << KojiParser.PlaceOpen) | (1 << KojiParser.DateOpen) | (1 << KojiParser.KaeritenMark) | (1 << KojiParser.TatetenChar) | (1 << KojiParser.OkuriganaMark) | (1 << KojiParser.IllegibleMark) | (1 << KojiParser.BugHoleMark) | (1 << KojiParser.NonJp) | (1 << KojiParser.Kanji) | (1 << KojiParser.Kana))) !== 0) || _la === KojiParser.Lb) {
+			while ((((_la) & ~0x1F) === 0 && ((1 << _la) & ((1 << KojiParser.OpenBlock1) | (1 << KojiParser.OpenBlock2) | (1 << KojiParser.OpenBlock3) | (1 << KojiParser.OpenBlock4) | (1 << KojiParser.OpenBlock5) | (1 << KojiParser.OpenInline) | (1 << KojiParser.FuriganaPre) | (1 << KojiParser.AnnotationOpen) | (1 << KojiParser.PersonOpen) | (1 << KojiParser.PlaceOpen) | (1 << KojiParser.DateOpen) | (1 << KojiParser.KaeritenMark) | (1 << KojiParser.TatetenChar) | (1 << KojiParser.OkuriganaMark) | (1 << KojiParser.IllegibleMark) | (1 << KojiParser.BugHoleMark) | (1 << KojiParser.NonJp) | (1 << KojiParser.Kanji))) !== 0) || _la === KojiParser.Kana || _la === KojiParser.Lb) {
 				{
 				{
 				this.state = 58;
@@ -344,7 +345,7 @@ export class KojiParser extends Parser {
 			this.state = 98;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			while (((((_la - 11)) & ~0x1F) === 0 && ((1 << (_la - 11)) & ((1 << (KojiParser.OpenInline - 11)) | (1 << (KojiParser.AnnotationOpen - 11)) | (1 << (KojiParser.PersonOpen - 11)) | (1 << (KojiParser.PlaceOpen - 11)) | (1 << (KojiParser.DateOpen - 11)) | (1 << (KojiParser.KaeritenMark - 11)) | (1 << (KojiParser.TatetenChar - 11)) | (1 << (KojiParser.OkuriganaMark - 11)) | (1 << (KojiParser.IllegibleMark - 11)) | (1 << (KojiParser.BugHoleMark - 11)) | (1 << (KojiParser.NonJp - 11)) | (1 << (KojiParser.Kanji - 11)) | (1 << (KojiParser.Kana - 11)) | (1 << (KojiParser.Lb - 11)))) !== 0)) {
+			while (((((_la - 11)) & ~0x1F) === 0 && ((1 << (_la - 11)) & ((1 << (KojiParser.OpenInline - 11)) | (1 << (KojiParser.FuriganaPre - 11)) | (1 << (KojiParser.AnnotationOpen - 11)) | (1 << (KojiParser.PersonOpen - 11)) | (1 << (KojiParser.PlaceOpen - 11)) | (1 << (KojiParser.DateOpen - 11)) | (1 << (KojiParser.KaeritenMark - 11)) | (1 << (KojiParser.TatetenChar - 11)) | (1 << (KojiParser.OkuriganaMark - 11)) | (1 << (KojiParser.IllegibleMark - 11)) | (1 << (KojiParser.BugHoleMark - 11)) | (1 << (KojiParser.NonJp - 11)) | (1 << (KojiParser.Kanji - 11)) | (1 << (KojiParser.Kana - 11)) | (1 << (KojiParser.Lb - 11)))) !== 0)) {
 				{
 				{
 				this.state = 95;
@@ -1270,7 +1271,7 @@ export class KojiParser extends Parser {
 					{
 					this.state = 259;
 					_la = this._input.LA(1);
-					if (!((((_la) & ~0x1F) === 0 && ((1 << _la) & ((1 << KojiParser.NonJp) | (1 << KojiParser.Kanji) | (1 << KojiParser.Kana))) !== 0))) {
+					if (!(((((_la - 30)) & ~0x1F) === 0 && ((1 << (_la - 30)) & ((1 << (KojiParser.NonJp - 30)) | (1 << (KojiParser.Kanji - 30)) | (1 << (KojiParser.Kana - 30)))) !== 0))) {
 					this._errHandler.recoverInline(this);
 					} else {
 						if (this._input.LA(1) === Token.EOF) {
@@ -1366,6 +1367,7 @@ export class KojiParser extends Parser {
 			this.state = 286;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
+			case KojiParser.FuriganaPre:
 			case KojiParser.NonJp:
 			case KojiParser.Kanji:
 			case KojiParser.Kana:
@@ -1464,47 +1466,57 @@ export class KojiParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 291;
+			this.state = 289;
+			this._errHandler.sync(this);
+			_la = this._input.LA(1);
+			if (_la === KojiParser.FuriganaPre) {
+				{
+				this.state = 288;
+				this.match(KojiParser.FuriganaPre);
+				}
+			}
+
+			this.state = 294;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
 			case KojiParser.Kanji:
 				{
-				this.state = 288;
+				this.state = 291;
 				_localctx._target = this.match(KojiParser.Kanji);
 				}
 				break;
 			case KojiParser.Kana:
 				{
-				this.state = 289;
+				this.state = 292;
 				_localctx._target = this.match(KojiParser.Kana);
 				}
 				break;
 			case KojiParser.NonJp:
 				{
-				this.state = 290;
+				this.state = 293;
 				_localctx._target = this.match(KojiParser.NonJp);
 				}
 				break;
 			default:
 				throw new NoViableAltException(this);
 			}
-			this.state = 293;
+			this.state = 296;
 			this.match(KojiParser.FuriganaOpen);
-			this.state = 294;
-			_localctx._right = this.match(KojiParser.FuriganaContent);
 			this.state = 297;
+			_localctx._right = this.match(KojiParser.FuriganaContent);
+			this.state = 300;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la === KojiParser.FuriganaSep) {
 				{
-				this.state = 295;
+				this.state = 298;
 				this.match(KojiParser.FuriganaSep);
-				this.state = 296;
+				this.state = 299;
 				_localctx._left = this.match(KojiParser.FuriganaContent);
 				}
 			}
 
-			this.state = 299;
+			this.state = 302;
 			this.match(KojiParser.FuriganaClose);
 			}
 		}
@@ -1530,19 +1542,19 @@ export class KojiParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 301;
+			this.state = 304;
 			this.match(KojiParser.KaeritenMark);
-			this.state = 303;
+			this.state = 306;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			do {
 				{
 				{
-				this.state = 302;
+				this.state = 305;
 				_localctx._content = this.match(KojiParser.KaeritenChar);
 				}
 				}
-				this.state = 305;
+				this.state = 308;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 			} while (_la === KojiParser.KaeritenChar);
@@ -1569,9 +1581,9 @@ export class KojiParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 307;
+			this.state = 310;
 			this.match(KojiParser.OkuriganaMark);
-			this.state = 308;
+			this.state = 311;
 			_localctx._content = this.match(KojiParser.Kana);
 			}
 		}
@@ -1596,7 +1608,7 @@ export class KojiParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 310;
+			this.state = 313;
 			this.match(KojiParser.TatetenChar);
 			}
 		}
@@ -1621,11 +1633,11 @@ export class KojiParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 312;
+			this.state = 315;
 			this.match(KojiParser.AnnotationOpen);
-			this.state = 313;
+			this.state = 316;
 			_localctx._content = this.textSegment();
-			this.state = 314;
+			this.state = 317;
 			this.match(KojiParser.AnnotationClose);
 			}
 		}
@@ -1651,7 +1663,7 @@ export class KojiParser extends Parser {
 			let _alt: number;
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 317;
+			this.state = 320;
 			this._errHandler.sync(this);
 			_alt = 1;
 			do {
@@ -1659,7 +1671,7 @@ export class KojiParser extends Parser {
 				case 1:
 					{
 					{
-					this.state = 316;
+					this.state = 319;
 					this.match(KojiParser.IllegibleMark);
 					}
 					}
@@ -1667,9 +1679,9 @@ export class KojiParser extends Parser {
 				default:
 					throw new NoViableAltException(this);
 				}
-				this.state = 319;
+				this.state = 322;
 				this._errHandler.sync(this);
-				_alt = this.interpreter.adaptivePredict(this._input, 40, this._ctx);
+				_alt = this.interpreter.adaptivePredict(this._input, 41, this._ctx);
 			} while (_alt !== 2 && _alt !== ATN.INVALID_ALT_NUMBER);
 			}
 		}
@@ -1695,7 +1707,7 @@ export class KojiParser extends Parser {
 			let _alt: number;
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 322;
+			this.state = 325;
 			this._errHandler.sync(this);
 			_alt = 1;
 			do {
@@ -1703,7 +1715,7 @@ export class KojiParser extends Parser {
 				case 1:
 					{
 					{
-					this.state = 321;
+					this.state = 324;
 					this.match(KojiParser.BugHoleMark);
 					}
 					}
@@ -1711,9 +1723,9 @@ export class KojiParser extends Parser {
 				default:
 					throw new NoViableAltException(this);
 				}
-				this.state = 324;
+				this.state = 327;
 				this._errHandler.sync(this);
-				_alt = this.interpreter.adaptivePredict(this._input, 41, this._ctx);
+				_alt = this.interpreter.adaptivePredict(this._input, 42, this._ctx);
 			} while (_alt !== 2 && _alt !== ATN.INVALID_ALT_NUMBER);
 			}
 		}
@@ -1739,31 +1751,31 @@ export class KojiParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 326;
+			this.state = 329;
 			this.match(KojiParser.PersonOpen);
-			this.state = 328;
+			this.state = 331;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			do {
 				{
 				{
-				this.state = 327;
+				this.state = 330;
 				_localctx._inlineContent = this.inlineContent();
 				_localctx._content.push(_localctx._inlineContent);
 				}
 				}
-				this.state = 330;
+				this.state = 333;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
-			} while (((((_la - 11)) & ~0x1F) === 0 && ((1 << (_la - 11)) & ((1 << (KojiParser.OpenInline - 11)) | (1 << (KojiParser.AnnotationOpen - 11)) | (1 << (KojiParser.PersonOpen - 11)) | (1 << (KojiParser.PlaceOpen - 11)) | (1 << (KojiParser.DateOpen - 11)) | (1 << (KojiParser.KaeritenMark - 11)) | (1 << (KojiParser.TatetenChar - 11)) | (1 << (KojiParser.OkuriganaMark - 11)) | (1 << (KojiParser.IllegibleMark - 11)) | (1 << (KojiParser.BugHoleMark - 11)) | (1 << (KojiParser.NonJp - 11)) | (1 << (KojiParser.Kanji - 11)) | (1 << (KojiParser.Kana - 11)) | (1 << (KojiParser.Lb - 11)))) !== 0));
-			this.state = 332;
+			} while (((((_la - 11)) & ~0x1F) === 0 && ((1 << (_la - 11)) & ((1 << (KojiParser.OpenInline - 11)) | (1 << (KojiParser.FuriganaPre - 11)) | (1 << (KojiParser.AnnotationOpen - 11)) | (1 << (KojiParser.PersonOpen - 11)) | (1 << (KojiParser.PlaceOpen - 11)) | (1 << (KojiParser.DateOpen - 11)) | (1 << (KojiParser.KaeritenMark - 11)) | (1 << (KojiParser.TatetenChar - 11)) | (1 << (KojiParser.OkuriganaMark - 11)) | (1 << (KojiParser.IllegibleMark - 11)) | (1 << (KojiParser.BugHoleMark - 11)) | (1 << (KojiParser.NonJp - 11)) | (1 << (KojiParser.Kanji - 11)) | (1 << (KojiParser.Kana - 11)) | (1 << (KojiParser.Lb - 11)))) !== 0));
+			this.state = 335;
 			this.match(KojiParser.PersonClose);
-			this.state = 334;
+			this.state = 337;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la === KojiParser.AttrsOpen) {
 				{
-				this.state = 333;
+				this.state = 336;
 				this.postPositionedAttrs();
 				}
 			}
@@ -1792,31 +1804,31 @@ export class KojiParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 336;
+			this.state = 339;
 			this.match(KojiParser.PlaceOpen);
-			this.state = 338;
+			this.state = 341;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			do {
 				{
 				{
-				this.state = 337;
+				this.state = 340;
 				_localctx._inlineContent = this.inlineContent();
 				_localctx._content.push(_localctx._inlineContent);
 				}
 				}
-				this.state = 340;
+				this.state = 343;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
-			} while (((((_la - 11)) & ~0x1F) === 0 && ((1 << (_la - 11)) & ((1 << (KojiParser.OpenInline - 11)) | (1 << (KojiParser.AnnotationOpen - 11)) | (1 << (KojiParser.PersonOpen - 11)) | (1 << (KojiParser.PlaceOpen - 11)) | (1 << (KojiParser.DateOpen - 11)) | (1 << (KojiParser.KaeritenMark - 11)) | (1 << (KojiParser.TatetenChar - 11)) | (1 << (KojiParser.OkuriganaMark - 11)) | (1 << (KojiParser.IllegibleMark - 11)) | (1 << (KojiParser.BugHoleMark - 11)) | (1 << (KojiParser.NonJp - 11)) | (1 << (KojiParser.Kanji - 11)) | (1 << (KojiParser.Kana - 11)) | (1 << (KojiParser.Lb - 11)))) !== 0));
-			this.state = 342;
+			} while (((((_la - 11)) & ~0x1F) === 0 && ((1 << (_la - 11)) & ((1 << (KojiParser.OpenInline - 11)) | (1 << (KojiParser.FuriganaPre - 11)) | (1 << (KojiParser.AnnotationOpen - 11)) | (1 << (KojiParser.PersonOpen - 11)) | (1 << (KojiParser.PlaceOpen - 11)) | (1 << (KojiParser.DateOpen - 11)) | (1 << (KojiParser.KaeritenMark - 11)) | (1 << (KojiParser.TatetenChar - 11)) | (1 << (KojiParser.OkuriganaMark - 11)) | (1 << (KojiParser.IllegibleMark - 11)) | (1 << (KojiParser.BugHoleMark - 11)) | (1 << (KojiParser.NonJp - 11)) | (1 << (KojiParser.Kanji - 11)) | (1 << (KojiParser.Kana - 11)) | (1 << (KojiParser.Lb - 11)))) !== 0));
+			this.state = 345;
 			this.match(KojiParser.PlaceClose);
-			this.state = 344;
+			this.state = 347;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la === KojiParser.AttrsOpen) {
 				{
-				this.state = 343;
+				this.state = 346;
 				this.postPositionedAttrs();
 				}
 			}
@@ -1845,31 +1857,31 @@ export class KojiParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 346;
+			this.state = 349;
 			this.match(KojiParser.DateOpen);
-			this.state = 348;
+			this.state = 351;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			do {
 				{
 				{
-				this.state = 347;
+				this.state = 350;
 				_localctx._inlineContent = this.inlineContent();
 				_localctx._content.push(_localctx._inlineContent);
 				}
 				}
-				this.state = 350;
+				this.state = 353;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
-			} while (((((_la - 11)) & ~0x1F) === 0 && ((1 << (_la - 11)) & ((1 << (KojiParser.OpenInline - 11)) | (1 << (KojiParser.AnnotationOpen - 11)) | (1 << (KojiParser.PersonOpen - 11)) | (1 << (KojiParser.PlaceOpen - 11)) | (1 << (KojiParser.DateOpen - 11)) | (1 << (KojiParser.KaeritenMark - 11)) | (1 << (KojiParser.TatetenChar - 11)) | (1 << (KojiParser.OkuriganaMark - 11)) | (1 << (KojiParser.IllegibleMark - 11)) | (1 << (KojiParser.BugHoleMark - 11)) | (1 << (KojiParser.NonJp - 11)) | (1 << (KojiParser.Kanji - 11)) | (1 << (KojiParser.Kana - 11)) | (1 << (KojiParser.Lb - 11)))) !== 0));
-			this.state = 352;
+			} while (((((_la - 11)) & ~0x1F) === 0 && ((1 << (_la - 11)) & ((1 << (KojiParser.OpenInline - 11)) | (1 << (KojiParser.FuriganaPre - 11)) | (1 << (KojiParser.AnnotationOpen - 11)) | (1 << (KojiParser.PersonOpen - 11)) | (1 << (KojiParser.PlaceOpen - 11)) | (1 << (KojiParser.DateOpen - 11)) | (1 << (KojiParser.KaeritenMark - 11)) | (1 << (KojiParser.TatetenChar - 11)) | (1 << (KojiParser.OkuriganaMark - 11)) | (1 << (KojiParser.IllegibleMark - 11)) | (1 << (KojiParser.BugHoleMark - 11)) | (1 << (KojiParser.NonJp - 11)) | (1 << (KojiParser.Kanji - 11)) | (1 << (KojiParser.Kana - 11)) | (1 << (KojiParser.Lb - 11)))) !== 0));
+			this.state = 355;
 			this.match(KojiParser.DateClose);
-			this.state = 354;
+			this.state = 357;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la === KojiParser.AttrsOpen) {
 				{
-				this.state = 353;
+				this.state = 356;
 				this.postPositionedAttrs();
 				}
 			}
@@ -1892,7 +1904,7 @@ export class KojiParser extends Parser {
 	}
 
 	public static readonly _serializedATN: string =
-		"\x03\uC91D\uCABA\u058D\uAFBA\u4F53\u0607\uEA8B\uC241\x03/\u0167\x04\x02" +
+		"\x03\uC91D\uCABA\u058D\uAFBA\u4F53\u0607\uEA8B\uC241\x030\u016A\x04\x02" +
 		"\t\x02\x04\x03\t\x03\x04\x04\t\x04\x04\x05\t\x05\x04\x06\t\x06\x04\x07" +
 		"\t\x07\x04\b\t\b\x04\t\t\t\x04\n\t\n\x04\v\t\v\x04\f\t\f\x04\r\t\r\x04" +
 		"\x0E\t\x0E\x04\x0F\t\x0F\x04\x10\t\x10\x04\x11\t\x11\x04\x12\t\x12\x04" +
@@ -1922,156 +1934,159 @@ export class KojiParser extends Parser {
 		"\x06\x12\u0107\n\x12\r\x12\x0E\x12\u0108\x03\x13\x03\x13\x05\x13\u010D" +
 		"\n\x13\x03\x13\x07\x13\u0110\n\x13\f\x13\x0E\x13\u0113\v\x13\x03\x13\x03" +
 		"\x13\x03\x14\x03\x14\x03\x14\x03\x14\x03\x14\x03\x14\x03\x14\x03\x14\x03" +
-		"\x14\x03\x14\x05\x14\u0121\n\x14\x03\x15\x03\x15\x03\x15\x05\x15\u0126" +
-		"\n\x15\x03\x15\x03\x15\x03\x15\x03\x15\x05\x15\u012C\n\x15\x03\x15\x03" +
-		"\x15\x03\x16\x03\x16\x06\x16\u0132\n\x16\r\x16\x0E\x16\u0133\x03\x17\x03" +
-		"\x17\x03\x17\x03\x18\x03\x18\x03\x19\x03\x19\x03\x19\x03\x19\x03\x1A\x06" +
-		"\x1A\u0140\n\x1A\r\x1A\x0E\x1A\u0141\x03\x1B\x06\x1B\u0145\n\x1B\r\x1B" +
-		"\x0E\x1B\u0146\x03\x1C\x03\x1C\x06\x1C\u014B\n\x1C\r\x1C\x0E\x1C\u014C" +
-		"\x03\x1C\x03\x1C\x05\x1C\u0151\n\x1C\x03\x1D\x03\x1D\x06\x1D\u0155\n\x1D" +
-		"\r\x1D\x0E\x1D\u0156\x03\x1D\x03\x1D\x05\x1D\u015B\n\x1D\x03\x1E\x03\x1E" +
-		"\x06\x1E\u015F\n\x1E\r\x1E\x0E\x1E\u0160\x03\x1E\x03\x1E\x05\x1E\u0165" +
-		"\n\x1E\x03\x1E\x02\x02\x02\x1F\x02\x02\x04\x02\x06\x02\b\x02\n\x02\f\x02" +
-		"\x0E\x02\x10\x02\x12\x02\x14\x02\x16\x02\x18\x02\x1A\x02\x1C\x02\x1E\x02" +
-		" \x02\"\x02$\x02&\x02(\x02*\x02,\x02.\x020\x022\x024\x026\x028\x02:\x02" +
-		"\x02\x03\x03\x02\x1F!\x02\u019E\x02?\x03\x02\x02\x02\x04I\x03\x02\x02" +
-		"\x02\x06K\x03\x02\x02\x02\bd\x03\x02\x02\x02\nk\x03\x02\x02\x02\fr\x03" +
-		"\x02\x02\x02\x0Et\x03\x02\x02\x02\x10\x91\x03\x02\x02\x02\x12\x93\x03" +
-		"\x02\x02\x02\x14\xAF\x03\x02\x02\x02\x16\xB1\x03\x02\x02\x02\x18\xCC\x03" +
-		"\x02\x02\x02\x1A\xCE\x03\x02\x02\x02\x1C\xE8\x03\x02\x02\x02\x1E\xEA\x03" +
-		"\x02\x02\x02 \u0103\x03\x02\x02\x02\"\u0106\x03\x02\x02\x02$\u010A\x03" +
-		"\x02\x02\x02&\u0120\x03\x02\x02\x02(\u0125\x03\x02\x02\x02*\u012F\x03" +
-		"\x02\x02\x02,\u0135\x03\x02\x02\x02.\u0138\x03\x02\x02\x020\u013A\x03" +
-		"\x02\x02\x022\u013F\x03\x02\x02\x024\u0144\x03\x02\x02\x026\u0148\x03" +
-		"\x02\x02\x028\u0152\x03\x02\x02\x02:\u015C\x03\x02\x02\x02<>\x05\x04\x03" +
-		"\x02=<\x03\x02\x02\x02>A\x03\x02\x02\x02?=\x03\x02\x02\x02?@\x03\x02\x02" +
-		"\x02@B\x03\x02\x02\x02A?\x03\x02\x02\x02BC\x07\x02\x02\x03C\x03\x03\x02" +
-		"\x02\x02DJ\x05\f\x07\x02EJ\x05\x06\x04\x02FJ\x05&\x14\x02GJ\x05\"\x12" +
-		"\x02HJ\x07$\x02\x02ID\x03\x02\x02\x02IE\x03\x02\x02\x02IF\x03\x02\x02" +
-		"\x02IG\x03\x02\x02\x02IH\x03\x02\x02\x02J\x05\x03\x02\x02\x02KL\x07\r" +
-		"\x02\x02LN\x07&\x02\x02MO\x07*\x02\x02NM\x03\x02\x02\x02NO\x03\x02\x02" +
-		"\x02OS\x03\x02\x02\x02PR\x07+\x02\x02QP\x03\x02\x02\x02RU\x03\x02\x02" +
-		"\x02SQ\x03\x02\x02\x02ST\x03\x02\x02\x02TV\x03\x02\x02\x02US\x03\x02\x02" +
-		"\x02VW\x07\'\x02\x02W\\\x05\b\x05\x02XY\x07\x0F\x02\x02Y[\x05\b\x05\x02" +
-		"ZX\x03\x02\x02\x02[^\x03\x02\x02\x02\\Z\x03\x02\x02\x02\\]\x03\x02\x02" +
-		"\x02]_\x03\x02\x02\x02^\\\x03\x02\x02\x02_`\x07\x0E\x02\x02`\x07\x03\x02" +
-		"\x02\x02ac\x05\n\x06\x02ba\x03\x02\x02\x02cf\x03\x02\x02\x02db\x03\x02" +
-		"\x02\x02de\x03\x02\x02\x02e\t\x03\x02\x02\x02fd\x03\x02\x02\x02gl\x05" +
-		"&\x14\x02hl\x05\"\x12\x02il\x05\x06\x04\x02jl\x07$\x02\x02kg\x03\x02\x02" +
-		"\x02kh\x03\x02\x02\x02ki\x03\x02\x02\x02kj\x03\x02\x02\x02l\v\x03\x02" +
-		"\x02\x02ms\x05\x0E\b\x02ns\x05\x12\n\x02os\x05\x16\f\x02ps\x05\x1A\x0E" +
-		"\x02qs\x05\x1E\x10\x02rm\x03\x02\x02\x02rn\x03\x02\x02\x02ro\x03\x02\x02" +
-		"\x02rp\x03\x02\x02\x02rq\x03\x02\x02\x02s\r\x03\x02\x02\x02tu\x07\x03" +
-		"\x02\x02uw\x07&\x02\x02vx\x07*\x02\x02wv\x03\x02\x02\x02wx\x03\x02\x02" +
-		"\x02x|\x03\x02\x02\x02y{\x07+\x02\x02zy\x03\x02\x02\x02{~\x03\x02\x02" +
-		"\x02|z\x03\x02\x02\x02|}\x03\x02\x02\x02}\x7F\x03\x02\x02\x02~|\x03\x02" +
-		"\x02\x02\x7F\x83\x07(\x02\x02\x80\x82\x05\x10\t\x02\x81\x80\x03\x02\x02" +
-		"\x02\x82\x85\x03\x02\x02\x02\x83\x81\x03\x02\x02\x02\x83\x84\x03\x02\x02" +
-		"\x02\x84\x87\x03\x02\x02\x02\x85\x83\x03\x02\x02\x02\x86\x88\x07\x04\x02" +
-		"\x02\x87\x86\x03\x02\x02\x02\x87\x88\x03\x02\x02\x02\x88\x0F\x03\x02\x02" +
-		"\x02\x89\x92\x05&\x14\x02\x8A\x92\x05\"\x12\x02\x8B\x92\x05\x06\x04\x02" +
-		"\x8C\x92\x07$\x02\x02\x8D\x92\x05\x12\n\x02\x8E\x92\x05\x16\f\x02\x8F" +
-		"\x92\x05\x1A\x0E\x02\x90\x92\x05\x1E\x10\x02\x91\x89\x03\x02\x02\x02\x91" +
-		"\x8A\x03\x02\x02\x02\x91\x8B\x03\x02\x02\x02\x91\x8C\x03\x02\x02\x02\x91" +
-		"\x8D\x03\x02\x02\x02\x91\x8E\x03\x02\x02\x02\x91\x8F\x03\x02\x02\x02\x91" +
-		"\x90\x03\x02\x02\x02\x92\x11\x03\x02\x02\x02\x93\x94\x07\x05\x02\x02\x94" +
-		"\x96\x07&\x02\x02\x95\x97\x07*\x02\x02\x96\x95\x03\x02\x02\x02\x96\x97" +
-		"\x03\x02\x02\x02\x97\x9B\x03\x02\x02\x02\x98\x9A\x07+\x02\x02\x99\x98" +
-		"\x03\x02\x02\x02\x9A\x9D\x03\x02\x02\x02\x9B\x99\x03\x02\x02\x02\x9B\x9C" +
-		"\x03\x02\x02\x02\x9C\x9E\x03\x02\x02\x02\x9D\x9B\x03\x02\x02\x02\x9E\xA2" +
-		"\x07(\x02\x02\x9F\xA1\x05\x14\v\x02\xA0\x9F\x03\x02\x02\x02\xA1\xA4\x03" +
-		"\x02\x02\x02\xA2\xA0\x03\x02\x02\x02\xA2\xA3\x03\x02\x02\x02\xA3\xA6\x03" +
-		"\x02\x02\x02\xA4\xA2\x03\x02\x02\x02\xA5\xA7\x07\x06\x02\x02\xA6\xA5\x03" +
-		"\x02\x02\x02\xA6\xA7\x03\x02\x02\x02\xA7\x13\x03\x02\x02\x02\xA8\xB0\x05" +
-		"&\x14\x02\xA9\xB0\x05\"\x12\x02\xAA\xB0\x05\x06\x04\x02\xAB\xB0\x07$\x02" +
-		"\x02\xAC\xB0\x05\x16\f\x02\xAD\xB0\x05\x1A\x0E\x02\xAE\xB0\x05\x1E\x10" +
-		"\x02\xAF\xA8\x03\x02\x02\x02\xAF\xA9\x03\x02\x02\x02\xAF\xAA\x03\x02\x02" +
-		"\x02\xAF\xAB\x03\x02\x02\x02\xAF\xAC\x03\x02\x02\x02\xAF\xAD\x03\x02\x02" +
-		"\x02\xAF\xAE\x03\x02\x02\x02\xB0\x15\x03\x02\x02\x02\xB1\xB2\x07\x07\x02" +
-		"\x02\xB2\xB4\x07&\x02\x02\xB3\xB5\x07*\x02\x02\xB4\xB3\x03\x02\x02\x02" +
-		"\xB4\xB5\x03\x02\x02\x02\xB5\xB9\x03\x02\x02\x02\xB6\xB8\x07+\x02\x02" +
-		"\xB7\xB6\x03\x02\x02\x02\xB8\xBB\x03\x02\x02\x02\xB9\xB7\x03\x02\x02\x02" +
-		"\xB9\xBA\x03\x02\x02\x02\xBA\xBC\x03\x02\x02\x02\xBB\xB9\x03\x02\x02\x02" +
-		"\xBC\xC0\x07(\x02\x02\xBD\xBF\x05\x18\r\x02\xBE\xBD\x03\x02\x02\x02\xBF" +
-		"\xC2\x03\x02\x02\x02\xC0\xBE\x03\x02\x02\x02\xC0\xC1\x03\x02\x02\x02\xC1" +
-		"\xC4\x03\x02\x02\x02\xC2\xC0\x03\x02\x02\x02\xC3\xC5\x07\b\x02\x02\xC4" +
-		"\xC3\x03\x02\x02\x02\xC4\xC5\x03\x02\x02\x02\xC5\x17\x03\x02\x02\x02\xC6" +
-		"\xCD\x05&\x14\x02\xC7\xCD\x05\"\x12\x02\xC8\xCD\x05\x06\x04\x02\xC9\xCD" +
-		"\x07$\x02\x02\xCA\xCD\x05\x1A\x0E\x02\xCB\xCD\x05\x1E\x10\x02\xCC\xC6" +
-		"\x03\x02\x02\x02\xCC\xC7\x03\x02\x02\x02\xCC\xC8\x03\x02\x02\x02\xCC\xC9" +
-		"\x03\x02\x02\x02\xCC\xCA\x03\x02\x02\x02\xCC\xCB\x03\x02\x02\x02\xCD\x19" +
-		"\x03\x02\x02\x02\xCE\xCF\x07\t\x02\x02\xCF\xD1\x07&\x02\x02\xD0\xD2\x07" +
-		"*\x02\x02\xD1\xD0\x03\x02\x02\x02\xD1\xD2\x03\x02\x02\x02\xD2\xD6\x03" +
-		"\x02\x02\x02\xD3\xD5\x07+\x02\x02\xD4\xD3\x03\x02\x02\x02\xD5\xD8\x03" +
-		"\x02\x02\x02\xD6\xD4\x03\x02\x02\x02\xD6\xD7\x03\x02\x02\x02\xD7\xD9\x03" +
-		"\x02\x02\x02\xD8\xD6\x03\x02\x02\x02\xD9\xDD\x07(\x02\x02\xDA\xDC\x05" +
-		"\x1C\x0F\x02\xDB\xDA\x03\x02\x02\x02\xDC\xDF\x03\x02\x02\x02\xDD\xDB\x03" +
-		"\x02\x02\x02\xDD\xDE\x03\x02\x02\x02\xDE\xE1\x03\x02\x02\x02\xDF\xDD\x03" +
-		"\x02\x02\x02\xE0\xE2\x07\n\x02\x02\xE1\xE0\x03\x02\x02\x02\xE1\xE2\x03" +
-		"\x02\x02\x02\xE2\x1B\x03\x02\x02\x02\xE3\xE9\x05&\x14\x02\xE4\xE9\x05" +
-		"\"\x12\x02\xE5\xE9\x05\x06\x04\x02\xE6\xE9\x07$\x02\x02\xE7\xE9\x05\x1E" +
-		"\x10\x02\xE8\xE3\x03\x02\x02\x02\xE8\xE4\x03\x02\x02\x02\xE8\xE5\x03\x02" +
-		"\x02\x02\xE8\xE6\x03\x02\x02\x02\xE8\xE7\x03\x02\x02\x02\xE9\x1D\x03\x02" +
-		"\x02\x02\xEA\xEB\x07\v\x02\x02\xEB\xED\x07&\x02\x02\xEC\xEE\x07*\x02\x02" +
-		"\xED\xEC\x03\x02\x02\x02\xED\xEE\x03\x02\x02\x02\xEE\xF2\x03\x02\x02\x02" +
-		"\xEF\xF1\x07+\x02\x02\xF0\xEF\x03\x02\x02\x02\xF1\xF4\x03\x02\x02\x02" +
-		"\xF2\xF0\x03\x02\x02\x02\xF2\xF3\x03\x02\x02\x02\xF3\xF5\x03\x02\x02\x02" +
-		"\xF4\xF2\x03\x02\x02\x02\xF5\xF9\x07(\x02\x02\xF6\xF8\x05 \x11\x02\xF7" +
-		"\xF6\x03\x02\x02\x02\xF8\xFB\x03\x02\x02\x02\xF9\xF7\x03\x02\x02\x02\xF9" +
-		"\xFA\x03\x02\x02\x02\xFA\xFD\x03\x02\x02\x02\xFB\xF9\x03\x02\x02\x02\xFC" +
-		"\xFE\x07\f\x02\x02\xFD\xFC\x03\x02\x02\x02\xFD\xFE\x03\x02\x02\x02\xFE" +
-		"\x1F\x03\x02\x02\x02\xFF\u0104\x05&\x14\x02\u0100\u0104\x05\"\x12\x02" +
-		"\u0101\u0104\x05\x06\x04\x02\u0102\u0104\x07$\x02\x02\u0103\xFF\x03\x02" +
-		"\x02\x02\u0103\u0100\x03\x02\x02\x02\u0103\u0101\x03\x02\x02\x02\u0103" +
-		"\u0102\x03\x02\x02\x02\u0104!\x03\x02\x02\x02\u0105\u0107\t\x02\x02\x02" +
-		"\u0106\u0105\x03\x02\x02\x02\u0107\u0108\x03\x02\x02\x02\u0108\u0106\x03" +
-		"\x02\x02\x02\u0108\u0109\x03\x02\x02\x02\u0109#\x03\x02\x02\x02\u010A" +
-		"\u010C\x07\x19\x02\x02\u010B\u010D\x07*\x02\x02\u010C\u010B\x03\x02\x02" +
-		"\x02\u010C\u010D\x03\x02\x02\x02\u010D\u0111\x03\x02\x02\x02\u010E\u0110" +
-		"\x07+\x02\x02\u010F\u010E\x03\x02\x02\x02\u0110\u0113\x03\x02\x02\x02" +
-		"\u0111\u010F\x03\x02\x02\x02\u0111\u0112\x03\x02\x02\x02\u0112\u0114\x03" +
-		"\x02\x02\x02\u0113\u0111\x03\x02\x02\x02\u0114\u0115\x07)\x02\x02\u0115" +
-		"%\x03\x02\x02\x02\u0116\u0121\x05(\x15\x02\u0117\u0121\x05*\x16\x02\u0118" +
-		"\u0121\x05,\x17\x02\u0119\u0121\x05.\x18\x02\u011A\u0121\x050\x19\x02" +
-		"\u011B\u0121\x052\x1A\x02\u011C\u0121\x054\x1B\x02\u011D\u0121\x056\x1C" +
-		"\x02\u011E\u0121\x058\x1D\x02\u011F\u0121\x05:\x1E\x02\u0120\u0116\x03" +
-		"\x02\x02\x02\u0120\u0117\x03\x02\x02\x02\u0120\u0118\x03\x02\x02\x02\u0120" +
-		"\u0119\x03\x02\x02\x02\u0120\u011A\x03\x02\x02\x02\u0120\u011B\x03\x02" +
-		"\x02\x02\u0120\u011C\x03\x02\x02\x02\u0120\u011D\x03\x02\x02\x02\u0120" +
-		"\u011E\x03\x02\x02\x02\u0120\u011F\x03\x02\x02\x02\u0121\'\x03\x02\x02" +
-		"\x02\u0122\u0126\x07 \x02\x02\u0123\u0126\x07!\x02\x02\u0124\u0126\x07" +
-		"\x1F\x02\x02\u0125\u0122\x03\x02\x02\x02\u0125\u0123\x03\x02\x02\x02\u0125" +
-		"\u0124\x03\x02\x02\x02\u0126\u0127\x03\x02\x02\x02\u0127\u0128\x07\x10" +
-		"\x02\x02\u0128\u012B\x07,\x02\x02\u0129\u012A\x07-\x02\x02\u012A\u012C" +
-		"\x07,\x02\x02\u012B\u0129\x03\x02\x02\x02\u012B\u012C\x03\x02\x02\x02" +
-		"\u012C\u012D\x03\x02\x02\x02\u012D\u012E\x07.\x02\x02\u012E)\x03\x02\x02" +
-		"\x02\u012F\u0131\x07\x1A\x02\x02\u0130\u0132\x07/\x02\x02\u0131\u0130" +
-		"\x03\x02\x02\x02\u0132\u0133\x03\x02\x02\x02\u0133\u0131\x03\x02\x02\x02" +
-		"\u0133\u0134\x03\x02\x02\x02\u0134+\x03\x02\x02\x02\u0135\u0136\x07\x1C" +
-		"\x02\x02\u0136\u0137\x07!\x02\x02\u0137-\x03\x02\x02\x02\u0138\u0139\x07" +
-		"\x1B\x02\x02\u0139/\x03\x02\x02\x02\u013A\u013B\x07\x11\x02\x02\u013B" +
-		"\u013C\x05\"\x12\x02\u013C\u013D\x07\x12\x02\x02\u013D1\x03\x02\x02\x02" +
-		"\u013E\u0140\x07\x1D\x02\x02\u013F\u013E\x03\x02\x02\x02\u0140\u0141\x03" +
-		"\x02\x02\x02\u0141\u013F\x03\x02\x02\x02\u0141\u0142\x03\x02\x02\x02\u0142" +
-		"3\x03\x02\x02\x02\u0143\u0145\x07\x1E\x02\x02\u0144\u0143\x03\x02\x02" +
-		"\x02\u0145\u0146\x03\x02\x02\x02\u0146\u0144\x03\x02\x02\x02\u0146\u0147" +
-		"\x03\x02\x02\x02\u01475\x03\x02\x02\x02\u0148\u014A\x07\x13\x02\x02\u0149" +
-		"\u014B\x05\n\x06\x02\u014A\u0149\x03\x02\x02\x02\u014B\u014C\x03\x02\x02" +
-		"\x02\u014C\u014A\x03\x02\x02\x02\u014C\u014D\x03\x02\x02\x02\u014D\u014E" +
-		"\x03\x02\x02\x02\u014E\u0150\x07\x14\x02\x02\u014F\u0151\x05$\x13\x02" +
-		"\u0150\u014F\x03\x02\x02\x02\u0150\u0151\x03\x02\x02\x02\u01517\x03\x02" +
-		"\x02\x02\u0152\u0154\x07\x15\x02\x02\u0153\u0155\x05\n\x06\x02\u0154\u0153" +
-		"\x03\x02\x02\x02\u0155\u0156\x03\x02\x02\x02\u0156\u0154\x03\x02\x02\x02" +
-		"\u0156\u0157\x03\x02\x02\x02\u0157\u0158\x03\x02\x02\x02\u0158\u015A\x07" +
-		"\x16\x02\x02\u0159\u015B\x05$\x13\x02\u015A\u0159\x03\x02\x02\x02\u015A" +
-		"\u015B\x03\x02\x02\x02\u015B9\x03\x02\x02\x02\u015C\u015E\x07\x17\x02" +
-		"\x02\u015D\u015F\x05\n\x06\x02\u015E\u015D\x03\x02\x02\x02\u015F\u0160" +
-		"\x03\x02\x02\x02\u0160\u015E\x03\x02\x02\x02\u0160\u0161\x03\x02\x02\x02" +
-		"\u0161\u0162\x03\x02\x02\x02\u0162\u0164\x07\x18\x02\x02\u0163\u0165\x05" +
-		"$\x13\x02\u0164\u0163\x03\x02\x02\x02\u0164\u0165\x03\x02\x02\x02\u0165" +
-		";\x03\x02\x02\x022?INS\\dkrw|\x83\x87\x91\x96\x9B\xA2\xA6\xAF\xB4\xB9" +
+		"\x14\x03\x14\x05\x14\u0121\n\x14\x03\x15\x05\x15\u0124\n\x15\x03\x15\x03" +
+		"\x15\x03\x15\x05\x15\u0129\n\x15\x03\x15\x03\x15\x03\x15\x03\x15\x05\x15" +
+		"\u012F\n\x15\x03\x15\x03\x15\x03\x16\x03\x16\x06\x16\u0135\n\x16\r\x16" +
+		"\x0E\x16\u0136\x03\x17\x03\x17\x03\x17\x03\x18\x03\x18\x03\x19\x03\x19" +
+		"\x03\x19\x03\x19\x03\x1A\x06\x1A\u0143\n\x1A\r\x1A\x0E\x1A\u0144\x03\x1B" +
+		"\x06\x1B\u0148\n\x1B\r\x1B\x0E\x1B\u0149\x03\x1C\x03\x1C\x06\x1C\u014E" +
+		"\n\x1C\r\x1C\x0E\x1C\u014F\x03\x1C\x03\x1C\x05\x1C\u0154\n\x1C\x03\x1D" +
+		"\x03\x1D\x06\x1D\u0158\n\x1D\r\x1D\x0E\x1D\u0159\x03\x1D\x03\x1D\x05\x1D" +
+		"\u015E\n\x1D\x03\x1E\x03\x1E\x06\x1E\u0162\n\x1E\r\x1E\x0E\x1E\u0163\x03" +
+		"\x1E\x03\x1E\x05\x1E\u0168\n\x1E\x03\x1E\x02\x02\x02\x1F\x02\x02\x04\x02" +
+		"\x06\x02\b\x02\n\x02\f\x02\x0E\x02\x10\x02\x12\x02\x14\x02\x16\x02\x18" +
+		"\x02\x1A\x02\x1C\x02\x1E\x02 \x02\"\x02$\x02&\x02(\x02*\x02,\x02.\x02" +
+		"0\x022\x024\x026\x028\x02:\x02\x02\x03\x03\x02 \"\x02\u01A2\x02?\x03\x02" +
+		"\x02\x02\x04I\x03\x02\x02\x02\x06K\x03\x02\x02\x02\bd\x03\x02\x02\x02" +
+		"\nk\x03\x02\x02\x02\fr\x03\x02\x02\x02\x0Et\x03\x02\x02\x02\x10\x91\x03" +
+		"\x02\x02\x02\x12\x93\x03\x02\x02\x02\x14\xAF\x03\x02\x02\x02\x16\xB1\x03" +
+		"\x02\x02\x02\x18\xCC\x03\x02\x02\x02\x1A\xCE\x03\x02\x02\x02\x1C\xE8\x03" +
+		"\x02\x02\x02\x1E\xEA\x03\x02\x02\x02 \u0103\x03\x02\x02\x02\"\u0106\x03" +
+		"\x02\x02\x02$\u010A\x03\x02\x02\x02&\u0120\x03\x02\x02\x02(\u0123\x03" +
+		"\x02\x02\x02*\u0132\x03\x02\x02\x02,\u0138\x03\x02\x02\x02.\u013B\x03" +
+		"\x02\x02\x020\u013D\x03\x02\x02\x022\u0142\x03\x02\x02\x024\u0147\x03" +
+		"\x02\x02\x026\u014B\x03\x02\x02\x028\u0155\x03\x02\x02\x02:\u015F\x03" +
+		"\x02\x02\x02<>\x05\x04\x03\x02=<\x03\x02\x02\x02>A\x03\x02\x02\x02?=\x03" +
+		"\x02\x02\x02?@\x03\x02\x02\x02@B\x03\x02\x02\x02A?\x03\x02\x02\x02BC\x07" +
+		"\x02\x02\x03C\x03\x03\x02\x02\x02DJ\x05\f\x07\x02EJ\x05\x06\x04\x02FJ" +
+		"\x05&\x14\x02GJ\x05\"\x12\x02HJ\x07%\x02\x02ID\x03\x02\x02\x02IE\x03\x02" +
+		"\x02\x02IF\x03\x02\x02\x02IG\x03\x02\x02\x02IH\x03\x02\x02\x02J\x05\x03" +
+		"\x02\x02\x02KL\x07\r\x02\x02LN\x07\'\x02\x02MO\x07+\x02\x02NM\x03\x02" +
+		"\x02\x02NO\x03\x02\x02\x02OS\x03\x02\x02\x02PR\x07,\x02\x02QP\x03\x02" +
+		"\x02\x02RU\x03\x02\x02\x02SQ\x03\x02\x02\x02ST\x03\x02\x02\x02TV\x03\x02" +
+		"\x02\x02US\x03\x02\x02\x02VW\x07(\x02\x02W\\\x05\b\x05\x02XY\x07\x0F\x02" +
+		"\x02Y[\x05\b\x05\x02ZX\x03\x02\x02\x02[^\x03\x02\x02\x02\\Z\x03\x02\x02" +
+		"\x02\\]\x03\x02\x02\x02]_\x03\x02\x02\x02^\\\x03\x02\x02\x02_`\x07\x0E" +
+		"\x02\x02`\x07\x03\x02\x02\x02ac\x05\n\x06\x02ba\x03\x02\x02\x02cf\x03" +
+		"\x02\x02\x02db\x03\x02\x02\x02de\x03\x02\x02\x02e\t\x03\x02\x02\x02fd" +
+		"\x03\x02\x02\x02gl\x05&\x14\x02hl\x05\"\x12\x02il\x05\x06\x04\x02jl\x07" +
+		"%\x02\x02kg\x03\x02\x02\x02kh\x03\x02\x02\x02ki\x03\x02\x02\x02kj\x03" +
+		"\x02\x02\x02l\v\x03\x02\x02\x02ms\x05\x0E\b\x02ns\x05\x12\n\x02os\x05" +
+		"\x16\f\x02ps\x05\x1A\x0E\x02qs\x05\x1E\x10\x02rm\x03\x02\x02\x02rn\x03" +
+		"\x02\x02\x02ro\x03\x02\x02\x02rp\x03\x02\x02\x02rq\x03\x02\x02\x02s\r" +
+		"\x03\x02\x02\x02tu\x07\x03\x02\x02uw\x07\'\x02\x02vx\x07+\x02\x02wv\x03" +
+		"\x02\x02\x02wx\x03\x02\x02\x02x|\x03\x02\x02\x02y{\x07,\x02\x02zy\x03" +
+		"\x02\x02\x02{~\x03\x02\x02\x02|z\x03\x02\x02\x02|}\x03\x02\x02\x02}\x7F" +
+		"\x03\x02\x02\x02~|\x03\x02\x02\x02\x7F\x83\x07)\x02\x02\x80\x82\x05\x10" +
+		"\t\x02\x81\x80\x03\x02\x02\x02\x82\x85\x03\x02\x02\x02\x83\x81\x03\x02" +
+		"\x02\x02\x83\x84\x03\x02\x02\x02\x84\x87\x03\x02\x02\x02\x85\x83\x03\x02" +
+		"\x02\x02\x86\x88\x07\x04\x02\x02\x87\x86\x03\x02\x02\x02\x87\x88\x03\x02" +
+		"\x02\x02\x88\x0F\x03\x02\x02\x02\x89\x92\x05&\x14\x02\x8A\x92\x05\"\x12" +
+		"\x02\x8B\x92\x05\x06\x04\x02\x8C\x92\x07%\x02\x02\x8D\x92\x05\x12\n\x02" +
+		"\x8E\x92\x05\x16\f\x02\x8F\x92\x05\x1A\x0E\x02\x90\x92\x05\x1E\x10\x02" +
+		"\x91\x89\x03\x02\x02\x02\x91\x8A\x03\x02\x02\x02\x91\x8B\x03\x02\x02\x02" +
+		"\x91\x8C\x03\x02\x02\x02\x91\x8D\x03\x02\x02\x02\x91\x8E\x03\x02\x02\x02" +
+		"\x91\x8F\x03\x02\x02\x02\x91\x90\x03\x02\x02\x02\x92\x11\x03\x02\x02\x02" +
+		"\x93\x94\x07\x05\x02\x02\x94\x96\x07\'\x02\x02\x95\x97\x07+\x02\x02\x96" +
+		"\x95\x03\x02\x02\x02\x96\x97\x03\x02\x02\x02\x97\x9B\x03\x02\x02\x02\x98" +
+		"\x9A\x07,\x02\x02\x99\x98\x03\x02\x02\x02\x9A\x9D\x03\x02\x02\x02\x9B" +
+		"\x99\x03\x02\x02\x02\x9B\x9C\x03\x02\x02\x02\x9C\x9E\x03\x02\x02\x02\x9D" +
+		"\x9B\x03\x02\x02\x02\x9E\xA2\x07)\x02\x02\x9F\xA1\x05\x14\v\x02\xA0\x9F" +
+		"\x03\x02\x02\x02\xA1\xA4\x03\x02\x02\x02\xA2\xA0\x03\x02\x02\x02\xA2\xA3" +
+		"\x03\x02\x02\x02\xA3\xA6\x03\x02\x02\x02\xA4\xA2\x03\x02\x02\x02\xA5\xA7" +
+		"\x07\x06\x02\x02\xA6\xA5\x03\x02\x02\x02\xA6\xA7\x03\x02\x02\x02\xA7\x13" +
+		"\x03\x02\x02\x02\xA8\xB0\x05&\x14\x02\xA9\xB0\x05\"\x12\x02\xAA\xB0\x05" +
+		"\x06\x04\x02\xAB\xB0\x07%\x02\x02\xAC\xB0\x05\x16\f\x02\xAD\xB0\x05\x1A" +
+		"\x0E\x02\xAE\xB0\x05\x1E\x10\x02\xAF\xA8\x03\x02\x02\x02\xAF\xA9\x03\x02" +
+		"\x02\x02\xAF\xAA\x03\x02\x02\x02\xAF\xAB\x03\x02\x02\x02\xAF\xAC\x03\x02" +
+		"\x02\x02\xAF\xAD\x03\x02\x02\x02\xAF\xAE\x03\x02\x02\x02\xB0\x15\x03\x02" +
+		"\x02\x02\xB1\xB2\x07\x07\x02\x02\xB2\xB4\x07\'\x02\x02\xB3\xB5\x07+\x02" +
+		"\x02\xB4\xB3\x03\x02\x02\x02\xB4\xB5\x03\x02\x02\x02\xB5\xB9\x03\x02\x02" +
+		"\x02\xB6\xB8\x07,\x02\x02\xB7\xB6\x03\x02\x02\x02\xB8\xBB\x03\x02\x02" +
+		"\x02\xB9\xB7\x03\x02\x02\x02\xB9\xBA\x03\x02\x02\x02\xBA\xBC\x03\x02\x02" +
+		"\x02\xBB\xB9\x03\x02\x02\x02\xBC\xC0\x07)\x02\x02\xBD\xBF\x05\x18\r\x02" +
+		"\xBE\xBD\x03\x02\x02\x02\xBF\xC2\x03\x02\x02\x02\xC0\xBE\x03\x02\x02\x02" +
+		"\xC0\xC1\x03\x02\x02\x02\xC1\xC4\x03\x02\x02\x02\xC2\xC0\x03\x02\x02\x02" +
+		"\xC3\xC5\x07\b\x02\x02\xC4\xC3\x03\x02\x02\x02\xC4\xC5\x03\x02\x02\x02" +
+		"\xC5\x17\x03\x02\x02\x02\xC6\xCD\x05&\x14\x02\xC7\xCD\x05\"\x12\x02\xC8" +
+		"\xCD\x05\x06\x04\x02\xC9\xCD\x07%\x02\x02\xCA\xCD\x05\x1A\x0E\x02\xCB" +
+		"\xCD\x05\x1E\x10\x02\xCC\xC6\x03\x02\x02\x02\xCC\xC7\x03\x02\x02\x02\xCC" +
+		"\xC8\x03\x02\x02\x02\xCC\xC9\x03\x02\x02\x02\xCC\xCA\x03\x02\x02\x02\xCC" +
+		"\xCB\x03\x02\x02\x02\xCD\x19\x03\x02\x02\x02\xCE\xCF\x07\t\x02\x02\xCF" +
+		"\xD1\x07\'\x02\x02\xD0\xD2\x07+\x02\x02\xD1\xD0\x03\x02\x02\x02\xD1\xD2" +
+		"\x03\x02\x02\x02\xD2\xD6\x03\x02\x02\x02\xD3\xD5\x07,\x02\x02\xD4\xD3" +
+		"\x03\x02\x02\x02\xD5\xD8\x03\x02\x02\x02\xD6\xD4\x03\x02\x02\x02\xD6\xD7" +
+		"\x03\x02\x02\x02\xD7\xD9\x03\x02\x02\x02\xD8\xD6\x03\x02\x02\x02\xD9\xDD" +
+		"\x07)\x02\x02\xDA\xDC\x05\x1C\x0F\x02\xDB\xDA\x03\x02\x02\x02\xDC\xDF" +
+		"\x03\x02\x02\x02\xDD\xDB\x03\x02\x02\x02\xDD\xDE\x03\x02\x02\x02\xDE\xE1" +
+		"\x03\x02\x02\x02\xDF\xDD\x03\x02\x02\x02\xE0\xE2\x07\n\x02\x02\xE1\xE0" +
+		"\x03\x02\x02\x02\xE1\xE2\x03\x02\x02\x02\xE2\x1B\x03\x02\x02\x02\xE3\xE9" +
+		"\x05&\x14\x02\xE4\xE9\x05\"\x12\x02\xE5\xE9\x05\x06\x04\x02\xE6\xE9\x07" +
+		"%\x02\x02\xE7\xE9\x05\x1E\x10\x02\xE8\xE3\x03\x02\x02\x02\xE8\xE4\x03" +
+		"\x02\x02\x02\xE8\xE5\x03\x02\x02\x02\xE8\xE6\x03\x02\x02\x02\xE8\xE7\x03" +
+		"\x02\x02\x02\xE9\x1D\x03\x02\x02\x02\xEA\xEB\x07\v\x02\x02\xEB\xED\x07" +
+		"\'\x02\x02\xEC\xEE\x07+\x02\x02\xED\xEC\x03\x02\x02\x02\xED\xEE\x03\x02" +
+		"\x02\x02\xEE\xF2\x03\x02\x02\x02\xEF\xF1\x07,\x02\x02\xF0\xEF\x03\x02" +
+		"\x02\x02\xF1\xF4\x03\x02\x02\x02\xF2\xF0\x03\x02\x02\x02\xF2\xF3\x03\x02" +
+		"\x02\x02\xF3\xF5\x03\x02\x02\x02\xF4\xF2\x03\x02\x02\x02\xF5\xF9\x07)" +
+		"\x02\x02\xF6\xF8\x05 \x11\x02\xF7\xF6\x03\x02\x02\x02\xF8\xFB\x03\x02" +
+		"\x02\x02\xF9\xF7\x03\x02\x02\x02\xF9\xFA\x03\x02\x02\x02\xFA\xFD\x03\x02" +
+		"\x02\x02\xFB\xF9\x03\x02\x02\x02\xFC\xFE\x07\f\x02\x02\xFD\xFC\x03\x02" +
+		"\x02\x02\xFD\xFE\x03\x02\x02\x02\xFE\x1F\x03\x02\x02\x02\xFF\u0104\x05" +
+		"&\x14\x02\u0100\u0104\x05\"\x12\x02\u0101\u0104\x05\x06\x04\x02\u0102" +
+		"\u0104\x07%\x02\x02\u0103\xFF\x03\x02\x02\x02\u0103\u0100\x03\x02\x02" +
+		"\x02\u0103\u0101\x03\x02\x02\x02\u0103\u0102\x03\x02\x02\x02\u0104!\x03" +
+		"\x02\x02\x02\u0105\u0107\t\x02\x02\x02\u0106\u0105\x03\x02\x02\x02\u0107" +
+		"\u0108\x03\x02\x02\x02\u0108\u0106\x03\x02\x02\x02\u0108\u0109\x03\x02" +
+		"\x02\x02\u0109#\x03\x02\x02\x02\u010A\u010C\x07\x1A\x02\x02\u010B\u010D" +
+		"\x07+\x02\x02\u010C\u010B\x03\x02\x02\x02\u010C\u010D\x03\x02\x02\x02" +
+		"\u010D\u0111\x03\x02\x02\x02\u010E\u0110\x07,\x02\x02\u010F\u010E\x03" +
+		"\x02\x02\x02\u0110\u0113\x03\x02\x02\x02\u0111\u010F\x03\x02\x02\x02\u0111" +
+		"\u0112\x03\x02\x02\x02\u0112\u0114\x03\x02\x02\x02\u0113\u0111\x03\x02" +
+		"\x02\x02\u0114\u0115\x07*\x02\x02\u0115%\x03\x02\x02\x02\u0116\u0121\x05" +
+		"(\x15\x02\u0117\u0121\x05*\x16\x02\u0118\u0121\x05,\x17\x02\u0119\u0121" +
+		"\x05.\x18\x02\u011A\u0121\x050\x19\x02\u011B\u0121\x052\x1A\x02\u011C" +
+		"\u0121\x054\x1B\x02\u011D\u0121\x056\x1C\x02\u011E\u0121\x058\x1D\x02" +
+		"\u011F\u0121\x05:\x1E\x02\u0120\u0116\x03\x02\x02\x02\u0120\u0117\x03" +
+		"\x02\x02\x02\u0120\u0118\x03\x02\x02\x02\u0120\u0119\x03\x02\x02\x02\u0120" +
+		"\u011A\x03\x02\x02\x02\u0120\u011B\x03\x02\x02\x02\u0120\u011C\x03\x02" +
+		"\x02\x02\u0120\u011D\x03\x02\x02\x02\u0120\u011E\x03\x02\x02\x02\u0120" +
+		"\u011F\x03\x02\x02\x02\u0121\'\x03\x02\x02\x02\u0122\u0124\x07\x10\x02" +
+		"\x02\u0123\u0122\x03\x02\x02\x02\u0123\u0124\x03\x02\x02\x02\u0124\u0128" +
+		"\x03\x02\x02\x02\u0125\u0129\x07!\x02\x02\u0126\u0129\x07\"\x02\x02\u0127" +
+		"\u0129\x07 \x02\x02\u0128\u0125\x03\x02\x02\x02\u0128\u0126\x03\x02\x02" +
+		"\x02\u0128\u0127\x03\x02\x02\x02\u0129\u012A\x03\x02\x02\x02\u012A\u012B" +
+		"\x07\x11\x02\x02\u012B\u012E\x07-\x02\x02\u012C\u012D\x07.\x02\x02\u012D" +
+		"\u012F\x07-\x02\x02\u012E\u012C\x03\x02\x02\x02\u012E\u012F\x03\x02\x02" +
+		"\x02\u012F\u0130\x03\x02\x02\x02\u0130\u0131\x07/\x02\x02\u0131)\x03\x02" +
+		"\x02\x02\u0132\u0134\x07\x1B\x02\x02\u0133\u0135\x070\x02\x02\u0134\u0133" +
+		"\x03\x02\x02\x02\u0135\u0136\x03\x02\x02\x02\u0136\u0134\x03\x02\x02\x02" +
+		"\u0136\u0137\x03\x02\x02\x02\u0137+\x03\x02\x02\x02\u0138\u0139\x07\x1D" +
+		"\x02\x02\u0139\u013A\x07\"\x02\x02\u013A-\x03\x02\x02\x02\u013B\u013C" +
+		"\x07\x1C\x02\x02\u013C/\x03\x02\x02\x02\u013D\u013E\x07\x12\x02\x02\u013E" +
+		"\u013F\x05\"\x12\x02\u013F\u0140\x07\x13\x02\x02\u01401\x03\x02\x02\x02" +
+		"\u0141\u0143\x07\x1E\x02\x02\u0142\u0141\x03\x02\x02\x02\u0143\u0144\x03" +
+		"\x02\x02\x02\u0144\u0142\x03\x02\x02\x02\u0144\u0145\x03\x02\x02\x02\u0145" +
+		"3\x03\x02\x02\x02\u0146\u0148\x07\x1F\x02\x02\u0147\u0146\x03\x02\x02" +
+		"\x02\u0148\u0149\x03\x02\x02\x02\u0149\u0147\x03\x02\x02\x02\u0149\u014A" +
+		"\x03\x02\x02\x02\u014A5\x03\x02\x02\x02\u014B\u014D\x07\x14\x02\x02\u014C" +
+		"\u014E\x05\n\x06\x02\u014D\u014C\x03\x02\x02\x02\u014E\u014F\x03\x02\x02" +
+		"\x02\u014F\u014D\x03\x02\x02\x02\u014F\u0150\x03\x02\x02\x02\u0150\u0151" +
+		"\x03\x02\x02\x02\u0151\u0153\x07\x15\x02\x02\u0152\u0154\x05$\x13\x02" +
+		"\u0153\u0152\x03\x02\x02\x02\u0153\u0154\x03\x02\x02\x02\u01547\x03\x02" +
+		"\x02\x02\u0155\u0157\x07\x16\x02\x02\u0156\u0158\x05\n\x06\x02\u0157\u0156" +
+		"\x03\x02\x02\x02\u0158\u0159\x03\x02\x02\x02\u0159\u0157\x03\x02\x02\x02" +
+		"\u0159\u015A\x03\x02\x02\x02\u015A\u015B\x03\x02\x02\x02\u015B\u015D\x07" +
+		"\x17\x02\x02\u015C\u015E\x05$\x13\x02\u015D\u015C\x03\x02\x02\x02\u015D" +
+		"\u015E\x03\x02\x02\x02\u015E9\x03\x02\x02\x02\u015F\u0161\x07\x18\x02" +
+		"\x02\u0160\u0162\x05\n\x06\x02\u0161\u0160\x03\x02\x02\x02\u0162\u0163" +
+		"\x03\x02\x02\x02\u0163\u0161\x03\x02\x02\x02\u0163\u0164\x03\x02\x02\x02" +
+		"\u0164\u0165\x03\x02\x02\x02\u0165\u0167\x07\x19\x02\x02\u0166\u0168\x05" +
+		"$\x13\x02\u0167\u0166\x03\x02\x02\x02\u0167\u0168\x03\x02\x02\x02\u0168" +
+		";\x03\x02\x02\x023?INS\\dkrw|\x83\x87\x91\x96\x9B\xA2\xA6\xAF\xB4\xB9" +
 		"\xC0\xC4\xCC\xD1\xD6\xDD\xE1\xE8\xED\xF2\xF9\xFD\u0103\u0108\u010C\u0111" +
-		"\u0120\u0125\u012B\u0133\u0141\u0146\u014C\u0150\u0156\u015A\u0160\u0164";
+		"\u0120\u0123\u0128\u012E\u0136\u0144\u0149\u014F\u0153\u0159\u015D\u0163" +
+		"\u0167";
 	public static __ATN: ATN;
 	public static get _ATN(): ATN {
 		if (!KojiParser.__ATN) {
@@ -3014,6 +3029,7 @@ export class FuriganaContext extends ParserRuleContext {
 			return this.getToken(KojiParser.FuriganaContent, i);
 		}
 	}
+	public FuriganaPre(): TerminalNode | undefined { return this.tryGetToken(KojiParser.FuriganaPre, 0); }
 	public Kanji(): TerminalNode | undefined { return this.tryGetToken(KojiParser.Kanji, 0); }
 	public Kana(): TerminalNode | undefined { return this.tryGetToken(KojiParser.Kana, 0); }
 	public NonJp(): TerminalNode | undefined { return this.tryGetToken(KojiParser.NonJp, 0); }
