@@ -10,9 +10,9 @@ const Furigana: ConversionRule = {
 	htmlTemplate: `
 	<ruby class="Furigana {{$classes}}" {{{$htmlId}}} >
 		{{{$1}}}
-		<rt class="right">{{{$2}}}</rt>
+		<rt class="furigana-right">{{{$2}}}</rt>
 		{{#$3}}
-		<rtc class="left">{{{$3}}}</rtc>
+		<rtc class="furigana-left">{{{$3}}}</rtc>
 		{{/$3}}
 	</ruby>
 	`,
