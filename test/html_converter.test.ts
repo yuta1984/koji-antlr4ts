@@ -53,6 +53,13 @@ describe('html converter', () => {
 		expect(html).to.contain('<ruby');
 	});
 
+	it('should be able to convert annotation', () => {
+		const src = '【コメント】';
+		const ast = parse(src).ast;
+		const html = convertToHTML(ast);
+		expect(html).to.contain('<span  class="Annotation ">【コメント】</span>');
+	});
+
 	it('should convert ast with an additional conversion rule', () => {
 		const kakoigaki: ConversionRule = {
 			elemName: '箱',

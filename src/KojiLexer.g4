@@ -66,7 +66,7 @@ Class: ('*' | '＊' ) AttrName;
 fragment AttrName: [A-z][A-z0-9\-_.]*;
 
 mode FURIGANA;
-FuriganaContent: (Kana | NonJpChar)+;
+FuriganaContent: (Kana | KanjiChar | NonJpChar)+;
 FuriganaSep: '｜';
 FuriganaClose: '）' -> popMode;
 
