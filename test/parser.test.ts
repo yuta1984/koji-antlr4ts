@@ -164,5 +164,11 @@ describe('parser', function () {
 			expect(node).to.have.property('id', 'id_string');
 			expect(node).to.have.deep.property('classes', ['class_string']);
 		});
+
+		it('allows any symbols in annotation', () => {
+			const result = parse('【コメントの中には何でも■？□はいります】');
+			console.log(result.errors);
+			expect(result.errors).to.be.empty;
+		});
 	});
 });

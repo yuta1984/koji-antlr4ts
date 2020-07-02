@@ -79,7 +79,7 @@ FuriganaOpen right = FuriganaContent (FuriganaSep left = FuriganaContent)? Furig
 kaeriten: KaeritenMark content = KaeritenChar+;
 okurigana: OkuriganaMark content = Kana;
 tateten: TatetenChar;
-annotation: AnnotationOpen content = textSegment AnnotationClose;
+annotation: AnnotationOpen content = AnnotationContent AnnotationClose;
 illegible: IllegibleMark+;
 bugHole: BugHoleMark+;
 person: PersonOpen content += inlineContent+ PersonClose postPositionedAttrs?;

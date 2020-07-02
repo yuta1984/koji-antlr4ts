@@ -24,8 +24,7 @@ Bar: '｜';
 // // syntax sugars
 FuriganaPre: ('／' | '/');
 FuriganaOpen: '（' -> pushMode(FURIGANA);
-AnnotationOpen: '【';
-AnnotationClose: '】';
+AnnotationOpen: '【' -> pushMode(ANNOTATION);
 
 PersonOpen: '｛';
 PersonClose: '｝';
@@ -72,3 +71,7 @@ FuriganaClose: '）' -> popMode;
 
 mode KAERITEN;
 KaeritenChar: [レ一二三四五六七八九十上中下甲乙丙丁天地人]+ -> popMode;
+
+mode ANNOTATION;
+AnnotationContent: ~('\n' | '】')*;
+AnnotationClose: '】' -> popMode;
