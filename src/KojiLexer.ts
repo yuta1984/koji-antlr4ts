@@ -99,7 +99,7 @@ export class KojiLexer extends Lexer {
 		"'\uFF3B'", "'\uFF3F'", undefined, "'\uFFE3'", "'\u25A0'", "'\u25A1'", 
 		undefined, undefined, undefined, undefined, undefined, undefined, undefined, 
 		undefined, "'\uFF1A'", undefined, "'\uFF3D'", undefined, undefined, undefined, 
-		undefined, "'\uFF09'", undefined, undefined, "'\u3011'",
+		undefined, "'\uFF09'",
 	];
 	private static readonly _SYMBOLIC_NAMES: Array<string | undefined> = [
 		undefined, "OpenBlock1", "CloseBlock1", "OpenBlock2", "CloseBlock2", "OpenBlock3", 
@@ -294,7 +294,7 @@ export class KojiLexer extends Lexer {
 		"\u0135\u0136\x03\x02\x02\x02\u0136\u0137\b2\x07\x02\u0137h\x03\x02\x02" +
 		"\x02\u0138\u013A\n\x0F\x02\x02\u0139\u0138\x03\x02\x02\x02\u013A\u013D" +
 		"\x03\x02\x02\x02\u013B\u0139\x03\x02\x02\x02\u013B\u013C\x03\x02\x02\x02" +
-		"\u013Cj\x03\x02\x02\x02\u013D\u013B\x03\x02\x02\x02\u013E\u013F\x07\u3013" +
+		"\u013Cj\x03\x02\x02\x02\u013D\u013B\x03\x02\x02\x02\u013E\u013F\t\x0F" +
 		"\x02\x02\u013F\u0140\x03\x02\x02\x02\u0140\u0141\b4\x07\x02\u0141l\x03" +
 		"\x02\x02\x02\x15\x02\x03\x04\x05\x06\xDA\xDF\xE4\xE9\xEE\xF0\u0101\u0107" +
 		"\u0109\u0121\u0127\u0129\u0134\u013B\b\x07\x03\x02\x07\x04\x02\x07\x06" +

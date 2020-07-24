@@ -72,7 +72,7 @@ export class KojiXMLConverter implements KojiConverter {
 			let idStr = '',
 				classesStr = '';
 			if (node.id) idStr = `xml:id='${node.id}'`;
-			if (node.classes) classesStr = `subtype='block ${node.classes.join(' ')}'`;
+			if (node.classes) classesStr = `type='${node.name}' subtype='block ${node.classes.join(' ')}'`;
 			const children = this.convertChildren(node.children).join('');
 			return `<div ${idStr} ${classesStr}>${children}</div>`;
 		}

@@ -74,4 +74,4 @@ KaeritenChar: [レ一二三四五六七八九十上中下甲乙丙丁天地人]+
 
 mode ANNOTATION;
 AnnotationContent: ~('\n' | '】')*;
-AnnotationClose: '】' -> popMode;
+AnnotationClose: ('\n' | '】') -> popMode;
