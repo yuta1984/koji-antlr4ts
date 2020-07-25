@@ -83,6 +83,14 @@ describe('parser', function() {
 			expect(furigana.children[1][0]).equal('袷着用');
 		});
 
+		it('does not put zenkaku space and kanji into the same class', () => {
+			const result = parse('　十八（じゅうはち）');
+			const space = result.ast.body[0] as string;
+			const furigana = result.ast.body[1] as KojiASTNode;
+			expect(space).to.equal('　');
+			expect(furigana.children[0][0]).equal('十八');
+		});
+
 		it('recognizes okurigana and kaeriten', () => {
 			const result = parse('逐￣テ＿レ吹￣ヲ潛￣カニ');
 			const children = result.ast.body;
