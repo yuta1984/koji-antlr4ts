@@ -74,7 +74,8 @@ syntaxSugar:
 	| place
 	| date;
 
-furigana: FuriganaPre? (target = Kanji | target = Kana | target = NonJp)
+furiganaTarget: Kanji | Kana | NonJp | annotation | illegible | bugHole;
+furigana: FuriganaPre? (target = furiganaTarget)
 FuriganaOpen right = FuriganaContent (FuriganaSep left = FuriganaContent)? FuriganaClose;
 kaeriten: KaeritenMark content = KaeritenChar+;
 okurigana: OkuriganaMark content = Kana;

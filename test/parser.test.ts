@@ -91,6 +91,16 @@ describe('parser', function() {
 			expect(furigana.children[0][0]).equal('十八');
 		});
 
+		it('allows furigana for ？ □　■ 【】', function() {
+			const texts = [ '？（ふりがな）', '□□（ふりがな）', '■（ふりがな）', '【ホゲ】（ふりがな）' ];
+			texts.forEach((text) => {
+				const result = parse(text);
+				const furigana = result.ast.body[0] as KojiASTNode;
+				expect(result.errors).to.be.empty;
+				expect(furigana.children[1][0]).to.equal('ふりがな');
+			});
+		});
+
 		it('recognizes okurigana and kaeriten', () => {
 			const result = parse('逐￣テ＿レ吹￣ヲ潛￣カニ');
 			const children = result.ast.body;

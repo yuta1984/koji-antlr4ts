@@ -22,6 +22,7 @@ import { BlockContent5Context } from "./KojiParser";
 import { TextSegmentContext } from "./KojiParser";
 import { PostPositionedAttrsContext } from "./KojiParser";
 import { SyntaxSugarContext } from "./KojiParser";
+import { FuriganaTargetContext } from "./KojiParser";
 import { FuriganaContext } from "./KojiParser";
 import { KaeritenContext } from "./KojiParser";
 import { OkuriganaContext } from "./KojiParser";
@@ -174,6 +175,13 @@ export interface KojiParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitSyntaxSugar?: (ctx: SyntaxSugarContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `KojiParser.furiganaTarget`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitFuriganaTarget?: (ctx: FuriganaTargetContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `KojiParser.furigana`.
