@@ -68,10 +68,11 @@ describe('html converter', () => {
 			example: 'テスト',
 			textTemplate: '{{$text}}',
 			htmlTemplate: `<span {{{$htmlId}}} class="box {{{$classes}}}">{{$1}}</span>`,
-			xmlTemplate: `<span rend="box">{{$1}}</span>`
+			xmlTemplate: `<span rend="box">{{$1}}</span>`,
+			docxTemplate: ``
 		};
 		const ast = parse('《箱#id*class1*class2：ホゲホゲ》').ast;
-		const html = convertToHTML(ast, { rules: [ kakoigaki ] });
+		const html = convertToHTML(ast, { rules: [kakoigaki] });
 		expect(html).to.contain('<span id="id" class="box class1 class2">ホゲホゲ</span>');
 	});
 
@@ -83,10 +84,11 @@ describe('html converter', () => {
 			example: 'テスト',
 			textTemplate: '{{$text}}',
 			htmlTemplate: `<span {{{$htmlId}}} class="connected {{{$classes}}}">{{$1}}-{{$2}}</span>`,
-			xmlTemplate: `<span rend="tateten">{{$1}}</span>`
+			xmlTemplate: `<span rend="tateten">{{$1}}</span>`,
+			docxTemplate: ``
 		};
 		const ast = parse('《ハイフン#id*class1*class2：ホゲホゲ｜フガフガ》').ast;
-		const html = convertToHTML(ast, { rules: [ kakoigaki ] });
+		const html = convertToHTML(ast, { rules: [kakoigaki] });
 		expect(html).to.contain('<span id="id" class="connected class1 class2">ホゲホゲ-フガフガ</span>');
 	});
 
@@ -98,10 +100,11 @@ describe('html converter', () => {
 			example: 'テスト',
 			textTemplate: '{{$text}}',
 			htmlTemplate: `<span {{{$htmlId}}} class="connected {{{$classes}}}">{{$1}}-{{$2}}</span>`,
-			xmlTemplate: `<span rend="tateten">{{$1}}</span>`
+			xmlTemplate: `<span rend="tateten">{{$1}}</span>`,
+			docxTemplate: ``
 		};
 		const ast = parse('《ハイフン#id*class1*class2：ホゲホゲ｜フガフガ》').ast;
-		const func = () => convertToHTML(ast, { rules: [ kakoigaki ] });
+		const func = () => convertToHTML(ast, { rules: [kakoigaki] });
 		expect(func).to.throw(Error);
 	});
 });

@@ -1,6 +1,6 @@
 {
 	"name": "koji-lang",
-	"version": "0.4.17",
+	"version": "0.5.0",
 	"description": "Processor for Koji, a light-weight markup language for historical Japanese text",
 	"main": "lib/index.js",
 	"scripts": {
@@ -16,6 +16,8 @@
 	"license": "MIT",
 	"devDependencies": {
 		"@types/chai": "^4.2.11",
+		"@types/chai-xml": "^0.3.2",
+		"@types/jszip": "^3.4.1",
 		"@types/mocha": "^7.0.2",
 		"@types/mustache": "^4.0.1",
 		"@types/node": "^12.0.10",
@@ -23,6 +25,7 @@
 		"antlr4ts-cli": "^0.5.0-alpha.3",
 		"chai": "^4.2.0",
 		"chai-dom": "^1.8.2",
+		"chai-xml": "^0.4.0",
 		"mocha": "^7.1.2",
 		"require-context": "^1.1.0",
 		"source-map-support": "^0.5.16",
@@ -34,6 +37,7 @@
 	},
 	"dependencies": {
 		"antlr4ts": "^0.5.0-alpha.3",
+		"jszip": "^3.6.0",
 		"mustache": "^4.0.1",
 		"xml-formatter": "^2.0.1"
 	}

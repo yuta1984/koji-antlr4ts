@@ -21,6 +21,16 @@ const Warigaki: ConversionRule = {
 		<span>{{{.}}}</span><lb/>
 		{{/$0}}
 	</span>
+	`,
+	docxTemplate: `
+	<w:r>
+        <w:rPr>
+          <w:rFonts w:hint="eastAsia"/>
+          <w:eastAsianLayout w:combine="1"/>
+        </w:rPr>
+        <w:t>{{{$$1}}}{{{$$2}}}
+        </w:t>
+    </w:r>
 	`
 };
 

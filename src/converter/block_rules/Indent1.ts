@@ -7,7 +7,8 @@ const Indent1: ConversionRule = {
 	example: '％字下げ一\nこの部分が字下げされます\n％',
 	textTemplate: '{{$1}}',
 	htmlTemplate: `<div {{{$htmlId}}} class="Indent1 {{$classes}}">{{{$1}}}</div>`,
-	xmlTemplate: `<div rend="indent(-1)" {{{$xmlId}}} {{{$xmlSubtypes}}}>{{{$1}}}</div>`
+	xmlTemplate: `<div rend="indent(-1)" {{{$xmlId}}} {{{$xmlSubtypes}}}>{{{$1}}}</div>`,
+	docxTemplate: `<w:p>{{{$1}}}</w:p>`
 };
 
 export default Indent1;

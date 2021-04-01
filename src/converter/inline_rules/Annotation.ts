@@ -8,8 +8,15 @@ const Annotation: ConversionRule = {
 	minContentCount: 1,
 	maxContentCount: 1,
 	textTemplate: '{{$text}}',
-	htmlTemplate: `<span data-annotation-coment="{{{$1}}}" {{{$htmlId}}} class="Annotation {{$classes}}">【{{{$1}}}】</span>`,
-	xmlTemplate: `<!-- {{$1}} -->`
+	htmlTemplate: `<span {{{$htmlId}}} class="Annotation {{$classes}}">【{{{$1}}}】</span>`,
+	xmlTemplate: `<!-- {{$1}} -->`,
+	docxTemplate: `<w:r>
+                <w:rPr>
+                    <w:rFonts w:hint="eastAsia"/>
+                    <w:color w:val="FF0000"/>
+                </w:rPr>
+                <w:t>【{{{$$1}}}】</w:t>
+            </w:r>`
 };
 
 export default Annotation;

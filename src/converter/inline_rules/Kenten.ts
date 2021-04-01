@@ -16,7 +16,8 @@ const Kenten: ConversionRule = {
     >
         {{{$1}}}
     </span>`,
-	xmlTemplate: `<emph>{{{$1}}}</emph>`
+	xmlTemplate: `<emph>{{{$1}}}</emph>`,
+	docxTemplate: `{{{$$1}}}`
 };
 
 export default Kenten;

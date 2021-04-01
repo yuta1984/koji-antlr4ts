@@ -9,7 +9,8 @@ const Date: ConversionRule = {
 	maxContentCount: 1,
 	textTemplate: '{{$1}}',
 	htmlTemplate: `<span {{{$htmlId}}} class="Date {{$classes}}">{{{$1}}}</span>`,
-	xmlTemplate: `<date {{{$xmlId}}} {{{$xmlSubType}}}>{{{$1}}}</date>`
+	xmlTemplate: `<date {{{$xmlId}}} {{{$xmlSubType}}}>{{{$1}}}</date>`,
+	docxTemplate: `<w:r><w:rPr><w:rFonts w:hint="eastAsia"/></w:rPr><w:t>{{$$1}}</w:t></w:r>`
 };
 
 export default Date;

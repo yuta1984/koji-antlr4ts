@@ -24,6 +24,36 @@ const Furigana: ConversionRule = {
 		<span type="rt" rend="left">{{{$3}}}</span>
 		{{/$3}}
 	</span>
+	`,
+	docxTemplate: `
+			<w:r>
+                <w:ruby>
+                    <w:rubyPr>
+                        <w:rubyAlign w:val="distributeSpace"/>
+                        <w:hps w:val="10"/>
+                        <w:hpsRaise w:val="18"/>
+                        <w:hpsBaseText w:val="21"/>
+                        <w:lid w:val="ja-JP"/>
+                    </w:rubyPr>
+                    <w:rt>
+                        <w:r>
+                            <w:rPr>
+                                <w:rFonts w:hint="eastAsia"/>
+                                <w:sz w:val="10"/>
+                            </w:rPr>
+                            <w:t>{{{$$2}}}</w:t>
+                        </w:r>
+                    </w:rt>
+                    <w:rubyBase>
+                        <w:r>
+                            <w:rPr>
+                                <w:rFonts w:hint="eastAsia"/>
+                            </w:rPr>
+                            <w:t>{{{$$1}}}</w:t>
+                        </w:r>
+                    </w:rubyBase>
+                </w:ruby>
+            </w:r>
 	`
 };
 

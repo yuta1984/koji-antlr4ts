@@ -11,9 +11,11 @@ import {
 } from 'antlr4ts';
 import { KojiLexer } from './KojiLexer';
 import { KojiXMLConverter } from './converter/KojiXMLConverter';
+import { KojiDocxDocumentConverter } from './converter/KojiDocxDocumentConverter';
 import { ConversionOptions, ConversionRule } from './converter/KojiConverter';
 import inlineConversionRules from './converter/inline_rules';
 import blockConversionRules from './converter/block_rules';
+import { generateDocx } from './converter/generateDocx';
 
 interface KojiParseError {
 	offendingSymbol: any | undefined;
@@ -42,7 +44,7 @@ class AccumlateErrorListener implements ANTLRErrorListener<any> {
 	}
 }
 
-export function tokenize(input: string): { tokens: Token[]; errors: KojiParseError[] } {
+export function tokenize(input: string): { tokens: Token[]; errors: KojiParseError[]; } {
 	const is = new ANTLRInputStream(input);
 	const lexer = new KojiLexer(is);
 	const errorHandler = new AccumlateErrorListener();
@@ -52,7 +54,7 @@ export function tokenize(input: string): { tokens: Token[]; errors: KojiParseErr
 	return { tokens: stream.getTokens(), errors: errorHandler.errors };
 }
 
-export function parse(input: string): { ast: KojiDocumentNode; errors: KojiParseError[] } {
+export function parse(input: string): { ast: KojiDocumentNode; errors: KojiParseError[]; } {
 	const is = new ANTLRInputStream(input);
 	const lexer = new KojiLexer(is);
 	const ts = new CommonTokenStream(lexer);
@@ -77,6 +79,15 @@ export function convertToXML(ast: KojiDocumentNode, options?: ConversionOptions)
 	return converter.convert(ast);
 }
 
-export const conversionRules: { [elemName: string]: ConversionRule } = {};
+export function convertToDocxDocument(ast: KojiDocumentNode, options?: ConversionOptions): string {
+	const converter = new KojiDocxDocumentConverter(options);
+	return converter.convert(ast);
+}
+
+export async function saveAsDocx(path: string, ast: KojiDocumentNode) {
+	await generateDocx(path, ast);
+}
+
+export const conversionRules: { [elemName: string]: ConversionRule; } = {};
 inlineConversionRules.forEach((r) => (conversionRules[r.elemName] = r));
 blockConversionRules.forEach((r) => (conversionRules[r.elemName] = r));

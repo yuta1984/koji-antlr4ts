@@ -8,7 +8,17 @@ const Kaeriten: ConversionRule = {
 	maxContentCount: 1,
 	textTemplate: '＿{{$1}}',
 	htmlTemplate: `<span {{{$htmlId}}} class="Kaeriten {{$classes}}">{{{$1}}}</span>`,
-	xmlTemplate: `<span type="kaeriten" {{{$xmlId}}} {{{$xmlSubtypes}}}>{{{$1}}}</span>`
+	xmlTemplate: `<span type="kaeriten" {{{$xmlId}}} {{{$xmlSubtypes}}}>{{{$1}}}</span>`,
+	docxTemplate: `
+			<w:r>
+        		<w:rPr>
+                    <w:rFonts w:hint="eastAsia"/>
+                    <w:vertAlign w:val="subscript"/>
+                </w:rPr>
+                <w:t>{{{$$1}}}</w:t>
+            </w:r>
+	`
+
 };
 
 export default Kaeriten;

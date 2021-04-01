@@ -8,7 +8,16 @@ const Okurigana: ConversionRule = {
 	maxContentCount: 1,
 	textTemplate: '￣{{$1}}',
 	htmlTemplate: `<span {{{$htmlId}}} class="Okurigana {{$classes}}">{{{$1}}}</span>`,
-	xmlTemplate: `<span type="okurigana" {{{$xmlId}}} {{{$xmlSubtypes}}}>{{{$1}}}</span>`
+	xmlTemplate: `<span type="okurigana" {{{$xmlId}}} {{{$xmlSubtypes}}}>{{{$1}}}</span>`,
+	docxTemplate: `
+			<w:r>
+        		<w:rPr>
+                    <w:rFonts w:hint="eastAsia"/>
+                    <w:vertAlign w:val="superscript"/>
+                </w:rPr>
+                <w:t>{{{$$1}}}</w:t>
+            </w:r>
+	`
 };
 
 export default Okurigana;

@@ -10,8 +10,8 @@ import Person from './Person';
 import Place from './Place';
 import Title from './Title';
 import Warigaki from './Warigaki';
-import Misekechi from './Kenten';
-import Kenten from './Misekechi';
+import Misekechi from './Misekechi';
+import Kenten from './Kenten';
 
 export default [
 	Annotation,

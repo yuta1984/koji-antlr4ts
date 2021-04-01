@@ -7,7 +7,8 @@ const Cover: ConversionRule = {
 	example: '％表紙\n《題：地震年代記》\n％',
 	textTemplate: '{{{$1}}}',
 	htmlTemplate: `<div {{{$htmlId}}} class="Cover {{$classes}}">{{{$1}}}</div>`,
-	xmlTemplate: `<titlePage {{{$xmlId}}} {{{$xmlSubtypes}}}>{{{$1}}}</titlePage>`
+	xmlTemplate: `<titlePage {{{$xmlId}}} {{{$xmlSubtypes}}}>{{{$1}}}</titlePage>`,
+	docxTemplate: `<w:p>{{{$1}}}</w:p>`
 };
 
 export default Cover;
