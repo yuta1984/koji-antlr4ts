@@ -1,9 +1,9 @@
 {
 	"name": "koji-lang",
-	"version": "0.5.0",
+	"version": "0.5.1",
 	"description": "Processor for Koji, a light-weight markup language for historical Japanese text",
 	"main": "lib/index.js",
-	"scripts": {
+		"scripts": {
 		"antlr4ts": "antlr4ts -visitor src/Koji*.g4 ",
 		"clean": "rm -rf _bundles lib",
 		"build": "npm run clean & tsc && npm run webpack",

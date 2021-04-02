@@ -15,7 +15,7 @@ import { KojiDocxDocumentConverter } from './converter/KojiDocxDocumentConverter
 import { ConversionOptions, ConversionRule } from './converter/KojiConverter';
 import inlineConversionRules from './converter/inline_rules';
 import blockConversionRules from './converter/block_rules';
-import { generateDocx } from './converter/generateDocx';
+import { toBlob, toBase64String, toBuffer } from './converter/KojiDocxCompiler';
 
 interface KojiParseError {
 	offendingSymbol: any | undefined;
@@ -79,13 +79,25 @@ export function convertToXML(ast: KojiDocumentNode, options?: ConversionOptions)
 	return converter.convert(ast);
 }
 
-export function convertToDocxDocument(ast: KojiDocumentNode, options?: ConversionOptions): string {
+export function convertToDocxDocumentXml(ast: KojiDocumentNode, options?: ConversionOptions): string {
 	const converter = new KojiDocxDocumentConverter(options);
 	return converter.convert(ast);
 }
 
-export async function saveAsDocx(path: string, ast: KojiDocumentNode) {
-	await generateDocx(path, ast);
+type TypeName = "blob" | "base64" | "buffer";
+type ObjectType<T> =
+	T extends "blob" ? Blob :
+	T extends "base64" ? string :
+	T extends "buffer" ? Buffer :
+	never;
+export function convertToDocx<T extends TypeName>(ast: KojiDocumentNode, type: T): Promise<ObjectType<T>> {
+	if (type === "blob") {
+		return toBlob(ast) as Promise<ObjectType<T>>;
+	} else if (type === "base64") {
+		return toBase64String(ast) as Promise<ObjectType<T>>;
+	} else if (type === "buffer") {
+		return toBuffer(ast) as Promise<ObjectType<T>>;
+	}
 }
 
 export const conversionRules: { [elemName: string]: ConversionRule; } = {};

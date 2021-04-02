@@ -1,6 +1,7 @@
-import { parse, convertToDocxDocument, saveAsDocx } from '../src';
+import { parse, convertToDocxDocumentXml, convertToDocx } from '../src';
 import * as chai from 'chai';
 import * as chaiXml from 'chai-xml';
+import * as fs from 'fs';
 
 chai.use(chaiXml);
 const expect = chai.expect;
@@ -81,17 +82,33 @@ const expected1 = `
 </w:document>`;
 const ast = parse(case1).ast;
 
-describe('docx document converter', () => {
+describe('docx xml converter', () => {
     it('should generate a docx from case1 without any errors', () => {
         let fn = () => {
-            saveAsDocx("~/test.docx", ast);
+
         };
         expect(fn).not.to.throw();
     });
 
     it('should be valid', () => {
-        const xml = convertToDocxDocument(ast);
+        const xml = convertToDocxDocumentXml(ast);
         expect(xml).xml.to.be.valid();
     });
 
+});
+
+describe('docx binary converter', () => {
+    it('should return blob, buffer, or base64', async () => {
+        let fn = async () => {
+            const base64 = await convertToDocx(ast, "base64");
+            const blob = await convertToDocx(ast, "blob");
+            const buf = await convertToDocx(ast, "buffer");
+        };
+        expect(fn).not.to.throw();
+    });
+
+    it('should generate a valid docx file', async () => {
+        const buf = await convertToDocx(ast, "buffer");
+        fs.writeFileSync("/Users/yuta/Desktop/test.docx", buf);
+    });
 });
