@@ -27,32 +27,47 @@ const Furigana: ConversionRule = {
 	`,
 	docxTemplate: `
 			<w:r>
-                <w:ruby>
-                    <w:rubyPr>
-                        <w:rubyAlign w:val="distributeSpace"/>
-                        <w:hps w:val="10"/>
-                        <w:hpsRaise w:val="18"/>
-                        <w:hpsBaseText w:val="21"/>
-                        <w:lid w:val="ja-JP"/>
-                    </w:rubyPr>
-                    <w:rt>
-                        <w:r>
-                            <w:rPr>
-                                <w:rFonts w:hint="eastAsia"/>
-                                <w:sz w:val="10"/>
-                            </w:rPr>
-                            <w:t>{{{$$2}}}</w:t>
-                        </w:r>
-                    </w:rt>
-                    <w:rubyBase>
-                        <w:r>
-                            <w:rPr>
-                                <w:rFonts w:hint="eastAsia"/>
-                            </w:rPr>
-                            <w:t>{{{$$1}}}</w:t>
-                        </w:r>
-                    </w:rubyBase>
-                </w:ruby>
+                <w:fldChar w:fldCharType="begin"/>
+            </w:r>
+            <w:r>
+                <w:instrText xml:space="preserve"></w:instrText>
+            </w:r>
+            <w:r>
+                <w:rPr>
+                    <w:rFonts w:hint="eastAsia"/>
+                </w:rPr>
+                <w:instrText>eq \\o\\ad(\\s\\up 9(</w:instrText>
+            </w:r>
+			<w:r>
+                <w:rPr>
+					<w:rFonts w:hint="eastAsia"/>
+                    <w:sz w:val="10"/>
+                </w:rPr>
+                <w:instrText>{{{$$2}}}</w:instrText>
+            </w:r>
+			{{#$3}}
+			<w:r>
+                <w:rPr>
+                    <w:rFonts w:hint="eastAsia"/>
+                </w:rPr>
+                <w:instrText>),\\s\\do 9(</w:instrText>
+            </w:r>
+			<w:r>
+                <w:rPr>
+					<w:rFonts w:hint="eastAsia"/>
+                    <w:sz w:val="10"/>
+                </w:rPr>
+                <w:instrText>{{{$$3}}}</w:instrText>
+            </w:r>
+			{{/$3}}
+			<w:r>
+                <w:rPr>
+                    <w:rFonts w:hint="eastAsia"/>
+                </w:rPr>
+                <w:instrText>),{{{$$1}}})</w:instrText>
+            </w:r>
+            <w:r>
+                <w:fldChar w:fldCharType="end"/>
             </w:r>
 	`
 };
