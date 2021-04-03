@@ -118,7 +118,7 @@ export class KojiParser extends Parser {
 		undefined, "'\uFF05'", "'\n\n'", "'\uFF05\uFF05'", "'\n\uFF05\n'", "'\uFF05\uFF05\uFF05'", 
 		"'\n\uFF05\uFF05\n'", "'\uFF05\uFF05\uFF05\uFF05'", "'\n\uFF05\uFF05\uFF05\n'", 
 		"'\uFF05\uFF05\uFF05\uFF05\uFF05'", "'\n\uFF05\uFF05\uFF05\uFF05\n'", 
-		"'\u300A'", "'\u300B'", undefined, undefined, "'\uFF08'", "'\u3010'", 
+		"'\u300A'", "'\u300B'", undefined, "'\uFF0F'", "'\uFF08'", "'\u3010'", 
 		"'\uFF5B'", "'\uFF5D'", "'\u3014'", "'\u3015'", "'\uFF1C'", "'\uFF1E'", 
 		"'\uFF3B'", "'\uFF3F'", undefined, "'\uFFE3'", "'\u25A0'", "'\u25A1'", 
 		undefined, undefined, undefined, undefined, undefined, undefined, undefined, 
