@@ -31,7 +31,6 @@ export class KojiDocxDocumentConverter implements KojiConverter {
     convert(ast: KojiDocumentNode): string {
         const children = this.convertChildren([ast.body]);
         for (let i = 0; i < children.length; i++) {
-            console.log(children[i]);
             if (/^<w:t>.*<\/w:t>$/.test(children[i])) {
                 children[i] = `<w:r>${children[i]}</w:r>`;
             }
