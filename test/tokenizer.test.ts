@@ -38,9 +38,17 @@ describe('tokenizer', () => {
 	});
 
 	it('should recognize dots as non jp char', () => {
+		const src = '3.14';
+		const result = tokenize(src);
+		const tokens = result.tokens;
+
+		assertTokenType(tokens[1], 'NonJp');
+	});
+
+	it('should recognize slash as non jp char', () => {
 		const src = '3/14';
 		const result = tokenize(src);
 		const tokens = result.tokens;
-		assertTokenType(tokens[1], 'NonJpChar');
+		assertTokenType(tokens[1], 'NonJp');
 	});
 });

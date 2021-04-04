@@ -31,7 +31,8 @@ const Warigaki: ConversionRule = {
         <w:t>{{{$$1}}}{{{$$2}}}
         </w:t>
     </w:r>
-	`
+	`,
+	latexTemplate: '{{#$3}} {{#$4}} \\yongyouwari{ {{{$1}}} }{ {{{$2}}} }{ {{{$3}}} }{ {{{$4}}} } {{/$4}} {{^$4}} \\sangyouwari{ {{{$1}}} }{ {{{$2}}} }{ {{{$3}}} } {{/$4}} {{/$3}} {{^$3}}\\sougyou{ {{{$1}}} }{ {{{$2}}} } {{/$3}}'
 };
 
 export default Warigaki;

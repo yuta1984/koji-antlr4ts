@@ -11,6 +11,7 @@ export interface ConversionRule {
 	htmlTemplate: string;
 	xmlTemplate: string;
 	docxTemplate?: string;
+	latexTemplate?: string;
 }
 
 export interface KojiConverter {

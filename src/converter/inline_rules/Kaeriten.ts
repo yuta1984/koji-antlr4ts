@@ -17,7 +17,8 @@ const Kaeriten: ConversionRule = {
                 </w:rPr>
                 <w:t>{{{$$1}}}</w:t>
             </w:r>
-	`
+	`,
+	latexTemplate: '\\kaeriten{ {{{$1}}} }'
 
 };
 

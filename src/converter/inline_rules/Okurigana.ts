@@ -17,7 +17,8 @@ const Okurigana: ConversionRule = {
                 </w:rPr>
                 <w:t>{{{$$1}}}</w:t>
             </w:r>
-	`
+	`,
+	latexTemplate: '\\kokana{ {{{$1}}} }{}'
 };
 
 export default Okurigana;

@@ -10,7 +10,8 @@ const Illegible: ConversionRule = {
 	textTemplate: '{{$text}}',
 	htmlTemplate: `<span {{{$htmlId}}} class="illegible {{$classes}}">{{{$1}}}</span>`,
 	xmlTemplate: `<gap {{{$xmlId}}} {{{$xmlSubtypes}}} quantity="{{$text.length}}" unit="chars" reason="illegible"/>`,
-	docxTemplate: `<w:r><w:t>{{{$$1}}}</w:t></w:r>`
+	docxTemplate: `<w:r><w:t>{{{$$1}}}</w:t></w:r>`,
+	latexTemplate: '{{$text}}'
 };
 
 export default Illegible;

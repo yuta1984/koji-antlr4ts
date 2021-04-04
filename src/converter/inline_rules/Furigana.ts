@@ -69,7 +69,8 @@ const Furigana: ConversionRule = {
             <w:r>
                 <w:fldChar w:fldCharType="end"/>
             </w:r>
-	`
+	`,
+	latexTemplate: '{{#$3}}\\HidariNakaTn{ {{/$3}}\\MigiNakaTn{ {{{$1}}} }{ {{{$2}}} }{{#$3}} }{ {{{$3}}} }{{/$3}}'
 };
 
 export default Furigana;

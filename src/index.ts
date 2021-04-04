@@ -16,6 +16,7 @@ import { ConversionOptions, ConversionRule } from './converter/KojiConverter';
 import inlineConversionRules from './converter/inline_rules';
 import blockConversionRules from './converter/block_rules';
 import { toBlob, toBase64String, toBuffer } from './converter/KojiDocxCompiler';
+import { KojiLaTeXConverter } from './converter/KojiLaTeXConverter';
 
 interface KojiParseError {
 	offendingSymbol: any | undefined;
@@ -81,6 +82,11 @@ export function convertToXML(ast: KojiDocumentNode, options?: ConversionOptions)
 
 export function convertToDocxDocumentXml(ast: KojiDocumentNode, options?: ConversionOptions): string {
 	const converter = new KojiDocxDocumentConverter(options);
+	return converter.convert(ast);
+}
+
+export function convertToLaTeX(ast: KojiDocumentNode, options?: ConversionOptions): string {
+	const converter = new KojiLaTeXConverter(options);
 	return converter.convert(ast);
 }
 

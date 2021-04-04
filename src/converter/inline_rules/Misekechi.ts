@@ -50,7 +50,8 @@ const Kenten: ConversionRule = {
                     </w:rubyBase>
                 </w:ruby>
             </w:r>
-	`
+	`,
+    latexTemplate: `\\sout{ \\MigiKataTn{ {{{$1}}} }{ {{{$2}}} } }`
 };
 
 export default Kenten;

@@ -10,7 +10,8 @@ const Title: ConversionRule = {
 	textTemplate: '{{$1}}',
 	htmlTemplate: `<h1 class="Title {{$classes}}" {{$htmlId}}>{{{$1}}}</h1>`,
 	xmlTemplate: `<docTitle {{{$xmlId}}} {{{$xmlSubtypes}}}>{{{$1}}}</docTitle>`,
-	docxTemplate: `<w:r><w:rPr><w:rFonts w:hint="eastAsia"/></w:rPr><w:t>{{$text}}</w:t></w:r>`
+	docxTemplate: `<w:r><w:rPr><w:rFonts w:hint="eastAsia"/></w:rPr><w:t>{{$text}}</w:t></w:r>`,
+	latexTemplate: '{{$text}}'
 };
 
 export default Title;

@@ -16,7 +16,8 @@ const Annotation: ConversionRule = {
                     <w:color w:val="FF0000"/>
                 </w:rPr>
                 <w:t>【{{{$$1}}}】</w:t>
-            </w:r>`
+            </w:r>`,
+	latexTemplate: `\\textcolor{red}{【{{{$1}}}】}`
 };
 
 export default Annotation;
