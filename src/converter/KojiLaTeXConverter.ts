@@ -89,7 +89,7 @@ export class KojiLaTeXConverter implements KojiConverter {
         return `% みんなで翻刻テキストLaTeXエクスポート（試験版）
 % 金水敏先生が公開するkunten2e.sty(http://www.let.osaka-u.ac.jp/~kinsui/tex/kunten2e.sty)を使用してコンパイルしてください
 
-\\documentclass[dvipdfmx,autodetect-engine]{tbook}% 
+\\documentclass[dvipdfmx,autodetect-engine]{utbook}% 
 \\usepackage{kuten2e,color}
 \\usepackage[normalem]{ulem}
 \\begin{document}
