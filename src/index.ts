@@ -80,6 +80,30 @@ export function convertToXML(ast: KojiDocumentNode, options?: ConversionOptions)
 	return converter.convert(ast);
 }
 
+export function convertToTEI(ast: KojiDocumentNode): string {
+	const xml = convertToXML(ast);
+	return `<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_all.rng" type="application/xml"
+	schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>Title</title>
+         </titleStmt>
+         <publicationStmt>
+            <p>Publication Information</p>
+         </publicationStmt>
+         <sourceDesc>
+            <p>Information about the source</p>
+         </sourceDesc>
+      </fileDesc>
+   </teiHeader>
+   ${xml}
+</TEI>
+	`;
+}
+
 export function convertToDocxDocumentXml(ast: KojiDocumentNode, options?: ConversionOptions): string {
 	const converter = new KojiDocxDocumentConverter(options);
 	return converter.convert(ast);

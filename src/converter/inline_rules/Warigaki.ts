@@ -16,11 +16,11 @@ const Warigaki: ConversionRule = {
 	</span>
 	`,
 	xmlTemplate: `
-	<span {{{$xmlId}}} type="warigaki" {{{$xmlSubtypes}}}>
+	<note type="wari">
 		{{#$0}}
-		<span>{{{.}}}</span><lb/>
+		{{{.}}}<milestone unit="wrb"/>
 		{{/$0}}
-	</span>
+	</note>
 	`,
 	docxTemplate: `
 	<w:r>

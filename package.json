@@ -1,44 +1,44 @@
 {
-	"name": "koji-lang",
-	"version": "0.5.4",
-	"description": "Processor for Koji, a light-weight markup language for historical Japanese text",
-	"main": "lib/index.js",
-		"scripts": {
-		"antlr4ts": "antlr4ts -visitor src/Koji*.g4 ",
-		"clean": "rm -rf _bundles lib",
-		"build": "npm run clean & tsc && npm run webpack",
-		"webpack": "webpack --mode production",
-		"test": "mocha -r ts-node/register test/*.test.ts",
-		"prepublish": "npm run build",
-		"publish": "npm publish ./"
-	},
-	"author": "Yuta Hashimoto",
-	"license": "MIT",
-	"devDependencies": {
-		"@types/chai": "^4.2.11",
-		"@types/chai-xml": "^0.3.2",
-		"@types/jszip": "^3.4.1",
-		"@types/mocha": "^7.0.2",
-		"@types/mustache": "^4.0.1",
-		"@types/node": "^12.0.10",
-		"@types/webpack-env": "^1.15.1",
-		"antlr4ts-cli": "^0.5.0-alpha.3",
-		"chai": "^4.2.0",
-		"chai-dom": "^1.8.2",
-		"chai-xml": "^0.4.0",
-		"mocha": "^7.1.2",
-		"require-context": "^1.1.0",
-		"source-map-support": "^0.5.16",
-		"ts-loader": "^6.0.4",
-		"ts-node": "^8.10.1",
-		"typescript": "^3.8.3",
-		"webpack": "^4.35.3",
-		"webpack-cli": "^3.3.5"
-	},
-	"dependencies": {
-		"antlr4ts": "^0.5.0-alpha.3",
-		"jszip": "^3.6.0",
-		"mustache": "^4.0.1",
-		"xml-formatter": "^2.0.1"
-	}
+  "name": "koji-lang",
+  "version": "0.5.9",
+  "description": "Processor for Koji, a light-weight markup language for historical Japanese text",
+  "main": "lib/index.js",
+  "scripts": {
+    "antlr4ts": "antlr4ts -visitor src/Koji*.g4 ",
+    "clean": "rm -rf _bundles lib",
+    "build": "npm run clean & tsc && npm run webpack",
+    "webpack": "webpack --mode production",
+    "test": "mocha -r ts-node/register test/*.test.ts",
+    "prepublish": "npm run build",
+    "publish": "npm publish ./"
+  },
+  "author": "Yuta Hashimoto",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/chai": "^4.2.11",
+    "@types/chai-xml": "^0.3.2",
+    "@types/jszip": "^3.4.1",
+    "@types/mocha": "^7.0.2",
+    "@types/mustache": "^4.0.1",
+    "@types/node": "^12.0.10",
+    "@types/webpack-env": "^1.15.1",
+    "antlr4ts-cli": "^0.5.0-alpha.3",
+    "chai": "^4.2.0",
+    "chai-dom": "^1.8.2",
+    "chai-xml": "^0.4.0",
+    "mocha": "^7.1.2",
+    "require-context": "^1.1.0",
+    "source-map-support": "^0.5.16",
+    "ts-loader": "^6.0.4",
+    "ts-node": "^8.10.1",
+    "typescript": "^3.8.3",
+    "webpack": "^4.35.3",
+    "webpack-cli": "^3.3.5"
+  },
+  "dependencies": {
+    "antlr4ts": "^0.5.0-alpha.3",
+    "jszip": "^3.6.0",
+    "mustache": "^4.0.1",
+    "xml-formatter": "^2.0.1"
+  }
 }

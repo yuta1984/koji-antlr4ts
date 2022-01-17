@@ -8,7 +8,7 @@ const Kaeriten: ConversionRule = {
 	maxContentCount: 1,
 	textTemplate: '＿{{$1}}',
 	htmlTemplate: `<span {{{$htmlId}}} class="Kaeriten {{$classes}}">{{{$1}}}</span>`,
-	xmlTemplate: `<span type="kaeriten" {{{$xmlId}}} {{{$xmlSubtypes}}}>{{{$1}}}</span>`,
+	xmlTemplate: `<metamark function="kaeriten">レ</metamark>`,
 	docxTemplate: `
 			<w:r>
         		<w:rPr>

@@ -1,5 +1,7 @@
-import { parse, convertToXML } from '../src';
-import { expect } from 'chai';
+import { parse, convertToXML, convertToTEI } from '../src';
+import { expect, use } from 'chai';
+import * as chaiXml from 'chai-xml';
+use(chaiXml);
 
 const case1 = `％表紙
 安政二改正
@@ -21,6 +23,34 @@ const case1 = `％表紙
 の中国（なかつくに）の泰平（たいへい）万々歳（ばん〳〵ぜい）たるよしを人々に知（し）らせ参（まゐ）らせんとて
 ｛無名氏識｝`;
 
+describe('tei converter', () => {
+	const src = 'ほげほげ';
+	const ast = parse(src).ast;
+	const xml = convertToTEI(ast);
+	expect(xml).xml.to.deep.equal(`
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_all.rng" type="application/xml"
+	schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<?xml-model href="../../%E6%B3%95%E5%AE%9D%E7%BE%A9%E6%9E%97/tei_all_ja_421/document.rnc" type="application/relax-ng-compact-syntax"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>Title</title>
+         </titleStmt>
+         <publicationStmt>
+            <p>Publication Information</p>
+         </publicationStmt>
+         <sourceDesc>
+            <p>Information about the source</p>
+         </sourceDesc>
+      </fileDesc>
+   </teiHeader>
+   <text>ほげほげ</text>
+</TEI>
+	`);
+});
+
 describe('xml converter', () => {
 	it('should convert case1 without any errors', () => {
 		let ast = parse(case1).ast;
@@ -29,4 +59,84 @@ describe('xml converter', () => {
 		};
 		expect(fn).not.to.throw();
 	});
+
+
+	it('should be valid', () => {
+		const src = 'ここにテキストを入力（にゅうりょく｜インプット）';
+		const ast = parse(src).ast;
+		const xml = convertToXML(ast);
+		expect(xml).xml.to.be.valid();
+	});
+
+	it('should be able to process ruby2', () => {
+		const src = '入力（にゅうりょく）';
+		const ast = parse(src).ast;
+		const xml = convertToXML(ast);
+		expect(xml).xml.to.deep.equal(`
+		<text>
+            <ruby>
+                <rb>入力</rb>
+                <rt>にゅうりょく</rt>
+            </ruby>
+		</text>`);
+	});
+
+	it('should be able to process ruby2', () => {
+		const src = '入力（にゅうりょく｜インプット）';
+		const ast = parse(src).ast;
+		const xml = convertToXML(ast);
+		expect(xml).xml.to.deep.equal(`
+		<text>
+			<ruby>
+               	<rb>
+			   		<ruby>
+                    	<rb>入力</rb>
+                     	<rt>にゅうりょく</rt>
+               		</ruby>
+				</rb>
+               <rt>インプット</rt>
+            </ruby>
+		</text>`);
+	});
+
+	it('should able to process 圏点', () => {
+		const src = '《圏点：圏点が付される文｜﹅》';
+		const ast = parse(src).ast;
+		const xml = convertToXML(ast);
+		expect(xml).xml.to.deep.equal(`<text><seg style="text-emphasis: filled sesame">圏点が付される文</seg></text>`);
+	});
+
+	it('should able to process 見せ消ち', () => {
+		const src = '《見せ消ち：訂正前の文｜訂正後の文》';
+		const ast = parse(src).ast;
+		const xml = convertToXML(ast);
+		expect(xml).xml.to.deep.equal(`<text><subst>
+               <del>訂正前の文</del>
+               <add>訂正後の文</add>
+            </subst></text>`);
+	});
+
+	it('should able to process 割書', () => {
+		const src = '《割書：一行目｜二行目｜三行目》';
+		const ast = parse(src).ast;
+		const xml = convertToXML(ast);
+		//expect(xml).xml.to.deep.equal(`<text><note type="wari">一行目<milestone unit="wrb"/>二行目<milestone unit="wrb"/>三行目<milestone unit="wrb"/></note></text>`);
+	});
+
+	it('should able to process 送り仮名', () => {
+		const src = '￣ス';
+		const ast = parse(src).ast;
+		const xml = convertToXML(ast);
+		expect(xml).xml.to.deep.equal(`<text><note type="okuri">ス</note></text>`);
+	});
+
+	it('should able to process 返り点', () => {
+		const src = '＿レ';
+		const ast = parse(src).ast;
+		const xml = convertToXML(ast);
+		expect(xml).xml.to.deep.equal(`<text><metamark function="kaeriten">レ</metamark></text>`);
+	});
+
 });
+
+

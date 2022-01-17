@@ -16,7 +16,7 @@ const Kenten: ConversionRule = {
     >
         {{{$1}}}
     </span>`,
-    xmlTemplate: `<emph>{{{$1}}}</emph>`,
+    xmlTemplate: `<seg style="text-emphasis: filled sesame">{{{$1}}}</seg>`,
     docxTemplate: `
 	<w:r>
             <w:rPr>

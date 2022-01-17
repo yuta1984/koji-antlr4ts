@@ -16,10 +16,10 @@ const Kenten: ConversionRule = {
         {{/$2}}        
     </ruby>`,
     xmlTemplate: `
-    <del rend="overstrike">{{{$1}}}</del>
-    {{#$2}}
-    <add place="right">{{{$2}}}</add>
-    {{/$2}}`,
+    <subst>
+        <del>{{{$1}}}</del>
+        <add>{{{$2}}}</add>
+    </subst>`,
     docxTemplate: `
 			<w:r>
                 <w:ruby>

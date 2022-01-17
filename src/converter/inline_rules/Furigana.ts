@@ -17,13 +17,21 @@ const Furigana: ConversionRule = {
 	</ruby>
 	`,
 	xmlTemplate: `
-	<span type="ruby" {{{$xmlId}}} {{{$xmlSubtypes}}}>		
-		<span type="rb">{{{$1}}}</span>
-		<span type="rt" rend="right">{{{$2}}}</span>
+	<ruby>
 		{{#$3}}
-		<span type="rt" rend="left">{{{$3}}}</span>
+        <rb>		
+			<ruby>
+            	<rb>{{{$1}}}</rb>
+        		<rt>{{{$2}}}</rt>
+        	</ruby>
+		</rb>
+        <rt>{{{$3}}}</rt>
 		{{/$3}}
-	</span>
+		{{^$3}}
+            <rb>{{{$1}}}</rb>
+        	<rt>{{{$2}}}</rt>        	
+		{{/$3}}
+    </ruby>
 	`,
 	docxTemplate: `
 			<w:r>
