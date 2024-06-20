@@ -1,4 +1,4 @@
-// Generated from src/KojiParser.g4 by ANTLR 4.7.3-SNAPSHOT
+// Generated from src/KojiParser.g4 by ANTLR 4.9.0-SNAPSHOT
 
 
 import { ATN } from "antlr4ts/atn/ATN";
@@ -152,6 +152,10 @@ export class KojiParser extends Parser {
 
 	// @Override
 	public get serializedATN(): string { return KojiParser._serializedATN; }
+
+	protected createFailedPredicateException(predicate?: string, message?: string): FailedPredicateException {
+		return new FailedPredicateException(this, predicate, message);
+	}
 
 	constructor(input: TokenStream) {
 		super(input);
@@ -2249,7 +2253,7 @@ export class ListContext extends ParserRuleContext {
 
 
 export class InlineContext extends ParserRuleContext {
-	public _inlineContentSeq: InlineContentSeqContext;
+	public _inlineContentSeq!: InlineContentSeqContext;
 	public _content: InlineContentSeqContext[] = [];
 	public OpenInline(): TerminalNode { return this.getToken(KojiParser.OpenInline, 0); }
 	public ElemName(): TerminalNode { return this.getToken(KojiParser.ElemName, 0); }
@@ -2433,7 +2437,7 @@ export class BlockContext extends ParserRuleContext {
 
 
 export class Block1Context extends ParserRuleContext {
-	public _blockContent1: BlockContent1Context;
+	public _blockContent1!: BlockContent1Context;
 	public _content: BlockContent1Context[] = [];
 	public OpenBlock1(): TerminalNode { return this.getToken(KojiParser.OpenBlock1, 0); }
 	public ElemName(): TerminalNode { return this.getToken(KojiParser.ElemName, 0); }
@@ -2538,7 +2542,7 @@ export class BlockContent1Context extends ParserRuleContext {
 
 
 export class Block2Context extends ParserRuleContext {
-	public _blockContent2: BlockContent2Context;
+	public _blockContent2!: BlockContent2Context;
 	public _content: BlockContent2Context[] = [];
 	public OpenBlock2(): TerminalNode { return this.getToken(KojiParser.OpenBlock2, 0); }
 	public ElemName(): TerminalNode { return this.getToken(KojiParser.ElemName, 0); }
@@ -2640,7 +2644,7 @@ export class BlockContent2Context extends ParserRuleContext {
 
 
 export class Block3Context extends ParserRuleContext {
-	public _blockContent3: BlockContent3Context;
+	public _blockContent3!: BlockContent3Context;
 	public _content: BlockContent3Context[] = [];
 	public OpenBlock3(): TerminalNode { return this.getToken(KojiParser.OpenBlock3, 0); }
 	public ElemName(): TerminalNode { return this.getToken(KojiParser.ElemName, 0); }
@@ -2739,7 +2743,7 @@ export class BlockContent3Context extends ParserRuleContext {
 
 
 export class Block4Context extends ParserRuleContext {
-	public _blockContent4: BlockContent4Context;
+	public _blockContent4!: BlockContent4Context;
 	public _content: BlockContent4Context[] = [];
 	public OpenBlock4(): TerminalNode { return this.getToken(KojiParser.OpenBlock4, 0); }
 	public ElemName(): TerminalNode { return this.getToken(KojiParser.ElemName, 0); }
@@ -2835,7 +2839,7 @@ export class BlockContent4Context extends ParserRuleContext {
 
 
 export class Block5Context extends ParserRuleContext {
-	public _blockContent5: BlockContent5Context;
+	public _blockContent5!: BlockContent5Context;
 	public _content: BlockContent5Context[] = [];
 	public OpenBlock5(): TerminalNode { return this.getToken(KojiParser.OpenBlock5, 0); }
 	public ElemName(): TerminalNode { return this.getToken(KojiParser.ElemName, 0); }
@@ -3125,9 +3129,9 @@ export class FuriganaTargetContext extends ParserRuleContext {
 
 
 export class FuriganaContext extends ParserRuleContext {
-	public _target: FuriganaTargetContext;
-	public _right: Token;
-	public _left: Token;
+	public _target!: FuriganaTargetContext;
+	public _right!: Token;
+	public _left!: Token;
 	public FuriganaOpen(): TerminalNode { return this.getToken(KojiParser.FuriganaOpen, 0); }
 	public FuriganaClose(): TerminalNode { return this.getToken(KojiParser.FuriganaClose, 0); }
 	public FuriganaContent(): TerminalNode[];
@@ -3173,7 +3177,7 @@ export class FuriganaContext extends ParserRuleContext {
 
 
 export class KaeritenContext extends ParserRuleContext {
-	public _content: Token;
+	public _content!: Token;
 	public KaeritenMark(): TerminalNode { return this.getToken(KojiParser.KaeritenMark, 0); }
 	public KaeritenChar(): TerminalNode[];
 	public KaeritenChar(i: number): TerminalNode;
@@ -3213,7 +3217,7 @@ export class KaeritenContext extends ParserRuleContext {
 
 
 export class OkuriganaContext extends ParserRuleContext {
-	public _content: Token;
+	public _content!: Token;
 	public OkuriganaMark(): TerminalNode { return this.getToken(KojiParser.OkuriganaMark, 0); }
 	public Kana(): TerminalNode { return this.getToken(KojiParser.Kana, 0); }
 	constructor(parent: ParserRuleContext | undefined, invokingState: number) {
@@ -3275,7 +3279,7 @@ export class TatetenContext extends ParserRuleContext {
 
 
 export class AnnotationContext extends ParserRuleContext {
-	public _content: Token;
+	public _content!: Token;
 	public AnnotationOpen(): TerminalNode { return this.getToken(KojiParser.AnnotationOpen, 0); }
 	public AnnotationContent(): TerminalNode { return this.getToken(KojiParser.AnnotationContent, 0); }
 	public AnnotationClose(): TerminalNode | undefined { return this.tryGetToken(KojiParser.AnnotationClose, 0); }
@@ -3385,7 +3389,7 @@ export class BugHoleContext extends ParserRuleContext {
 
 
 export class PersonContext extends ParserRuleContext {
-	public _inlineContent: InlineContentContext;
+	public _inlineContent!: InlineContentContext;
 	public _content: InlineContentContext[] = [];
 	public PersonOpen(): TerminalNode { return this.getToken(KojiParser.PersonOpen, 0); }
 	public PersonClose(): TerminalNode { return this.getToken(KojiParser.PersonClose, 0); }
@@ -3430,7 +3434,7 @@ export class PersonContext extends ParserRuleContext {
 
 
 export class PlaceContext extends ParserRuleContext {
-	public _inlineContent: InlineContentContext;
+	public _inlineContent!: InlineContentContext;
 	public _content: InlineContentContext[] = [];
 	public PlaceOpen(): TerminalNode { return this.getToken(KojiParser.PlaceOpen, 0); }
 	public PlaceClose(): TerminalNode { return this.getToken(KojiParser.PlaceClose, 0); }
@@ -3475,7 +3479,7 @@ export class PlaceContext extends ParserRuleContext {
 
 
 export class DateContext extends ParserRuleContext {
-	public _inlineContent: InlineContentContext;
+	public _inlineContent!: InlineContentContext;
 	public _content: InlineContentContext[] = [];
 	public DateOpen(): TerminalNode { return this.getToken(KojiParser.DateOpen, 0); }
 	public DateClose(): TerminalNode { return this.getToken(KojiParser.DateClose, 0); }

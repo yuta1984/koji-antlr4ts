@@ -1,11 +1,7 @@
 import { parse, convertToLaTeX } from '../src';
 import * as chai from 'chai';
-import * as chaiXml from 'chai-xml';
-import * as fs from 'fs';
 
-chai.use(chaiXml);
 const expect = chai.expect;
-
 
 const case2 = `
 漢-文
@@ -22,10 +18,8 @@ const case1 = `左右ルビのついた漢字を入力（にゅうりょく｜�
 const ast = parse(case1).ast;
 
 describe('latex converter', () => {
-
-    it('should be valid', () => {
-        const latex = convertToLaTeX(ast);
-        console.log(latex);
-    });
-
+  it('should be valid', () => {
+    const latex = convertToLaTeX(ast);
+    console.log(latex);
+  });
 });

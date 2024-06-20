@@ -1,4 +1,4 @@
-// Generated from src/KojiLexer.g4 by ANTLR 4.7.3-SNAPSHOT
+// Generated from src/KojiLexer.g4 by ANTLR 4.9.0-SNAPSHOT
 
 
 import { ATN } from "antlr4ts/atn/ATN";
